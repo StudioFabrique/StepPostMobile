@@ -1,0 +1,7 @@
+{
+  "name": "step-post-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

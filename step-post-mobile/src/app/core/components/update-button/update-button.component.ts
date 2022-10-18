@@ -1,0 +1,37 @@
+import { RechercheService } from 'src/app/core/services/recherche.service';
+import { UpdateStatutService } from './../../../core/services/update-statut.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-update-button',
+  templateUrl: './update-button.component.html',
+  styleUrls: ['./update-button.component.scss'],
+})
+export class UpdateButtonComponent implements OnInit {
+  @Output() action = new EventEmitter<void>();
+  @Input() etat!: any;
+  @Input() statut!: number;
+  @Input() bordereau!: number;
+  etats!: string[];
+
+  constructor(
+    private auth: AuthService,
+    private recherche: RechercheService,
+    private updateService: UpdateStatutService
+  ) {}
+
+  ngOnInit() {
+    console.log(this.etat.etat);
+  }
+
+  onUpdate() {
+    this.updateService.updateStatut(this.etat.id, this.bordereau).subscribe({
+      next: this.handleUpdateStatutResponse.bind(this),
+      error: this.auth.handleError.bind(this),
+    });
+  }
+  private handleUpdateStatutResponse(response: any) {
+    this.action.emit();
+  }
+}

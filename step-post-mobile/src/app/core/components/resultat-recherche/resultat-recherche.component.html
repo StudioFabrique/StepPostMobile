@@ -1,0 +1,41 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>
+      Bordereau n° : {{recherche.courrier.bordereau}}
+    </ion-card-subtitle>
+    <ion-card-title>
+      {{recherche.setType(recherche.courrier.type)}}
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div>
+      <p>{{recherche.courrier.prenom | titlecase}} {{recherche.courrier.nom | titlecase}}</p>
+      <p>{{recherche.courrier.adresse | titlecase}}</p>
+      <p>{{recherche.courrier.complement | titlecase}}</p>
+      <p>{{recherche.courrier.codePostal}} {{recherche.courrier.ville | titlecase}}</p>
+    </div>
+  </ion-card-content>
+</ion-card>
+<ion-grid class="statut">
+  <ion-row>
+    <ion-col class="ion-text-center">
+      {{recherche.courrier.date | date: 'dd/MM/YYYY'}} {{recherche.courrier.date | date: 'à hh:mm'}}
+    </ion-col>
+    <ion-col *ngIf="recherche.etats" class="ion-text-center">
+      {{recherche.etats[+recherche.courrier.etat - 1]}}
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="+recherche.courrier.etat > 4">
+    <ion-col>
+      <h5 class="ion-text-center">Aucune action possible</h5>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<ion-row *ngIf="courrier && recherche.courrier.etat < 5">
+  <ion-col lines="full">
+    <ion-button expand="block" (click)="onUpdate()">
+      <ion-label>modifier statut</ion-label>
+    </ion-button>
+  </ion-col>
+</ion-row>

@@ -1,0 +1,17 @@
+$orange: #FF5E1A;
+
+ion-item {
+    >div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        >p {
+            font-weight: bold;
+        }
+
+        >p:first-child {
+            color: $orange;
+        }
+    }
+}

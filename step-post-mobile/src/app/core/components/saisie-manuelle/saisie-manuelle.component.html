@@ -1,0 +1,24 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <!-- bordereau -->
+
+  <ion-item lines="full">
+    <ion-label position="floating">Numéro de bordereau :</ion-label>
+    <ion-input type="number" formControlName="bordereau"></ion-input>
+  </ion-item>
+
+  <!-- boutons -->
+
+  <ion-row>
+    <ion-col>
+      <ion-button type="submit" color="primary" expand="block">rechercher</ion-button>
+    </ion-col>
+  </ion-row>
+
+</form>
+
+<ion-row *ngIf="noResults" lines="full">
+  <ion-col>
+    <ion-text class="ion-margin">Aucun résultat</ion-text>
+  </ion-col>
+</ion-row>

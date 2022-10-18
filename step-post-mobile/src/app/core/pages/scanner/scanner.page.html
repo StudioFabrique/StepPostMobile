@@ -1,0 +1,34 @@
+<ion-content class="content">
+  <ion-grid>
+
+    <!-- menu -->
+
+    <ion-row *ngIf="!action">
+      <ion-col>
+        <ion-button expand="block" (click)="onQRCode()">
+          <ion-label>QRCode</ion-label>
+        </ion-button>
+        <ion-button *ngIf="!displaySaisie" expand="block" (click)="onSaisie()">
+          <ion-label>Saisie manuelle</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- QRCode -->
+
+    <ion-row>
+      <ion-col>
+        <app-qrcode *ngIf="displayQRCode" (resultat)="onResult($event)"></app-qrcode>
+      </ion-col>
+    </ion-row>
+
+    <!-- saisie manuelle -->
+
+    <ion-row>
+      <ion-col>
+        <app-saisie-manuelle *ngIf="displaySaisie" (resultat)="onResult($event)"></app-saisie-manuelle>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

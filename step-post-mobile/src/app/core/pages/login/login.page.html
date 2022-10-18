@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Connexion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- email -->
+
+    <ion-item lines="full">
+      <ion-label position="floating">Email :</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+
+    <!-- password -->
+
+    <ion-item lines="full">
+      <ion-label position="floating">Mot de passe :</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <!-- boutons -->
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block">envoyer</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

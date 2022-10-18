@@ -1,0 +1,14 @@
+<ion-row *ngFor="let etat of actionsList" lines="full">
+    <ion-col lines="full">
+        <app-update-button *ngIf="etat.id !== 1" [etat]="etat" [statut]="courrier.etat" [bordereau]="courrier.bordereau"
+            (action)="onAction()">
+        </app-update-button>
+    </ion-col>
+</ion-row>
+<ion-row>
+    <ion-col>
+        <ion-button expand="block" color="#FF5E1A" (click)="onAction()">
+            <ion-label>retour</ion-label>
+        </ion-button>
+    </ion-col>
+</ion-row>

@@ -1,0 +1,33 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="top" layout="icon-end">
+    <ion-tab-button tab="scanner">
+      <ion-icon name="qr-code-outline"></ion-icon>
+      <ion-label>Scanner</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="mes-scans">
+      <ion-icon name="bicycle-outline"></ion-icon>
+      <ion-label>Mes Scans</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="last-scan">
+      <ion-icon name="mail-outline"></ion-icon>
+      <ion-label>Dernier Scan</ion-label>
+    </ion-tab-button>
+
+
+    <ion-tab-button *ngIf="!auth.isLogged" tab="login">
+      <ion-icon name="enter-outline"></ion-icon>
+      <ion-label>Connexion</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button *ngIf="auth.isLogged" (click)="auth.logout()">
+      <ion-icon name="exit-outline"></ion-icon>
+      <ion-label>Déconnexion</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>

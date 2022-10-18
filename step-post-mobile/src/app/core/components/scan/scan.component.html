@@ -1,0 +1,6 @@
+<ion-item>
+  <div>
+    <p color="orange">{{scan.date | date: "dd/MM/YYYY à hh:mm"}}</p>
+    <p *ngIf="recherche.etats">{{recherche.etats[scan.statutId - 1]}}</p>
+  </div>
+</ion-item>

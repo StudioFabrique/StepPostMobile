@@ -1,0 +1,9 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mes Scans</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-scan *ngFor="let scan of mesScans" [scan]="scan"></app-scan>
+</ion-content>

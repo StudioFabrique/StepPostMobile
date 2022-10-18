@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="courrier">Résultat Scan : {{courrier.bordereau}}</ion-title>
+    <ion-title *ngIf="!courrier">Résultat Scan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- afichage du résultat d'une recherche courrier -->
+
+<ion-content *ngIf="courrier && !action" class="content">
+  <app-resultat-recherche [courrier]="courrier" (action)="onUpdate()"></app-resultat-recherche>
+</ion-content>
+
+<!-- message affiché si la recherche a échoué ou qu'aucune recherche n' a été effectué -->
+
+<ion-content *ngIf="!courrier">
+  <ion-row>
+    <ion-col>
+      <h4 class="no-result ion-text-center">Aucun résultat</h4>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<!-- actions possibles -->
+
+<ion-content class="update-statuts" *ngIf="action">
+  <app-update-statut [courrier]="courrier" (action)="onUpdate()">
+  </app-update-statut>
+</ion-content>
