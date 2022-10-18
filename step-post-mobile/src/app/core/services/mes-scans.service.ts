@@ -24,4 +24,18 @@ export class MesScansService {
       .get<MesScans[]>(`${environment.baseUrl}/facteur/mes-scans`)
       .pipe(tap((response) => (this.mesScans = response)));
   }
+
+  updateMesScans(scan: MesScans) {
+    if (!this.mesScans) {
+      this.getScans().subscribe((response: MesScans[]) => this.addScan(scan));
+    } else {
+      this.addScan(scan);
+    }
+  }
+
+  private addScan(scan: MesScans) {
+    console.table(this.mesScans);
+
+    this.mesScans = [...this.mesScans, scan];
+  }
 }

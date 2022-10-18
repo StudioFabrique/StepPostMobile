@@ -4,14 +4,23 @@ ion-item {
     >div {
         width: 100%;
         display: flex;
-        justify-content: space-between;
 
-        >p {
-            font-weight: bold;
+        >div {
+            width: 100%;
+
+            >p {
+                font-weight: bold;
+            }
         }
 
-        >p:first-child {
-            color: $orange;
+        >div:first-child {
+            >p:first-child {
+                color: $orange;
+            }
+        }
+
+        >div:last-child {
+            font-size: .75em;
         }
     }
 }

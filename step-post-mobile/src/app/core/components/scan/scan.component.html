@@ -1,6 +1,12 @@
 <ion-item>
-  <div>
-    <p color="orange">{{scan.date | date: "dd/MM/YYYY à hh:mm"}}</p>
-    <p *ngIf="recherche.etats">{{recherche.etats[scan.statutId - 1]}}</p>
+  <div class="ion-justify-content-between">
+    <div>
+      <p color="orange">{{scan.date | date: "dd/MM/YYYY à hh:mm"}}</p>
+    </div>
+    <div>
+      <p>Bordereau n° : {{scan.courrier.bordereau}}</p>
+      <p>{{recherche.setType(scan.courrier.type)}}</p>
+      <p *ngIf="recherche.etats">{{recherche.etats[scan.statutId - 1]}}</p>
+    </div>
   </div>
 </ion-item>

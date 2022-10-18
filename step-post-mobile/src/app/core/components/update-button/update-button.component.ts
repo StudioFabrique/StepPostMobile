@@ -1,4 +1,4 @@
-import { RechercheService } from 'src/app/core/services/recherche.service';
+import { MesScansService } from './../../services/mes-scans.service';
 import { UpdateStatutService } from './../../../core/services/update-statut.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
@@ -17,13 +17,11 @@ export class UpdateButtonComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private recherche: RechercheService,
+    private mesScans: MesScansService,
     private updateService: UpdateStatutService
   ) {}
 
-  ngOnInit() {
-    console.log(this.etat.etat);
-  }
+  ngOnInit() {}
 
   onUpdate() {
     this.updateService.updateStatut(this.etat.id, this.bordereau).subscribe({
@@ -32,6 +30,20 @@ export class UpdateButtonComponent implements OnInit {
     });
   }
   private handleUpdateStatutResponse(response: any) {
+    this.updateMesScans(response.data);
     this.action.emit();
+  }
+
+  private updateMesScans(value: any) {
+    const scan = {
+      date: value.date,
+      statutId: value.statutId,
+      courrier: {
+        id: value.id,
+        bordereau: value.bordereau,
+        type: value.type,
+      },
+    };
+    this.mesScans.updateMesScans(scan);
   }
 }
