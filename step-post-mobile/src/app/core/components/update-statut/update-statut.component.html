@@ -1,7 +1,6 @@
 <ion-row *ngFor="let etat of actionsList" lines="full">
     <ion-col lines="full">
-        <app-update-button *ngIf="etat.id !== 1" [etat]="etat" [statut]="courrier.etat" [bordereau]="courrier.bordereau"
-            (action)="onAction()">
+        <app-update-button *ngIf="etat.id !== 1" [etat]="etat" [courrier]="courrier" (action)="onAction()">
         </app-update-button>
     </ion-col>
 </ion-row>

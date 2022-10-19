@@ -9,38 +9,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mes-scans.page.scss'],
 })
 export class MesScansPage implements OnInit {
-  mesScans!: MesScans[];
-
-  constructor(
-    private auth: AuthService,
-    private mesScansService: MesScansService
-  ) {}
+  constructor(public mesScansService: MesScansService) {}
 
   /**
-   * si le service est déjà instancié récupère la liste des scans,
-   * sinon la récupère auprès de la bdd
+   * vérifie l'existence de la liste des scans du jour auprès du service,
+   * sinon le service va la récupérer via une requête Http
    */
 
   ngOnInit() {
-    if (this.mesScansService.mesScans) {
-      this.mesScans = this.mesScansService.mesScans;
-    } else {
-      this.getMesScans();
+    if (!this.mesScansService.mesScans) {
+      this.mesScansService.getScans();
     }
-  }
-
-  private handleResponse(response: MesScans[]) {
-    this.mesScans = response;
-  }
-
-  /**
-   * récupère la liste des scans du jour effectués par le facteur connecté
-   */
-
-  private getMesScans() {
-    this.mesScansService.getScans().subscribe({
-      next: this.handleResponse.bind(this),
-      error: this.auth.handleError.bind(this),
-    });
   }
 }

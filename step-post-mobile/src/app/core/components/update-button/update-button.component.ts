@@ -1,3 +1,4 @@
+import { InfosCourrier } from './../../models/infos-courrier.model';
 import { MesScansService } from './../../services/mes-scans.service';
 import { UpdateStatutService } from './../../../core/services/update-statut.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -11,8 +12,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class UpdateButtonComponent implements OnInit {
   @Output() action = new EventEmitter<void>();
   @Input() etat!: any;
-  @Input() statut!: number;
-  @Input() bordereau!: number;
+  @Input() courrier!: InfosCourrier;
   etats!: string[];
 
   constructor(
@@ -24,10 +24,12 @@ export class UpdateButtonComponent implements OnInit {
   ngOnInit() {}
 
   onUpdate() {
-    this.updateService.updateStatut(this.etat.id, this.bordereau).subscribe({
-      next: this.handleUpdateStatutResponse.bind(this),
-      error: this.auth.handleError.bind(this),
-    });
+    this.updateService
+      .updateStatut(this.etat.id, this.courrier.bordereau)
+      .subscribe({
+        next: this.handleUpdateStatutResponse.bind(this),
+        error: this.auth.handleError.bind(this),
+      });
   }
   private handleUpdateStatutResponse(response: any) {
     this.updateMesScans(response.data);
@@ -41,7 +43,7 @@ export class UpdateButtonComponent implements OnInit {
       courrier: {
         id: value.id,
         bordereau: value.bordereau,
-        type: value.type,
+        type: this.courrier.type,
       },
     };
     this.mesScans.updateMesScans(scan);
