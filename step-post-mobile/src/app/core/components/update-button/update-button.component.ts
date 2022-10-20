@@ -11,6 +11,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class UpdateButtonComponent implements OnInit {
   @Output() action = new EventEmitter<void>();
+  @Output() signaturePad = new EventEmitter<void>();
   @Input() etat!: any;
   @Input() courrier!: InfosCourrier;
   etats!: string[];
@@ -24,6 +25,9 @@ export class UpdateButtonComponent implements OnInit {
   ngOnInit() {}
 
   onUpdate() {
+    if (this.etat.id === 5) {
+      console.log('distrib');
+    }
     this.updateService
       .updateStatut(this.etat.id, this.courrier.bordereau)
       .subscribe({
@@ -31,6 +35,7 @@ export class UpdateButtonComponent implements OnInit {
         error: this.auth.handleError.bind(this),
       });
   }
+
   private handleUpdateStatutResponse(response: any) {
     this.updateMesScans(response.data);
     this.action.emit();

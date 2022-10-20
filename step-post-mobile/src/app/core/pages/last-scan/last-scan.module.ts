@@ -1,3 +1,4 @@
+import { SignatureComponent } from './../../components/signature/signature.component';
 import { UpdateStatutComponent } from './../../components/update-statut/update-statut.component';
 import { UpdateButtonComponent } from './../../components/update-button/update-button.component';
 import { ResultatRechercheComponent } from './../../components/resultat-recherche/resultat-recherche.component';
@@ -15,6 +16,7 @@ import { LastScanPage } from './last-scan.page';
     ResultatRechercheComponent,
     UpdateButtonComponent,
     UpdateStatutComponent,
+    SignatureComponent,
   ],
 })
 export class LastScanPageModule {}

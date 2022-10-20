@@ -1,6 +1,7 @@
 <ion-row *ngFor="let etat of actionsList" lines="full">
     <ion-col lines="full">
-        <app-update-button *ngIf="etat.id !== 1" [etat]="etat" [courrier]="courrier" (action)="onAction()">
+        <app-update-button *ngIf="etat.id !== 1" [etat]="etat" [courrier]="courrier" (action)="onAction()"
+            (signaturePad)="onSignature()">
         </app-update-button>
     </ion-col>
 </ion-row>
@@ -10,4 +11,8 @@
             <ion-label>retour</ion-label>
         </ion-button>
     </ion-col>
+</ion-row>
+
+<ion-row *ngIf="signaturePad">
+    <app-signature></app-signature>
 </ion-row>

@@ -13,6 +13,8 @@ export class UpdateStatutComponent implements OnInit {
   @Input() courrier!: InfosCourrier;
   etats!: any[];
   actionsList!: any[];
+  signaturePad!: boolean;
+  signature!: any;
 
   constructor(private auth: AuthService, private recherche: RechercheService) {}
 
@@ -27,6 +29,8 @@ export class UpdateStatutComponent implements OnInit {
   onAction() {
     this.action.emit();
   }
+
+  onSignature() {}
 
   private handleGetEtatsResponse(response: any[]) {
     this.etats = response;

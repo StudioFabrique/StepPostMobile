@@ -29,9 +29,10 @@ export class MesScansService {
 
   updateMesScans(scan: MesScans) {
     if (!this.mesScans) {
-      this.handleScans().subscribe((response: MesScans[]) =>
-        this.addScan(scan)
-      );
+      this.handleScans().subscribe((response: MesScans[]) => {
+        this.mesScans = response;
+        this.addScan(scan);
+      });
     } else {
       this.addScan(scan);
     }
