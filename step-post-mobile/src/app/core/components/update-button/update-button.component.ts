@@ -1,7 +1,4 @@
 import { InfosCourrier } from './../../models/infos-courrier.model';
-import { MesScansService } from './../../services/mes-scans.service';
-import { UpdateStatutService } from './../../../core/services/update-statut.service';
-import { AuthService } from 'src/app/core/services/auth.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -10,47 +7,16 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./update-button.component.scss'],
 })
 export class UpdateButtonComponent implements OnInit {
-  @Output() action = new EventEmitter<void>();
-  @Output() signaturePad = new EventEmitter<void>();
+  @Output() action = new EventEmitter<number>();
   @Input() etat!: any;
-  @Input() courrier!: InfosCourrier;
-  etats!: string[];
 
-  constructor(
-    private auth: AuthService,
-    private mesScans: MesScansService,
-    private updateService: UpdateStatutService
-  ) {}
+  constructor() {}
 
   ngOnInit() {}
 
-  onUpdate() {
-    if (this.etat.id === 5) {
-      console.log('distrib');
-    }
-    this.updateService
-      .updateStatut(this.etat.id, this.courrier.bordereau)
-      .subscribe({
-        next: this.handleUpdateStatutResponse.bind(this),
-        error: this.auth.handleError.bind(this),
-      });
-  }
+  onUpdate(): void {
+    console.log(this.etat);
 
-  private handleUpdateStatutResponse(response: any) {
-    this.updateMesScans(response.data);
-    this.action.emit();
-  }
-
-  private updateMesScans(value: any) {
-    const scan = {
-      date: value.date,
-      statutId: value.statutId,
-      courrier: {
-        id: value.id,
-        bordereau: value.bordereau,
-        type: this.courrier.type,
-      },
-    };
-    this.mesScans.updateMesScans(scan);
+    this.action.emit(this.etat.id);
   }
 }

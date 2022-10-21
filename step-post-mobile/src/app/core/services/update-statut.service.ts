@@ -16,4 +16,11 @@ export class UpdateStatutService {
       `${environment.baseUrl}/facteur/update?bordereau=${bordereau}&state=${state}`
     );
   }
+
+  updateSignature(signature: any, courrierId: number): Observable<any> {
+    return this.http.put<any>(`${environment.baseUrl}/facteur/signature`, {
+      courrierId,
+      signature,
+    });
+  }
 }

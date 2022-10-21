@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import SignaturePad from 'signature_pad';
 
 @Component({
@@ -8,6 +16,8 @@ import SignaturePad from 'signature_pad';
 })
 export class SignatureComponent implements AfterViewInit {
   @ViewChild('canvas') canvasEl: ElementRef;
+  @Output() retourSignature = new EventEmitter<any>();
+  @Input() courrierId!: number;
   signaturePad: SignaturePad;
   signatureImg: string;
 
@@ -33,6 +43,6 @@ export class SignatureComponent implements AfterViewInit {
   savePad() {
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;
-    console.log(this.signatureImg);
+    this.retourSignature.emit(this.signatureImg);
   }
 }

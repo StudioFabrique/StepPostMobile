@@ -1,3 +1,5 @@
+import { UpdateStatutService } from './../../services/update-statut.service';
+import { MesScansService } from './../../services/mes-scans.service';
 import { InfosCourrier } from '../../models/infos-courrier.model';
 import { AuthService } from './../../../core/services/auth.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
@@ -16,7 +18,12 @@ export class UpdateStatutComponent implements OnInit {
   signaturePad!: boolean;
   signature!: any;
 
-  constructor(private auth: AuthService, private recherche: RechercheService) {}
+  constructor(
+    private auth: AuthService,
+    private recherche: RechercheService,
+    private mesScans: MesScansService,
+    private updateService: UpdateStatutService
+  ) {}
 
   ngOnInit() {
     if (!this.recherche.etats) {
@@ -30,7 +37,30 @@ export class UpdateStatutComponent implements OnInit {
     this.action.emit();
   }
 
-  onSignature() {}
+  onSignature(): void {
+    this.signaturePad = !this.signaturePad;
+  }
+
+  onRetourSignature(value: any): void {
+    this.signature = value;
+    this.update(5, this.courrier.bordereau);
+  }
+
+  onUpdate(value: number) {
+    if (value === 5) {
+      this.signaturePad = true;
+      return;
+    } else {
+      this.update(value, this.courrier.bordereau);
+    }
+  }
+
+  private update(etat: number, bordereau: number): void {
+    this.updateService.updateStatut(etat, bordereau).subscribe({
+      next: this.handleUpdateStatutResponse.bind(this),
+      error: this.auth.handleError.bind(this),
+    });
+  }
 
   private handleGetEtatsResponse(response: any[]) {
     this.etats = response;
@@ -54,5 +84,35 @@ export class UpdateStatutComponent implements OnInit {
       }
     }
     return tab;
+  }
+
+  private handleUpdateStatutResponse(response: any) {
+    if (this.signature) {
+      this.updateService
+        .updateSignature(this.signature, this.courrier.id)
+        .subscribe({
+          next: this.handleUpdateSignatureResponse.bind(this),
+          error: this.auth.handleError.bind(this),
+        });
+    }
+    this.updateMesScans(response.data);
+    this.action.emit();
+  }
+
+  private handleUpdateSignatureResponse(response: any) {
+    console.log(response);
+  }
+
+  private updateMesScans(value: any) {
+    const scan = {
+      date: value.date,
+      statutId: value.statutId,
+      courrier: {
+        id: value.id,
+        bordereau: value.bordereau,
+        type: this.courrier.type,
+      },
+    };
+    this.mesScans.updateMesScans(scan);
   }
 }
