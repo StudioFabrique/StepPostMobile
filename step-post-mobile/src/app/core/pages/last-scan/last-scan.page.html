@@ -9,6 +9,13 @@
 
 <ion-content *ngIf="courrier && !action" class="content">
   <app-resultat-recherche [courrier]="courrier" (action)="onUpdate()"></app-resultat-recherche>
+  <ion-row *ngIf="courrier && recherche.courrier.etat < 5">
+    <ion-col lines="full">
+      <ion-button (click)="onUpdate()">
+        <ion-label>MODIFIER STATUT</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
   <app-fab></app-fab>
 </ion-content>
 

@@ -1,0 +1,31 @@
+ion-card-content {
+    >div {
+        >p {
+            font-size: .75em;
+        }
+    }
+}
+
+ion-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.date {
+    color: #FF5E1A
+}
+
+.statut {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+
+    >ion-row {
+        display: flex;
+
+        >ion-col:nth-child(2) {
+            font-size: 1.1em;
+        }
+    }
+}
