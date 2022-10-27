@@ -12,6 +12,6 @@ export class FabComponent implements OnInit {
   ngOnInit() {}
 
   onFabClick() {
-    this.router.navigateByUrl('/tabs/scanner');
+    this.router.navigateByUrl('/tabs/home');
   }
 }

@@ -9,6 +9,15 @@ ion-row {
     width: 100%;
 
     >ion-col {
+        width: 100%;
         display: flex;
+
+        >form {
+            width: 100%;
+        }
     }
+}
+
+ion-button {
+    width: 50%;
 }
