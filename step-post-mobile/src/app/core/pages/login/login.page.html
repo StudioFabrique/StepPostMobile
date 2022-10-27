@@ -4,29 +4,46 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+<ion-grid class="ion-align-items-center ion-justify-content-center" fullscreen="true">
+  <ion-row lines="full">
+    <ion-col>
+      <form class="ion-padding" [formGroup]="form" (ngSubmit)="onSubmit()" text-center>
 
-    <!-- email -->
+        <div>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Email :</ion-label>
-      <ion-input type="email" formControlName="email"></ion-input>
-    </ion-item>
+          <!-- email -->
 
-    <!-- password -->
+          <ion-item lines="full">
+            <ion-label position="floating">Email :</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Mot de passe :</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
-    </ion-item>
+          <!-- password -->
 
-    <!-- boutons -->
+          <ion-item lines="full">
+            <ion-label position="floating">Mot de passe :</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
 
-    <ion-row>
-      <ion-col>
-        <ion-button type="submit" color="primary" expand="block">envoyer</ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
-</ion-content>
+        </div>
+
+        <!-- boutoionns -->
+
+        <ion-row>
+          <ion-col class="ion-justify-content-center">
+            <ion-button size="default" type="submit" color="primary">SE CONNECTER
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+      </form>
+    </ion-col>
+  </ion-row>
+
+</ion-grid>
+
+<!-- footer -->
+
+<ion-footer>
+  <img src="assets/img/logo-step-post.png" alt="logo step-post">
+</ion-footer>
