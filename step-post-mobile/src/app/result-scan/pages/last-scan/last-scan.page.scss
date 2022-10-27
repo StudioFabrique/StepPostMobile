@@ -5,3 +5,11 @@
 ion-button {
     width: 50%;
 }
+
+ion-content {
+    >ion-row {
+        >ion-col {
+            display: flex;
+        }
+    }
+}
