@@ -1,3 +1,5 @@
+import { RegexService } from './../../services/regex.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InfosCourrier } from '../../models/infos-courrier.model';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,10 +15,29 @@ export class ScannerPage implements OnInit {
   displayQRCode!: boolean;
   courrier!: InfosCourrier;
   action!: boolean;
+  form!: FormGroup;
 
-  constructor(private router: Router, private nav: NavController) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private regex: RegexService,
+    private router: Router,
+    private nav: NavController
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      bordereau: [
+        null,
+        [Validators.required, Validators.pattern(this.regex.numberRegex)],
+      ],
+    });
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      this.onResult(this.form.value.bordereau);
+    }
+  }
 
   onAction() {
     this.action = true;
@@ -30,7 +51,6 @@ export class ScannerPage implements OnInit {
 
   onResult(value: string) {
     this.displayQRCode = false;
-    this.displaySaisie = false;
     this.router.navigate(['/tabs/last-scan', value]);
   }
 

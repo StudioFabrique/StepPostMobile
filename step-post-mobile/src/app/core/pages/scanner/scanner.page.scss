@@ -1,4 +1,14 @@
-.content {
-    height: 100vh;
-    --ion-background-color: transparent;
+ion-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 3vh;
+}
+
+ion-row {
+    width: 100%;
+
+    >ion-col {
+        display: flex;
+    }
 }

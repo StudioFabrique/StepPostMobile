@@ -1,40 +1,52 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Scan</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- menu -->
 
-<ion-content class="content">
-  <ion-grid>
+<ion-grid *ngIf="!action" class="ion-align-items-center ion-justify-content-center">
+  <ion-row class="ion-justify-content-center">
+    <ion-button (click)="onQRCode()">
+      <ion-label>QRCode</ion-label>
+    </ion-button>
+  </ion-row>
 
-    <!-- menu -->
+  <ion-row>
+    <ion-col class="ion-justify-content-center">
 
-    <ion-row *ngIf="!action">
-      <ion-col>
-        <ion-button expand="block" (click)="onQRCode()">
-          <ion-label>QRCode</ion-label>
-        </ion-button>
-        <ion-button *ngIf="!displaySaisie" expand="block" (click)="onSaisie()">
-          <ion-label>Saisie manuelle</ion-label>
-        </ion-button>
-      </ion-col>
-    </ion-row>
+      <!-- formulaire -->
 
-    <!-- QRCode -->
+      <form [formGroup]="form" (submit)="onSubmit()">
 
-    <ion-row>
-      <ion-col>
-        <app-qrcode *ngIf="displayQRCode" (resultat)="onResult($event)"></app-qrcode>
-      </ion-col>
-    </ion-row>
+        <!-- bordereau -->
 
-    <!-- saisie manuelle -->
+        <ion-item lines="full">
+          <ion-label position="floating">Numéro de bordereau :</ion-label>
+          <ion-input type="number" formControlName="bordereau">
+          </ion-input>
+        </ion-item>
 
-    <ion-row>
-      <ion-col>
-        <app-saisie-manuelle *ngIf="displaySaisie" (resultat)="onResult($event)"></app-saisie-manuelle>
-      </ion-col>
-    </ion-row>
+        <!-- bouton -->
 
-  </ion-grid>
-</ion-content>
+        <ion-row>
+          <ion-col class="ion-justify-content-center">
+            <ion-button type="submit" color="primary">SAISIE MANUELLE</ion-button>
+          </ion-col>
+        </ion-row>
+
+      </form>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<!-- QRCode -->
+
+<ion-row>
+  <ion-col>
+    <app-qrcode *ngIf="displayQRCode" (resultat)="onResult($event)"></app-qrcode>
+  </ion-col>
+</ion-row>
+
+<!-- saisie manuelle -->
+
+<ion-row>
+  <ion-col>
+    <app-saisie-manuelle *ngIf="displaySaisie" (resultat)="onResult($event)"></app-saisie-manuelle>
+  </ion-col>
+</ion-row>
