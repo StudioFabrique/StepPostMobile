@@ -42,11 +42,3 @@
     <app-qrcode *ngIf="displayQRCode" (resultat)="onResult($event)"></app-qrcode>
   </ion-col>
 </ion-row>
-
-<!-- saisie manuelle -->
-
-<ion-row>
-  <ion-col>
-    <app-saisie-manuelle *ngIf="displaySaisie" (resultat)="onResult($event)"></app-saisie-manuelle>
-  </ion-col>
-</ion-row>

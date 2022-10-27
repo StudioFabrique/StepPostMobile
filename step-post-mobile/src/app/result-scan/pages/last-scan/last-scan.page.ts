@@ -1,7 +1,7 @@
-import { InfosCourrier } from '../../models/infos-courrier.model';
-import { UpdateStatutService } from './../../services/update-statut.service';
+import { UpdateStatutService } from './../../../core/services/update-statut.service';
+import { RechercheService } from './../../../core/services/recherche.service';
+import { InfosCourrier } from './../../../core/models/infos-courrier.model';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { RechercheService } from './../../services/recherche.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 

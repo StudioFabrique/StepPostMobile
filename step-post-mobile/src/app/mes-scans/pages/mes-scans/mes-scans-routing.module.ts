@@ -1,17 +1,19 @@
+import { AuthGuard } from './../../../core/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LastScanPage } from './last-scan.page';
+import { MesScansPage } from './mes-scans.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: LastScanPage
-  }
+    component: MesScansPage,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LastScanPageRoutingModule {}
+export class MesScansPageRoutingModule {}

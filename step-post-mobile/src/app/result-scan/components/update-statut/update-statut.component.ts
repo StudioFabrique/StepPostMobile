@@ -1,6 +1,6 @@
-import { UpdateStatutService } from './../../services/update-statut.service';
-import { MesScansService } from './../../services/mes-scans.service';
-import { InfosCourrier } from '../../models/infos-courrier.model';
+import { UpdateStatutService } from './../../../core/services/update-statut.service';
+import { MesScansService } from './../../../core/services/mes-scans.service';
+import { InfosCourrier } from './../../../core/models/infos-courrier.model';
 import { AuthService } from './../../../core/services/auth.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { RechercheService } from 'src/app/core/services/recherche.service';

@@ -1,4 +1,4 @@
-import { InfosCourrier } from '../../models/infos-courrier.model';
+import { InfosCourrier } from './../../../core/models/infos-courrier.model';
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { RechercheService } from 'src/app/core/services/recherche.service';
 

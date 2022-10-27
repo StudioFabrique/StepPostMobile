@@ -1,4 +1,3 @@
-import { InfosCourrier } from './../../models/infos-courrier.model';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({

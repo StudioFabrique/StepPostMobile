@@ -1,6 +1,6 @@
-import { RegexService } from './../../services/regex.service';
+import { RegexService } from './../../../core/services/regex.service';
+import { InfosCourrier } from './../../../core/models/infos-courrier.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { InfosCourrier } from '../../models/infos-courrier.model';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';

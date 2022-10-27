@@ -1,5 +1,5 @@
-import { SharedModule } from './../../../shared/shared.module';
-import { ScanComponent } from './../../components/scan/scan.component';
+import { ScanComponent } from '../../components/scan/scan.component';
+import { SharedModule } from '../../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

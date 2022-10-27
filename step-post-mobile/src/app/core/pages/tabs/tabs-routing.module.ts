@@ -11,35 +11,27 @@ const routes: Routes = [
       {
         path: 'mes-scans',
         loadChildren: () =>
-          import('../mes-scans/mes-scans.module').then(
-            (m) => m.MesScansPageModule
+          import('../../../mes-scans/mes-scans.module').then(
+            (m) => m.MesScansModule
           ),
         canActivate: [AuthGuard],
       },
       {
-        path: 'scanner',
+        path: 'home',
         loadChildren: () =>
-          import('../scanner/scanner.module').then((m) => m.ScannerPageModule),
+          import('../../../home/home.module').then((m) => m.HomeModule),
         canActivate: [AuthGuard],
       },
       {
         path: '',
-        redirectTo: '/tabs/scanner',
+        redirectTo: '/tabs/home',
         pathMatch: 'full',
       },
       {
         path: 'last-scan',
         loadChildren: () =>
-          import('../last-scan/last-scan.module').then(
-            (m) => m.LastScanPageModule
-          ),
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'last-scan/:bordereau',
-        loadChildren: () =>
-          import('../last-scan/last-scan.module').then(
-            (m) => m.LastScanPageModule
+          import('../../../result-scan/result-scan.module').then(
+            (m) => m.ResultScanModule
           ),
         canActivate: [AuthGuard],
       },
@@ -47,7 +39,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/scanner',
+    redirectTo: '/tabs/home',
     pathMatch: 'full',
   },
 ];

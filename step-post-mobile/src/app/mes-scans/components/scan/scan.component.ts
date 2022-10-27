@@ -1,5 +1,5 @@
-import { RechercheService } from './../../services/recherche.service';
-import { MesScans } from './../../models/mes-scans.model';
+import { RechercheService } from 'src/app/core/services/recherche.service';
+import { MesScans } from './../../../core/models/mes-scans.model';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({

@@ -1,6 +1,4 @@
-import { MesScansService } from './../../services/mes-scans.service';
-import { AuthService } from './../../services/auth.service';
-import { MesScans } from './../../models/mes-scans.model';
+import { MesScansService } from '../../../core/services/mes-scans.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
