@@ -1,13 +1,13 @@
 <!-- menu -->
 
 <ion-grid *ngIf="!action" class="ion-align-items-center ion-justify-content-center">
-  <ion-row class="ion-justify-content-center">
+  <ion-row *ngIf="!displayQRCode" class="ion-justify-content-center">
     <ion-button (click)="onQRCode()">
       <ion-label>QRCode</ion-label>
     </ion-button>
   </ion-row>
 
-  <ion-row>
+  <ion-row *ngIf="!displayQRCode">
     <ion-col class="ion-justify-content-center">
 
       <!-- formulaire -->

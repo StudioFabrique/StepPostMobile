@@ -9,6 +9,7 @@
 
 <ion-content *ngIf="courrier && !action" class="content">
   <app-resultat-recherche [courrier]="courrier" (action)="onUpdate()"></app-resultat-recherche>
+  <app-fab></app-fab>
 </ion-content>
 
 <!-- message affiché si la recherche a échoué ou qu'aucune recherche n' a été effectué -->
@@ -19,6 +20,7 @@
       <h4 class="no-result ion-text-center">Aucun résultat</h4>
     </ion-col>
   </ion-row>
+  <app-fab></app-fab>
 </ion-content>
 
 <!-- actions possibles -->

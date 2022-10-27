@@ -1,3 +1,4 @@
+import { SharedModule } from './../../../shared/shared.module';
 import { ScanComponent } from './../../components/scan/scan.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,13 @@ import { MesScansPageRoutingModule } from './mes-scans-routing.module';
 import { MesScansPage } from './mes-scans.page';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, MesScansPageRoutingModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    MesScansPageRoutingModule,
+    SharedModule,
+  ],
   declarations: [MesScansPage, ScanComponent],
 })
 export class MesScansPageModule {}
