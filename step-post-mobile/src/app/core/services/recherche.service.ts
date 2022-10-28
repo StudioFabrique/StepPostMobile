@@ -16,7 +16,7 @@ export class RechercheService {
 
   getCourrier(bordereau: number): Observable<InfosCourrier> {
     return this.http
-      .get<any>(
+      .get<InfosCourrier>(
         `${environment.baseUrl}/facteur/courrier?bordereau=${bordereau}`
       )
       .pipe(

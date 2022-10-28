@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -7,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fab.component.scss'],
 })
 export class FabComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private nav: NavController) {}
 
   ngOnInit() {}
 
   onFabClick() {
-    this.router.navigateByUrl('/tabs/home');
+    this.nav.navigateBack('/tabs/home');
   }
 }

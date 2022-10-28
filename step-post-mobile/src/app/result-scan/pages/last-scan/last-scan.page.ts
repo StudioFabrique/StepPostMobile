@@ -1,3 +1,4 @@
+import { ResultatResolver } from './../../resolver/resultat.resolver';
 import { UpdateStatutService } from './../../../core/services/update-statut.service';
 import { RechercheService } from './../../../core/services/recherche.service';
 import { InfosCourrier } from './../../../core/models/infos-courrier.model';
@@ -22,16 +23,9 @@ export class LastScanPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.courrier = this.route.snapshot.data.courrier;
     if (!this.recherche.etats) {
       this.recherche.getStatutsList().subscribe();
-    }
-    const bordereau = this.route.snapshot.paramMap.get('bordereau');
-    if (bordereau) {
-      this.getCourrier(+bordereau);
-    } else {
-      console.log('oops');
-
-      this.courrier = this.recherche.courrier;
     }
   }
 

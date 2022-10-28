@@ -1,3 +1,4 @@
+import { ResultatResolver } from './../../resolver/resultat.resolver';
 import { UpdateButtonComponent } from '../../components/update-button/update-button.component';
 import { SignatureComponent } from '../../components/signature/signature.component';
 import { SharedModule } from './../../../shared/shared.module';
@@ -25,5 +26,6 @@ import { UpdateStatutComponent } from '../../components/update-statut/update-sta
     UpdateStatutComponent,
     SignatureComponent,
   ],
+  providers: [ResultatResolver],
 })
 export class LastScanPageModule {}

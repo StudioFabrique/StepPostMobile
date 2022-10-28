@@ -1,9 +1,9 @@
+import { NavController } from '@ionic/angular';
 import { RegexService } from 'src/app/core/services/regex.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +16,8 @@ export class LoginPage implements OnInit {
   constructor(
     private auth: AuthService,
     private formBuilder: FormBuilder,
-    private regex: RegexService,
-    private router: Router
+    private nav: NavController,
+    private regex: RegexService
   ) {}
 
   ngOnInit() {
@@ -52,7 +52,7 @@ export class LoginPage implements OnInit {
     if (response.token) {
       this.auth.token = response.token;
       this.auth.isLogged = true;
-      this.router.navigateByUrl('/');
+      this.nav.navigateForward('/');
     }
   }
 }

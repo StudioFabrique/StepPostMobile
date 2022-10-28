@@ -11,7 +11,6 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./scanner.page.scss'],
 })
 export class ScannerPage implements OnInit {
-  displaySaisie!: boolean;
   displayQRCode!: boolean;
   courrier!: InfosCourrier;
   action!: boolean;
@@ -20,7 +19,6 @@ export class ScannerPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private regex: RegexService,
-    private router: Router,
     private nav: NavController
   ) {}
 
@@ -41,21 +39,14 @@ export class ScannerPage implements OnInit {
 
   onAction() {
     this.action = true;
-    console.log(this.action);
   }
 
   onQRCode() {
     this.displayQRCode = true;
-    this.displaySaisie = false;
   }
 
   onResult(value: string) {
     this.displayQRCode = false;
-    this.router.navigate(['/tabs/last-scan', value]);
-  }
-
-  onSaisie() {
-    this.displayQRCode = false;
-    this.displaySaisie = true;
+    this.nav.navigateBack(['/tabs/last-scan', value]);
   }
 }

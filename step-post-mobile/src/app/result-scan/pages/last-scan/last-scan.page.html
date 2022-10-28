@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title *ngIf="courrier">Résultat Scan : {{courrier.bordereau}}</ion-title>
-    <ion-title *ngIf="!courrier">Résultat Scan</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Résultat Scan</ion-title>
   </ion-toolbar>
 </ion-header>
 

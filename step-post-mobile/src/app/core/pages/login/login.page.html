@@ -4,43 +4,45 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-grid class="ion-align-items-center ion-justify-content-center" fullscreen="true">
-  <ion-row lines="full">
-    <ion-col>
-      <form class="ion-padding" [formGroup]="form" (ngSubmit)="onSubmit()" text-center>
+<ion-content fullscreen="true">
+  <div class="ion-justify-content-center ion-align-items-center">
+    <ion-row lines="full">
+      <ion-col>
+        <form class="ion-padding" [formGroup]="form" (ngSubmit)="onSubmit()" text-center>
 
-        <div>
+          <div>
 
-          <!-- email -->
+            <!-- email -->
 
-          <ion-item lines="full">
-            <ion-label position="floating">Email :</ion-label>
-            <ion-input type="email" formControlName="email"></ion-input>
-          </ion-item>
+            <ion-item lines="full">
+              <ion-label position="floating">Email :</ion-label>
+              <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
 
-          <!-- password -->
+            <!-- password -->
 
-          <ion-item lines="full">
-            <ion-label position="floating">Mot de passe :</ion-label>
-            <ion-input type="password" formControlName="password"></ion-input>
-          </ion-item>
+            <ion-item lines="full">
+              <ion-label position="floating">Mot de passe :</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
 
-        </div>
+          </div>
 
-        <!-- boutoionns -->
+          <!-- boutoionns -->
 
-        <ion-row>
-          <ion-col class="ion-justify-content-center">
-            <ion-button size="default" type="submit" color="primary">SE CONNECTER
-            </ion-button>
-          </ion-col>
-        </ion-row>
+          <ion-row>
+            <ion-col class="ion-justify-content-center">
+              <ion-button size="default" type="submit" color="primary">SE CONNECTER
+              </ion-button>
+            </ion-col>
+          </ion-row>
 
-      </form>
-    </ion-col>
-  </ion-row>
+        </form>
+      </ion-col>
+    </ion-row>
 
-</ion-grid>
+  </div>
+</ion-content>
 
 <!-- footer -->
 

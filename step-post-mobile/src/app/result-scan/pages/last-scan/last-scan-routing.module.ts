@@ -1,3 +1,4 @@
+import { ResultatResolver } from './../../resolver/resultat.resolver';
 import { AuthGuard } from './../../../core/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -14,6 +15,7 @@ const routes: Routes = [
     path: ':bordereau',
     component: LastScanPage,
     canActivate: [AuthGuard],
+    resolve: { courrier: ResultatResolver },
   },
 ];
 

@@ -1,50 +1,60 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
     <ion-title>Scan</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<!-- menu -->
+<ion-content fullscreen="true">
 
-<ion-grid *ngIf="!action" class="ion-align-items-center ion-justify-content-center">
-  <ion-row *ngIf="!displayQRCode" class="ion-justify-content-center">
-    <ion-button (click)="onQRCode()">
-      <ion-label>QRCode</ion-label>
-    </ion-button>
-  </ion-row>
+  <div>
 
-  <ion-row *ngIf="!displayQRCode">
-    <ion-col class="ion-justify-content-center">
+    <!-- menu -->
 
-      <!-- formulaire -->
+    <ion-grid *ngIf="!action" class="ion-align-items-center ion-justify-content-center">
+      <ion-row *ngIf="!displayQRCode" class="ion-justify-content-center">
+        <ion-button (click)="onQRCode()">
+          <ion-label>QRCode</ion-label>
+        </ion-button>
+      </ion-row>
 
-      <form [formGroup]="form" (submit)="onSubmit()">
+      <ion-row *ngIf="!displayQRCode">
+        <ion-col class="ion-justify-content-center">
 
-        <!-- bordereau -->
+          <!-- formulaire -->
 
-        <ion-item lines="full">
-          <ion-label position="floating">Numéro de bordereau :</ion-label>
-          <ion-input type="number" formControlName="bordereau">
-          </ion-input>
-        </ion-item>
+          <form [formGroup]="form" (submit)="onSubmit()">
 
-        <!-- bouton -->
+            <!-- bordereau -->
 
-        <ion-row lines="full" class="ion-justify-content-center">
-          <ion-button type="submit" color="primary">
-            <ion-label>SAISIE MANUELLE</ion-label>
-          </ion-button>
-        </ion-row>
+            <ion-item lines="full">
+              <ion-label position="floating">Numéro de bordereau :</ion-label>
+              <ion-input type="number" formControlName="bordereau">
+              </ion-input>
+            </ion-item>
 
-      </form>
+            <!-- bouton -->
+
+            <ion-row lines="full" class="ion-justify-content-center">
+              <ion-button type="submit" color="primary">
+                <ion-label>SAISIE MANUELLE</ion-label>
+              </ion-button>
+            </ion-row>
+
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- QRCode -->
+
+  <ion-row>
+    <ion-col>
+      <app-qrcode *ngIf="displayQRCode" (resultat)="onResult($event)"></app-qrcode>
     </ion-col>
   </ion-row>
-</ion-grid>
 
-<!-- QRCode -->
-
-<ion-row>
-  <ion-col>
-    <app-qrcode *ngIf="displayQRCode" (resultat)="onResult($event)"></app-qrcode>
-  </ion-col>
-</ion-row>
+</ion-content>
