@@ -3,6 +3,7 @@ ion-grid {
     display: flex;
     flex-direction: column;
     padding: 3vh;
+    row-gap: 4vh;
 }
 
 ion-row {
@@ -18,7 +19,7 @@ ion-row {
             padding: 0 0 0 0;
             display: flex;
             flex-direction: column;
-            row-gap: 2vh;
+            row-gap: 4vh;
             width: 100%;
 
             >ion-item {
@@ -33,6 +34,10 @@ ion-button {
 }
 
 ion-content {
+    --ion-background-color: transparent;
+}
+
+div {
     display: flex;
-    --background-color: transparent;
+    min-height: 100%;
 }

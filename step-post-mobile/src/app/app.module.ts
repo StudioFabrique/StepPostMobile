@@ -10,7 +10,12 @@ import * as fr from '@angular/common/locales/fr';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, CoreModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    CoreModule,
+  ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'fr-FR' },

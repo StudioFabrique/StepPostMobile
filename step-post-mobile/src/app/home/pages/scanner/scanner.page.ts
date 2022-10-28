@@ -42,7 +42,7 @@ export class ScannerPage implements OnInit {
   }
 
   onQRCode() {
-    this.displayQRCode = true;
+    this.displayQRCode = !this.displayQRCode;
   }
 
   onResult(value: string) {

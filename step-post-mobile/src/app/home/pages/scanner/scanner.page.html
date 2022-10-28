@@ -1,15 +1,15 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/login"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Scan</ion-title>
+    <ion-fab *ngIf="displayQRCode" class="ion-padding" size="default" slot="start" (click)="onQRCode()">
+      <ion-icon name="stop-circle-outline"></ion-icon>
+    </ion-fab>
+    <ion-title slot="end" class="ion-padding">Scan</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
 
-  <div>
+  <div class="ion-justify-content-center ion-align-items-center">
 
     <!-- menu -->
 
