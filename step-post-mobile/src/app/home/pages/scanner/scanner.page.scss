@@ -7,13 +7,23 @@ ion-grid {
 
 ion-row {
     width: 100%;
+    display: flex;
+    padding: 0 0 0 0;
 
     >ion-col {
         width: 100%;
-        display: flex;
+        padding: 0 0 0 0;
 
         >form {
+            padding: 0 0 0 0;
+            display: flex;
+            flex-direction: column;
+            row-gap: 2vh;
             width: 100%;
+
+            >ion-item {
+                width: 100%;
+            }
         }
     }
 }
