@@ -1,0 +1,66 @@
+.screen {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: black;
+    opacity: .7;
+}
+
+.modal {
+    width: 90vw;
+    height: 40vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #45C5ED;
+    font-size: 1em;
+    z-index: 1000;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    >div:last-child {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+
+        >ion-button {
+            width: 40%;
+        }
+
+    }
+
+    >div {
+        >div:nth-child(2) {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    >.en-tete {
+        height: 75%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+
+p {
+    color: white;
+    margin: 0;
+}
+
+.etat {
+    font-size: 1.5em;
+    font-weight: bold;
+}

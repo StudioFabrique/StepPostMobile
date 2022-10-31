@@ -1,0 +1,13 @@
+ion-row {
+    width: 100vw;
+
+    >ion-col {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+
+        >ion-button {
+            width: 50%;
+        }
+    }
+}

@@ -6,7 +6,7 @@
     </ion-col>
 </ion-row>
 <ion-row>
-    <ion-col lines="full">
+    <ion-col lines="full" class="ion-justify-content-center ion-align-items-center">
         <ion-button expand="block" color="secondary" (click)="onRetour()">
             <ion-label>retour</ion-label>
         </ion-button>
@@ -16,3 +16,6 @@
 <ion-row *ngIf="signaturePad" class="ion-justify-content-center">
     <app-signature [courrierId]="courrier.id" (retourSignature)="onRetourSignature($event)"></app-signature>
 </ion-row>
+
+<app-modal-two-buttons *ngIf="showModal" [etat]="recherche.etats[newStatut - 1]" (reponse)="onResponse($event)">
+</app-modal-two-buttons>

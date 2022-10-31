@@ -18,10 +18,12 @@ export class UpdateStatutComponent implements OnInit {
   actionsList!: any[];
   signaturePad!: boolean;
   signature!: any;
+  showModal!: boolean;
+  newStatut!: number | null;
 
   constructor(
     private auth: AuthService,
-    private recherche: RechercheService,
+    public recherche: RechercheService,
     private mesScans: MesScansService,
     private updateService: UpdateStatutService
   ) {}
@@ -36,6 +38,14 @@ export class UpdateStatutComponent implements OnInit {
 
   onAction() {
     this.action.emit();
+  }
+
+  onResponse(value: boolean): void {
+    if (!value) {
+      this.showModal = false;
+    } else {
+      this.update(this.newStatut, this.courrier.bordereau);
+    }
   }
 
   onRetour() {
@@ -56,7 +66,8 @@ export class UpdateStatutComponent implements OnInit {
       this.signaturePad = true;
       return;
     } else {
-      this.update(value, this.courrier.bordereau);
+      this.newStatut = value;
+      this.showModal = true;
     }
   }
 
@@ -100,6 +111,7 @@ export class UpdateStatutComponent implements OnInit {
           error: this.auth.handleError.bind(this),
         });
     }
+    this.newStatut = null;
     this.updateMesScans(response.data);
     this.action.emit();
   }

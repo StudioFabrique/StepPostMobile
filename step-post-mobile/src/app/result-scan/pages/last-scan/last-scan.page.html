@@ -6,22 +6,26 @@
 
 <!-- afichage du résultat d'une recherche courrier -->
 
-<ion-content *ngIf="courrier && !action" class="content">
+<ion-content *ngIf="courrier" class="content">
   <app-resultat-recherche [courrier]="courrier" (action)="onUpdate()"></app-resultat-recherche>
-  <ion-row *ngIf="courrier && recherche.courrier.etat < 5">
+  <ion-row *ngIf="courrier && !action && recherche.courrier.etat < 5">
     <ion-col class="ion-justify-content-center">
       <ion-button color="primary" (click)="onUpdate()">
         <ion-label>MODIFIER STATUT</ion-label>
       </ion-button>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="showCancelLastActionBtn">
+  <ion-row *ngIf="!action && showCancelLastActionBtn">
     <ion-col class="ion-justify-content-center">
       <ion-button color="secondary" (click)="onCancelLastAction()">
         <ion-label>ANNULER STATUT</ion-label>
       </ion-button>
     </ion-col>
-  </ion-row>
+  </ion-row><!-- actions possibles -->
+
+  <app-update-statut class="update-statuts" *ngIf="action" [courrier]="courrier" (retour)="onRetour()"
+    (action)="onUpdate()">
+  </app-update-statut>
 </ion-content>
 
 <!-- message affiché si la recherche a échoué ou qu'aucune recherche n' a été effectué -->
@@ -32,13 +36,6 @@
       <h4 class="no-result ion-text-center">Aucun résultat</h4>
     </ion-col>
   </ion-row>
-</ion-content>
-
-<!-- actions possibles -->
-
-<ion-content class="update-statuts" *ngIf="action">
-  <app-update-statut [courrier]="courrier" (retour)="onRetour()" (action)="onUpdate()">
-  </app-update-statut>
 </ion-content>
 
 <app-fab></app-fab>
