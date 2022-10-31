@@ -1,8 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
     <ion-title>Résultat Scan</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,6 +12,13 @@
     <ion-col class="ion-justify-content-center">
       <ion-button color="primary" (click)="onUpdate()">
         <ion-label>MODIFIER STATUT</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="showCancelLastActionBtn">
+    <ion-col class="ion-justify-content-center">
+      <ion-button color="secondary" (click)="onCancelLastAction()">
+        <ion-label>ANNULER STATUT</ion-label>
       </ion-button>
     </ion-col>
   </ion-row>
@@ -33,6 +37,8 @@
 <!-- actions possibles -->
 
 <ion-content class="update-statuts" *ngIf="action">
-  <app-update-statut [courrier]="courrier" (action)="onUpdate()">
+  <app-update-statut [courrier]="courrier" (retour)="onRetour()" (action)="onUpdate()">
   </app-update-statut>
 </ion-content>
+
+<app-fab></app-fab>

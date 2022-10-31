@@ -12,6 +12,7 @@ import { RechercheService } from 'src/app/core/services/recherche.service';
 })
 export class UpdateStatutComponent implements OnInit {
   @Output() action = new EventEmitter<void>();
+  @Output() retour = new EventEmitter<void>();
   @Input() courrier!: InfosCourrier;
   etats!: any[];
   actionsList!: any[];
@@ -35,6 +36,10 @@ export class UpdateStatutComponent implements OnInit {
 
   onAction() {
     this.action.emit();
+  }
+
+  onRetour() {
+    this.retour.emit();
   }
 
   onSignature(): void {

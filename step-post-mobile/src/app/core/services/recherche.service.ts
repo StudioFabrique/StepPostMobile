@@ -21,7 +21,9 @@ export class RechercheService {
       )
       .pipe(
         tap((value) => {
-          this.courrier = value;
+          if (value) {
+            this.courrier = value;
+          }
         })
       );
   }

@@ -23,4 +23,10 @@ export class UpdateStatutService {
       signature,
     });
   }
+
+  deleteLastStatut(bordereau: number): Observable<string> {
+    return this.http.delete<string>(
+      `${environment.baseUrl}/facteur/statut?bordereau=${bordereau}`
+    );
+  }
 }

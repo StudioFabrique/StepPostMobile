@@ -15,7 +15,6 @@ const routes: Routes = [
     path: ':bordereau',
     component: LastScanPage,
     canActivate: [AuthGuard],
-    resolve: { courrier: ResultatResolver },
   },
 ];
 
