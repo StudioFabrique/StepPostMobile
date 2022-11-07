@@ -17,4 +17,40 @@ export class ScanComponent implements OnInit {
       this.recherche.getStatutsList().subscribe();
     }
   }
+
+  setCardBgColor(statut: number): string {
+    let color;
+    switch (statut) {
+      case 5:
+        color = '#24A640';
+        break;
+      case 6:
+        color = '#FF5E1A';
+        break;
+      case 7:
+        color = '#FFCC40';
+        break;
+      case 8:
+        color = '#FFCC40';
+        break;
+      default:
+        color = '#';
+    }
+    return color;
+  }
+
+  setTextColor(statut: number): string {
+    let color;
+    switch (statut) {
+      case 7:
+        color = '#140a82';
+        break;
+      case 8:
+        color = '#140a82';
+        break;
+      default:
+        color = '#fff';
+    }
+    return color;
+  }
 }

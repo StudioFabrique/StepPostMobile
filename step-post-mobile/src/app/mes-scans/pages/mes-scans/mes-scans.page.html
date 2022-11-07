@@ -1,10 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Mes Scans</ion-title>
+    <ion-title>
+      <p align="center">Mes Scans</p>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <app-scan *ngFor="let scan of mesScansService.mesScans" [scan]="scan"></app-scan>
-  <app-fab></app-fab>
+  <div>
+    <app-scan *ngFor="let scan of mesScansService.mesScans" [scan]="scan"></app-scan>
+  </div>
 </ion-content>
+<app-fab></app-fab>

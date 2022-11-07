@@ -40,10 +40,10 @@ export class RechercheService {
     let value;
     switch (type) {
       case 1:
-        value = 'Lettre Suivie';
+        value = 'Lettre RAR';
         break;
       case 0:
-        value = 'Lettre RAR';
+        value = 'Lettre Suivie';
         break;
       default:
         value = 'Colis';

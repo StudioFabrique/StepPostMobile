@@ -1,6 +1,6 @@
 $orange: #FF5E1A;
 
-ion-item {
+/* ion-item {
     >div {
         width: 100%;
         display: flex;
@@ -21,6 +21,85 @@ ion-item {
 
         >div:last-child {
             font-size: .75em;
+        }
+    }
+} */
+
+// new maquette
+
+div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    >ion-card {
+        margin: 8px;
+        background-color: #140a82;
+        width: 80%;
+        display: flex;
+        border-radius: 5px;
+        align-items: flex-end;
+
+        >article {
+            padding: 16px;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        >article:first-child {
+            row-gap: 24px;
+
+            >div {
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                >.bordereau {
+                    font-size: .8em;
+                }
+
+                >p {
+                    padding: 0;
+                    margin: 0;
+                    font-weight: bold;
+                    font-size: .9em;
+                }
+
+                >ion-text {
+
+                    >h2 {
+                        padding: 0;
+                        margin: 0;
+                        font-weight: 900;
+                    }
+                }
+            }
+
+        }
+    }
+
+}
+
+.etat {
+    justify-content: flex-end;
+
+    >div {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+
+        >h5 {
+            width: 100%;
+            white-space: nowrap;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            color: white;
+            font-weight: 900;
         }
     }
 }

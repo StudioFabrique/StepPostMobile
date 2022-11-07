@@ -37,6 +37,11 @@ export class MesScansService {
     }
   }
 
+  /**
+   * retire le dernier élément du tableau mesScans
+   * dans le cas ou l'utilisateur annule le dernier
+   * scan effectué
+   */
   deleteLastScan() {
     this.mesScans.pop();
   }
