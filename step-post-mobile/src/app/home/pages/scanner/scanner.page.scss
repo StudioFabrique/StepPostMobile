@@ -8,7 +8,6 @@ ion-grid {
 
 ion-row {
     width: 100%;
-    display: flex;
     padding: 0 0 0 0;
 
     >ion-col {
@@ -35,9 +34,9 @@ ion-button {
 
 ion-content {
     --ion-background-color: transparent;
-}
 
-div {
-    display: flex;
-    min-height: 100%;
+    >div {
+        display: flex;
+        min-height: 100%;
+    }
 }

@@ -16,10 +16,13 @@
     <!-- menu -->
 
     <ion-grid *ngIf="!action" class="ion-align-items-center ion-justify-content-center">
-      <ion-row *ngIf="!displayQRCode" class="ion-justify-content-center">
+      <ion-row class="qrcode" *ngIf="!displayQRCode" class="ion-justify-content-center">
+
+        <p>Appuyer pour scanner un QR Code</p>
         <ion-button (click)="onQRCode()">
           <ion-label>QRCode</ion-label>
         </ion-button>
+
       </ion-row>
 
       <ion-row *ngIf="!displayQRCode">
