@@ -7,6 +7,19 @@
 </ion-header>
 
 <ion-content>
+
+  <!-- formulaire -->
+
+  <ion-row>
+    <form [formGroup]="form" (submit)="onSubmit()">
+      <ion-item lines="full">
+        <ion-label position="floating">Entrez le numéro de bordereau</ion-label>
+        <ion-input type="number" formControlName="bordereau">
+        </ion-input>
+      </ion-item>
+    </form>
+  </ion-row>
+
   <div>
     <app-scan *ngFor="let scan of mesScansService.mesScans" [scan]="scan"></app-scan>
   </div>

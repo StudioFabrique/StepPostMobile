@@ -12,6 +12,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'recherche-scans',
+    loadChildren: () =>
+      import('./pages/recherche/recherche.module').then(
+        (m) => m.RecherchePageModule
+      ),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

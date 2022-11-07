@@ -3,4 +3,11 @@ ion-content {
         margin-top: 16px;
         margin-bottom: 32px;
     }
+
+    ion-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
 }

@@ -25,6 +25,7 @@
       <div>
         <p [ngStyle]="{color: setTextColor(scan.statutId)}">{{recherche.setType(scan.courrier.type) | titlecase}}</p>
         <p [ngStyle]="{color: setTextColor(scan.statutId)}">{{scan.date | date}}</p>
+        <p [ngStyle]="{color: setTextColor(scan.statutId)}">{{scan.date | date: "à hh:mm"}}</p>
       </div>
     </article>
     <article class="etat">

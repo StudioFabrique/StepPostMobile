@@ -1,4 +1,4 @@
-import { ScanComponent } from '../../components/scan/scan.component';
+import { ScanComponent } from '../../../shared/components/scan/scan.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,6 +18,6 @@ import { MesScansPage } from './mes-scans.page';
     MesScansPageRoutingModule,
     SharedModule,
   ],
-  declarations: [MesScansPage, ScanComponent],
+  declarations: [MesScansPage],
 })
 export class MesScansPageModule {}
