@@ -37,6 +37,10 @@ export class MesScansService {
     }
   }
 
+  deleteLastScan() {
+    this.mesScans.pop();
+  }
+
   private addScan(scan: MesScans) {
     this.mesScans = [...this.mesScans, scan];
   }

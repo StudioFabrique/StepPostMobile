@@ -1,5 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { ResultatResolver } from './../../resolver/resultat.resolver';
+import { MesScansService } from './../../../core/services/mes-scans.service';
 import { UpdateStatutService } from './../../../core/services/update-statut.service';
 import { RechercheService } from './../../../core/services/recherche.service';
 import { InfosCourrier } from './../../../core/models/infos-courrier.model';
@@ -20,6 +19,7 @@ export class LastScanPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService,
+    private mesScansServices: MesScansService,
     public recherche: RechercheService,
     public updateService: UpdateStatutService
   ) {}
@@ -80,13 +80,24 @@ export class LastScanPage implements OnInit {
     });
   }
 
+  /**
+   * Gestion de la réponse serveur
+   *
+   * @param response InfosCourrier
+   */
   private handleGetCourrierResponse(response: InfosCourrier) {
     this.courrier = response;
   }
 
+  /**
+   * Gestion de la réponse serveur
+   *
+   * @param response String
+   */
   private handleDeleteStatutResponse(response: string): void {
     console.log(response);
     this.showCancelLastActionBtn = false;
     this.getCourrier(this.courrier.bordereau);
+    this.mesScansServices.deleteLastScan();
   }
 }
