@@ -6,21 +6,26 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
 
   <!-- formulaire -->
 
   <ion-row>
-    <form [formGroup]="form" (submit)="onSubmit()">
-      <ion-item lines="full">
-        <ion-label position="floating">Entrez le numéro de bordereau</ion-label>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-label position="floating">Entrez le n° de bordereau</ion-label>
         <ion-input type="number" formControlName="bordereau">
         </ion-input>
+        <ion-button type="submit" slot="end" shape="round" size="small">
+          <ion-icon color="tertiary" name="arrow-forward-circle-outline"></ion-icon>
+        </ion-button>
       </ion-item>
     </form>
   </ion-row>
 
-  <div>
+  <div *ngIf="mesScansService.isLoading" class="loader"></div>
+  <div *ngIf="!mesScansService.isLoading">
     <app-scan *ngFor="let scan of mesScansService.mesScans" [scan]="scan"></app-scan>
   </div>
 </ion-content>

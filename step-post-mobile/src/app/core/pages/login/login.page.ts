@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginPage implements OnInit {
   form!: FormGroup;
+  isLoading!: boolean;
 
   constructor(
     private auth: AuthService,
@@ -35,6 +36,7 @@ export class LoginPage implements OnInit {
 
   onSubmit() {
     /* if (this.form.valid) */ {
+      this.isLoading = true;
       this.auth.login('toto@tata.fr', '1234').subscribe({
         next: this.handleResponse.bind(this),
         error: this.handleError.bind(this),
@@ -46,9 +48,11 @@ export class LoginPage implements OnInit {
     if (error instanceof HttpErrorResponse) {
       console.log(error);
     }
+    this.isLoading = false;
   }
 
   handleResponse(response: any) {
+    this.isLoading = false;
     if (response.token) {
       this.auth.token = response.token;
       this.auth.isLogged = true;

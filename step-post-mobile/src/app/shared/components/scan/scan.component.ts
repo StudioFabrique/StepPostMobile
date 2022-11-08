@@ -12,11 +12,7 @@ export class ScanComponent implements OnInit {
 
   constructor(public recherche: RechercheService) {}
 
-  ngOnInit() {
-    if (!this.recherche.etats) {
-      this.recherche.getStatutsList().subscribe();
-    }
-  }
+  ngOnInit() {}
 
   setCardBgColor(statut: number): string {
     let color;

@@ -1,5 +1,4 @@
 import { AuthService } from './auth.service';
-import { tap } from 'rxjs/operators';
 import { environment } from './../../../environments/environment';
 import { Observable } from 'rxjs';
 import { MesScans } from './../models/mes-scans.model';
@@ -11,30 +10,26 @@ import { Injectable } from '@angular/core';
 })
 export class MesScansService {
   mesScans!: MesScans[];
+  isLoading!: boolean;
 
   constructor(private auth: AuthService, private http: HttpClient) {}
 
-  /**
-   * récupère la liste des scans du jour effectué par l'utilisateur connecté
-   *
-   * @returns observable<MesScans[]>
-   */
-
   getScans(): void {
-    this.handleScans().subscribe({
-      next: this.handleResponse.bind(this),
-      error: this.auth.handleError.bind(this),
-    });
+    this.getData();
   }
 
   updateMesScans(scan: MesScans) {
     if (!this.mesScans) {
-      this.handleScans().subscribe((response: MesScans[]) => {
-        this.mesScans = response;
-      });
+      this.getData();
     } else {
       this.addScan(scan);
     }
+  }
+
+  getScanByBordereau(bordereau: number): Observable<any> {
+    return this.http.get(
+      `${environment.baseUrl}/facteur/recherche-scans?bordereau=${bordereau}`
+    );
   }
 
   /**
@@ -46,17 +41,29 @@ export class MesScansService {
     this.mesScans.pop();
   }
 
+  private getData(): void {
+    this.isLoading = true;
+    this.handleScans().subscribe({
+      next: this.handleResponse.bind(this),
+      error: this.handleError.bind(this),
+    });
+  }
+
   private addScan(scan: MesScans) {
     this.mesScans = [...this.mesScans, scan];
   }
 
   private handleScans(): Observable<MesScans[]> {
-    return this.http.get<MesScans[]>(
-      `${environment.baseUrl}/facteur/mes-scans`
-    );
+    return this.http.get<any[]>(`${environment.baseUrl}/facteur/mes-scans`);
   }
 
   private handleResponse(response: MesScans[]) {
     this.mesScans = response;
+    this.isLoading = false;
+  }
+
+  private handleError(error: any): void {
+    this.isLoading = false;
+    this.auth.logout();
   }
 }

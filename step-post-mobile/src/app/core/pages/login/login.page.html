@@ -10,7 +10,8 @@
   <div class="ion-justify-content-center ion-align-items-center">
     <ion-row lines="full">
       <ion-col>
-        <form class="ion-padding" [formGroup]="form" (ngSubmit)="onSubmit()" text-center>
+        <div *ngIf="isLoading" class="loader"></div>
+        <form *ngIf="!isLoading" class="ion-padding" [formGroup]="form" (ngSubmit)="onSubmit()" text-center>
 
           <div>
 
@@ -30,7 +31,7 @@
 
           </div>
 
-          <!-- boutoionns -->
+          <!-- boutons -->
 
           <ion-row>
             <ion-col class="ion-justify-content-center">

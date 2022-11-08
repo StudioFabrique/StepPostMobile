@@ -1,3 +1,4 @@
+import { RechercheService } from 'src/app/core/services/recherche.service';
 import { NavController } from '@ionic/angular';
 import { RegexService } from 'src/app/core/services/regex.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,7 +18,8 @@ export class MesScansPage implements OnInit {
     public mesScansService: MesScansService,
     private formBuilder: FormBuilder,
     private regex: RegexService,
-    private nav: NavController
+    private nav: NavController,
+    private recherche: RechercheService
   ) {}
 
   /**
@@ -26,6 +28,9 @@ export class MesScansPage implements OnInit {
    */
 
   ngOnInit() {
+    if (!this.recherche.etats) {
+      this.recherche.getStatutsList().subscribe();
+    }
     if (!this.mesScansService.mesScans) {
       this.mesScansService.getScans();
     }
@@ -37,5 +42,13 @@ export class MesScansPage implements OnInit {
     });
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    if (this.form.valid) {
+      this.nav.navigateForward([
+        '/tabs/mes-scans/recherche-scans/',
+        this.form.value.bordereau,
+      ]);
+    }
+    this.form.reset();
+  }
 }

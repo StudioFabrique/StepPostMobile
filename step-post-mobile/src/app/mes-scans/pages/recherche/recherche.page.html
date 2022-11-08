@@ -1,14 +1,15 @@
 <ion-header>
   <ion-toolbar>
+    <ion-back-button slot="start" text="" icon="arrow-back-outline"></ion-back-button>
     <ion-title>
-      <p align="center">Recherche : {{toto}}</p>
+      <p align="center">Recherche : {{bordereau}}</p>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div>
-    <!--  <app-scan *ngFor="let scan from " [scan]="scan"></app-scan> -->
+    <app-scan *ngFor="let scan of mesScans" [scan]="scan"></app-scan>
   </div>
 </ion-content>
 
