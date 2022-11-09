@@ -67,3 +67,15 @@ ion-label {
         transform: rotate(360deg);
     }
 }
+
+ion-header {
+    >ion-toolbar {
+        >ion-title {
+            background-color: $blue;
+
+            >p {
+                color: white;
+            }
+        }
+    }
+}
