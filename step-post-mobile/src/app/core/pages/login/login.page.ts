@@ -56,7 +56,8 @@ export class LoginPage implements OnInit {
     if (response.token) {
       this.auth.token = response.token;
       this.auth.isLogged = true;
-      this.nav.navigateForward('/');
+      this.nav.navigateRoot('/');
+      this.nav.pop();
     }
   }
 }
