@@ -29,7 +29,7 @@ export class LoginPage implements OnInit {
       ],
       password: [
         null,
-        [Validators.required, Validators.pattern(this.regex.passwordRegex)],
+        [Validators.required, Validators.pattern(this.regex.numberRegex)],
       ],
     });
   }
@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
   onSubmit() {
     /*if (this.form.valid)*/ {
       this.isLoading = true;
-      this.auth.login('toto@tata.fr', 'Abcd@12345').subscribe({
+      this.auth.login('toto@tata.fr', '1234').subscribe({
         next: this.handleResponse.bind(this),
         error: this.handleError.bind(this),
       });
