@@ -36,6 +36,14 @@ ion-button {
     font-weight: bold;
 }
 
+ion-back-button {
+    background-color: $blue;
+}
+
+ion-toolbar {
+    margin: 0;
+}
+
 ion-label {
     color: white;
 }
