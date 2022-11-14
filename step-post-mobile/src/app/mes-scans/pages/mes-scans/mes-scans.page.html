@@ -24,6 +24,11 @@
     </form>
   </ion-row>
 
+  <div class="no-data" *ngIf="mesScansService.mesScans.length === 0">
+    <p>Aucun Résultats</p>
+    <img src="assets/img/404.png" alt="erreur 404">
+  </div>
+
   <div *ngIf="mesScansService.isLoading" class="loader"></div>
   <div *ngIf="!mesScansService.isLoading">
     <app-scan *ngFor="let scan of mesScansService.mesScans" [scan]="scan"></app-scan>

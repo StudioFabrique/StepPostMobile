@@ -32,12 +32,11 @@
 
 <!-- message affiché si la recherche a échoué ou qu'aucune recherche n' a été effectué -->
 
-<ion-content *ngIf="!courrier">
-  <ion-row>
-    <ion-col>
-      <h4 class="no-result ion-text-center">Aucun résultat</h4>
-    </ion-col>
-  </ion-row>
+<ion-content class="no-data" *ngIf="!courrier">
+  <div class="no-data">
+    <p>Aucun Résultats</p>
+    <img src="assets/img/404.png" alt="erreur 404">
+  </div>
 </ion-content>
 
 <app-fab></app-fab>
