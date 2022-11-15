@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { MesScans } from './../../../core/models/mes-scans.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MesScansService } from './../../../core/services/mes-scans.service';
@@ -13,6 +14,7 @@ export class RecherchePage implements OnInit {
   bordereau!: number;
   courrier!: any;
   mesScans!: MesScans[];
+  noData!: boolean;
 
   constructor(
     private auth: AuthService,
@@ -24,7 +26,7 @@ export class RecherchePage implements OnInit {
     this.bordereau = +this.route.snapshot.paramMap.get('bordereau');
     this.mesScansService.getScanByBordereau(this.bordereau).subscribe({
       next: this.handleResponse.bind(this),
-      error: this.auth.handleError.bind(this),
+      error: this.handleError.bind(this),
     });
   }
 
@@ -38,5 +40,16 @@ export class RecherchePage implements OnInit {
         type: response.type,
       },
     }));
+    this.noData = false;
+  }
+
+  private handleError(error: any): void {
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === 401 || error.status === 403) {
+        this.auth.logout();
+      } else if (error.status === 404) {
+        this.noData = true;
+      }
+    }
   }
 }

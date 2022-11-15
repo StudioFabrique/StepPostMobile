@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { MesScansService } from './../../../core/services/mes-scans.service';
 import { UpdateStatutService } from './../../../core/services/update-statut.service';
 import { RechercheService } from './../../../core/services/recherche.service';
@@ -15,6 +16,7 @@ export class LastScanPage implements OnInit {
   courrier!: InfosCourrier;
   action!: boolean;
   showCancelLastActionBtn!: boolean;
+  loader!: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,9 +27,11 @@ export class LastScanPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loader = true;
     if (!this.route.snapshot.paramMap.get('bordereau')) {
       if (this.recherche.courrier) {
         this.courrier = this.recherche.courrier;
+        this.loader = false;
       }
     } else {
       this.getCourrier(+this.route.snapshot.paramMap.get('bordereau'));
@@ -76,7 +80,7 @@ export class LastScanPage implements OnInit {
   private getCourrier(bordereau: number) {
     this.recherche.getCourrier(bordereau).subscribe({
       next: this.handleGetCourrierResponse.bind(this),
-      error: this.auth.handleError.bind(this),
+      error: this.handleError.bind(this),
     });
   }
 
@@ -87,6 +91,17 @@ export class LastScanPage implements OnInit {
    */
   private handleGetCourrierResponse(response: InfosCourrier) {
     this.courrier = response;
+    this.loader = false;
+  }
+
+  private handleError(error: any): void {
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === 401 || error.status === 403) {
+        this.auth.logout();
+      } else if (error.status === 404) {
+        this.loader = false;
+      }
+    }
   }
 
   /**
