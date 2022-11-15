@@ -15,7 +15,7 @@ export class ScanComponent implements OnInit {
   ngOnInit() {}
 
   setCardBgColor(statut: number): string {
-    let color;
+    let color: string;
     switch (statut) {
       case 5:
         color = '#24A640';

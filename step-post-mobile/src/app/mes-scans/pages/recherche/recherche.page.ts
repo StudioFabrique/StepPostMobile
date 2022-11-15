@@ -31,7 +31,7 @@ export class RecherchePage implements OnInit {
   private handleResponse(response: any): void {
     this.mesScans = response.sc.map((item) => ({
       date: item.date,
-      statutId: item.statut_id,
+      s: { statutCode: item.s.statutCode },
       courrier: {
         id: response.id,
         bordereau: response.bordereau,

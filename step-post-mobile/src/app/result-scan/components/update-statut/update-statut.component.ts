@@ -122,7 +122,7 @@ export class UpdateStatutComponent implements OnInit {
   private updateMesScans(value: any) {
     const scan = {
       date: value.date,
-      statutId: value.statutId,
+      s: { statutCode: value.statutCode },
       courrier: {
         id: value.id,
         bordereau: value.bordereau,
