@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class RechercheService {
   courrier!: InfosCourrier;
-  etats!: string[];
+  etats!: any[];
 
   constructor(private http: HttpClient) {}
 
@@ -31,9 +31,17 @@ export class RechercheService {
   getStatutsList(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.baseUrl}/facteur/statuts`).pipe(
       tap((value) => {
-        this.etats = value.map((elem) => elem.etat);
+        this.etats = value;
+        console.table(this.etats);
       })
     );
+  }
+
+  setEtat(value: number): string {
+    const statut: any = this.etats.find(
+      (item: any) => item.statutCode === value
+    );
+    return statut.etat;
   }
 
   setType(type: number): string {

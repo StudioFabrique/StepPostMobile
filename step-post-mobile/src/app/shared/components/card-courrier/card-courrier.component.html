@@ -27,7 +27,7 @@
       {{courrier.date | date: 'dd/MM/YYYY'}} {{courrier.date | date: 'à hh:mm'}}
     </ion-col>
     <ion-col *ngIf="recherche.etats" class="ion-text-center">
-      {{recherche.etats[+courrier.etat - 1] | uppercase}}
+      {{recherche.setEtat(courrier.etat) | uppercase}}
     </ion-col>
   </ion-row>
 </ion-grid>

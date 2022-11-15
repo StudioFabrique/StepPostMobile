@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
   onSubmit() {
     /* if (this.form.valid) */ {
       this.isLoading = true;
-      this.auth.login('test@test.fr', '1234').subscribe({
+      this.auth.login('toto@tata.fr', '1234').subscribe({
         next: this.handleResponse.bind(this),
         error: this.handleError.bind(this),
       });

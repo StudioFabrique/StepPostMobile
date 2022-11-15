@@ -14,7 +14,6 @@ export class UpdateStatutComponent implements OnInit {
   @Output() action = new EventEmitter<void>();
   @Output() retour = new EventEmitter<void>();
   @Input() courrier!: InfosCourrier;
-  etats!: any[];
   actionsList!: any[];
   signaturePad!: boolean;
   signature!: any;
@@ -33,6 +32,7 @@ export class UpdateStatutComponent implements OnInit {
       this.getEtats();
     } else {
       this.actionsList = this.setActionsList(this.recherche.etats);
+      console.table(this.actionsList);
     }
   }
 
@@ -79,8 +79,7 @@ export class UpdateStatutComponent implements OnInit {
   }
 
   private handleGetEtatsResponse(response: any[]) {
-    this.etats = response;
-    this.actionsList = this.setActionsList(this.etats);
+    this.actionsList = this.setActionsList(this.recherche.etats);
   }
 
   private getEtats() {
@@ -93,10 +92,10 @@ export class UpdateStatutComponent implements OnInit {
   private setActionsList(etats: any[]): any[] {
     let tab = [];
     if (this.courrier.etat === 1) {
-      tab = [...tab, { id: 2, etat: etats[1] }];
+      tab = [...tab, { id: 2, etat: this.recherche.setEtat(2) }];
     } else {
-      for (let i = 3; i < etats.length + 1; i++) {
-        tab = [...tab, { id: i, etat: etats[i - 1] }];
+      for (let i = 3; i < this.recherche.etats.length + 1; i++) {
+        tab = [...tab, { id: i, etat: this.recherche.setEtat(i) }];
       }
     }
     return tab;
