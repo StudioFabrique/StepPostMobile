@@ -110,6 +110,8 @@ export class UpdateStatutComponent implements OnInit {
           error: this.auth.handleError.bind(this),
         });
     }
+    console.log('response', response);
+
     this.newStatut = null;
     this.updateMesScans(response.data);
     this.action.emit();
@@ -120,15 +122,18 @@ export class UpdateStatutComponent implements OnInit {
   }
 
   private updateMesScans(value: any) {
+    console.log('value', value);
+
     const scan = {
       date: value.date,
-      s: { statutCode: value.statutCode },
+      s: { statutCode: value.s.statutCode },
       courrier: {
         id: value.id,
         bordereau: value.bordereau,
         type: this.courrier.type,
       },
     };
+    console.log('scan ', scan);
     this.mesScans.updateMesScans(scan);
   }
 }

@@ -50,7 +50,7 @@ export class MesScansService {
   }
 
   private addScan(scan: MesScans) {
-    this.mesScans = [...this.mesScans, scan];
+    this.mesScans = [scan, ...this.mesScans];
   }
 
   private handleScans(): Observable<MesScans[]> {

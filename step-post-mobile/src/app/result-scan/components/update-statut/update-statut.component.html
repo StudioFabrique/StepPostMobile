@@ -17,5 +17,5 @@
     <app-signature [courrierId]="courrier.id" (retourSignature)="onRetourSignature($event)"></app-signature>
 </ion-row>
 
-<app-modal-two-buttons *ngIf="showModal" [etat]="recherche.etats[newStatut - 1]" (reponse)="onResponse($event)">
+<app-modal-two-buttons *ngIf="showModal" [etat]="recherche.setEtat(newStatut)" (reponse)="onResponse($event)">
 </app-modal-two-buttons>
