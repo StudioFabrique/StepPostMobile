@@ -44,7 +44,6 @@ export class LastScanPage implements OnInit {
   onCancelLastAction(): void {
     this.updateService.deleteLastStatut(this.courrier.bordereau).subscribe({
       next: this.handleDeleteStatutResponse.bind(this),
-      error: this.auth.handleError.bind(this),
     });
   }
 
@@ -96,9 +95,7 @@ export class LastScanPage implements OnInit {
 
   private handleError(error: any): void {
     if (error instanceof HttpErrorResponse) {
-      if (error.status === 401 || error.status === 403) {
-        this.auth.logout();
-      } else if (error.status === 404) {
+      if (error.status === 404) {
         this.loader = false;
       }
     }
@@ -110,7 +107,6 @@ export class LastScanPage implements OnInit {
    * @param response String
    */
   private handleDeleteStatutResponse(response: string): void {
-    console.log(response);
     this.showCancelLastActionBtn = false;
     this.getCourrier(this.courrier.bordereau);
     this.mesScansServices.deleteLastScan();

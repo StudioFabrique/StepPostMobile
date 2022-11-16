@@ -39,16 +39,8 @@ export class LoginPage implements OnInit {
       this.isLoading = true;
       this.auth.login('toto@tata.fr', '1234').subscribe({
         next: this.handleResponse.bind(this),
-        error: this.handleError.bind(this),
       });
     }
-  }
-
-  handleError(error: any) {
-    if (error instanceof HttpErrorResponse) {
-      console.log(error);
-    }
-    this.isLoading = false;
   }
 
   handleResponse(response: any) {

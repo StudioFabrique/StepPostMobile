@@ -74,7 +74,6 @@ export class UpdateStatutComponent implements OnInit {
   private update(etat: number, bordereau: number): void {
     this.updateService.updateStatut(etat, bordereau).subscribe({
       next: this.handleUpdateStatutResponse.bind(this),
-      error: this.auth.handleError.bind(this),
     });
   }
 
@@ -85,7 +84,6 @@ export class UpdateStatutComponent implements OnInit {
   private getEtats() {
     this.recherche.getStatutsList().subscribe({
       next: this.handleGetEtatsResponse.bind(this),
-      error: this.auth.handleError.bind(this),
     });
   }
 
@@ -107,23 +105,17 @@ export class UpdateStatutComponent implements OnInit {
         .updateSignature(this.signature, this.courrier.id)
         .subscribe({
           next: this.handleUpdateSignatureResponse.bind(this),
-          error: this.auth.handleError.bind(this),
         });
     }
-    console.log('response', response);
 
     this.newStatut = null;
     this.updateMesScans(response.data);
     this.action.emit();
   }
 
-  private handleUpdateSignatureResponse(response: any) {
-    console.log(response);
-  }
+  private handleUpdateSignatureResponse(response: any) {}
 
   private updateMesScans(value: any) {
-    console.log('value', value);
-
     const scan = {
       date: value.date,
       s: { statutCode: value.s.statutCode },
@@ -133,7 +125,6 @@ export class UpdateStatutComponent implements OnInit {
         type: this.courrier.type,
       },
     };
-    console.log('scan ', scan);
     this.mesScans.updateMesScans(scan);
   }
 }

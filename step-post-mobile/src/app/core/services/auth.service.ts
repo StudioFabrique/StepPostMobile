@@ -29,12 +29,4 @@ export class AuthService {
   getToken(): string {
     return this.token;
   }
-
-  handleError(error: any) {
-    if (error instanceof HttpErrorResponse) {
-      if (error.status === 401 || error.status === 403) {
-        this.logout();
-      }
-    }
-  }
 }
