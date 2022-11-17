@@ -3,6 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 //  backend déployé sur Heroku
+
+//const remoteUrl = 'https://step-post-nodejs.herokuapp.com/api';
+
+//  serveur test
+
 const remoteUrl = 'https://step-post-nodejs.herokuapp.com/api';
 
 //  backend localhost

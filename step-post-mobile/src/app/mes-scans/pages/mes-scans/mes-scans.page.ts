@@ -19,7 +19,7 @@ export class MesScansPage implements OnInit {
     private formBuilder: FormBuilder,
     private regex: RegexService,
     private nav: NavController,
-    private recherche: RechercheService
+    public recherche: RechercheService
   ) {}
 
   /**
@@ -30,6 +30,9 @@ export class MesScansPage implements OnInit {
   ngOnInit() {
     if (!this.recherche.etats) {
       this.recherche.getStatutsList().subscribe();
+    }
+    if (!this.recherche.noResult) {
+      this.recherche.noResults().subscribe();
     }
     if (!this.mesScansService.mesScans) {
       this.mesScansService.getScans();

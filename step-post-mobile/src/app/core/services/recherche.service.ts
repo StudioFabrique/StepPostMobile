@@ -11,8 +11,15 @@ import { environment } from 'src/environments/environment';
 export class RechercheService {
   courrier!: InfosCourrier;
   etats!: any[];
+  noResult!: string;
 
   constructor(private http: HttpClient) {}
+
+  noResults(): Observable<any> {
+    return this.http
+      .get<any>(`https://api.npoint.io/3ddbced855639f012e06`)
+      .pipe(tap((value: any) => (this.noResult = value.noResults)));
+  }
 
   getCourrier(bordereau: number): Observable<InfosCourrier> {
     return this.http

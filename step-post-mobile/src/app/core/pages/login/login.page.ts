@@ -1,4 +1,4 @@
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { RegexService } from 'src/app/core/services/regex.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,7 +18,8 @@ export class LoginPage implements OnInit {
     private auth: AuthService,
     private formBuilder: FormBuilder,
     private nav: NavController,
-    private regex: RegexService
+    private regex: RegexService,
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit() {
@@ -46,10 +47,20 @@ export class LoginPage implements OnInit {
   handleResponse(response: any) {
     this.isLoading = false;
     if (response.token) {
+      this.showLoggedToast(response.username);
       this.auth.token = response.token;
       this.auth.isLogged = true;
       this.nav.navigateRoot('/');
       this.nav.pop();
     }
+  }
+
+  showLoggedToast(name: string) {
+    this.toastCtrl
+      .create({
+        message: `Bonjour ${name.toUpperCase()}`,
+        cssClass: 'toast',
+      })
+      .then((item) => item.present());
   }
 }

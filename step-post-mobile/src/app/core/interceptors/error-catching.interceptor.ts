@@ -1,6 +1,6 @@
 import { AuthService } from './../services/auth.service';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   HttpErrorResponse,
   HttpEvent,

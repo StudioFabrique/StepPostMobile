@@ -39,6 +39,9 @@ export class LastScanPage implements OnInit {
     if (!this.recherche.etats) {
       this.recherche.getStatutsList().subscribe();
     }
+    if (!this.recherche.noResult) {
+      this.recherche.noResults().subscribe();
+    }
   }
 
   onCancelLastAction(): void {

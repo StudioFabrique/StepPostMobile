@@ -38,7 +38,7 @@ export class MesScansService {
    * scan effectué
    */
   deleteLastScan() {
-    this.mesScans.pop();
+    this.mesScans.shift();
   }
 
   private getData(): void {
