@@ -47,20 +47,10 @@ export class LoginPage implements OnInit {
   handleResponse(response: any) {
     this.isLoading = false;
     if (response.token) {
-      this.showLoggedToast(response.username);
       this.auth.token = response.token;
       this.auth.isLogged = true;
       this.nav.navigateRoot('/');
       this.nav.pop();
     }
-  }
-
-  showLoggedToast(name: string) {
-    this.toastCtrl
-      .create({
-        message: `Bonjour ${name.toUpperCase()}`,
-        cssClass: 'toast',
-      })
-      .then((item) => item.present());
   }
 }
