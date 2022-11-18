@@ -31,7 +31,6 @@ export class LastScanPage implements OnInit {
     if (!this.route.snapshot.paramMap.get('bordereau')) {
       if (this.recherche.courrier) {
         this.courrier = this.recherche.courrier;
-        this.loader = false;
       }
     } else {
       this.getCourrier(+this.route.snapshot.paramMap.get('bordereau'));
@@ -42,6 +41,7 @@ export class LastScanPage implements OnInit {
     if (!this.recherche.noResult) {
       this.recherche.noResults().subscribe();
     }
+    this.loader = false;
   }
 
   onCancelLastAction(): void {
@@ -80,6 +80,7 @@ export class LastScanPage implements OnInit {
    * @param bordereau number : numéro de courrier à récupérer dans la bdd
    */
   private getCourrier(bordereau: number) {
+    this.loader = true;
     this.recherche.getCourrier(bordereau).subscribe({
       next: this.handleGetCourrierResponse.bind(this),
       error: this.handleError.bind(this),
