@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
       this.auth.isLogged = true;
       this.nav.navigateRoot('/');
       this.nav.pop();
-      this.toaster.toast(`Bienvenue ${response.username}`, 2);
+      this.toaster.loginSuccess(response.username);
     }
   }
 
@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
     this.isLoading = false;
     if (error instanceof HttpErrorResponse) {
       if (error.status === 401) {
-        this.toaster.toast('Identifiants incorrects', 1);
+        this.toaster.badCredentials();
       }
     }
   }
