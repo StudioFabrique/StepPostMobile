@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_post/repositories/data_repository.dart';
-import 'package:flutter_post/utils/constantes.dart';
-import 'package:flutter_post/views/screens/qrcode_scan.dart';
 import 'package:provider/provider.dart';
+import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
+import 'package:step_post_mobile_flutter/utils/constantes.dart';
+import 'package:step_post_mobile_flutter/views/screens/qrcode_scan.dart';
 
 class Scanner extends StatefulWidget {
   const Scanner({super.key});
