@@ -6,6 +6,7 @@ import 'package:step_post_mobile_flutter/services/formatter_service.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/screens/update_statut.dart';
 import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 import 'package:step_post_mobile_flutter/views/widgets/mail_card.dart';
 import 'package:step_post_mobile_flutter/views/widgets/search_form.dart';
 
@@ -78,23 +79,12 @@ class _CurrentScanState extends State<CurrentScan> {
                           height: 24,
                         ),
                         dataProvider.courrier.etat < 5
-                            ? ElevatedButton(
-                                onPressed: () {
+                            ? CustomButton(
+                                label: "Modifier le Statut",
+                                callback: () {
                                   Navigator.of(context).push(_createRoute());
                                 },
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: kBlue,
-                                    elevation: 10,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30))),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(16),
-                                  child: Text(
-                                    'MODIFIER LE STATUT',
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                ))
+                              )
                             : const CardText(
                                 label: 'Aucune action disponible',
                                 size: 20,
@@ -104,33 +94,19 @@ class _CurrentScanState extends State<CurrentScan> {
                           height: 24,
                         ),
                         hasBeenUpdated
-                            ? ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: kOrange,
-                                    elevation: 10,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30))),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(16),
-                                  child: Text(
-                                    'ANNULER STATUT',
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                ))
+                            ? CustomButton(
+                                label: "Annuler Statut",
+                                color: kOrange,
+                                callback: () {})
                             : const SizedBox()
                       ])
                     : Container(
-                        margin: const EdgeInsets.only(top: 200),
-                        child: Text(
-                          "Aucun Résultat",
-                          style: TextStyle(
-                              color: kBlue,
-                              fontSize: 35,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      )
+                        margin: const EdgeInsets.only(top: 100),
+                        child: Image.asset(
+                          "assets/images/203_1_1.png",
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.cover,
+                        )),
               ]);
   }
 

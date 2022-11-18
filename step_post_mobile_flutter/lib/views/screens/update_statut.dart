@@ -4,6 +4,7 @@ import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/screens/signature_pad.dart';
 import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 import 'package:step_post_mobile_flutter/views/widgets/statut_button.dart';
 
 class UpdateStatut extends StatefulWidget {
@@ -150,11 +151,11 @@ class _UpdateStatutState extends State<UpdateStatut> {
                         )
                       : Padding(
                           padding: const EdgeInsets.all(16),
-                          child: StatutButton(
-                              label: dataProvider.getEtat(index),
-                              callback: updateStatut,
-                              value: index),
-                        );
+                          child: CustomButton(
+                            label: dataProvider.getEtat(index),
+                            callback: updateStatut,
+                            value: index,
+                          ));
             },
           ),
         ),

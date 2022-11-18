@@ -82,9 +82,9 @@ class _LoginFormState extends State<LoginForm> {
                       int? code = await dataProvider.login(
                           username: "toto@tata.fr", password: "1234");
                       if (code == 200) {
-                        toast(code: true, name: dataProvider.name);
-                      } else if (code == 401) {
-                        toast(code: false);
+                        toast(code: code!, name: dataProvider.name);
+                      } else {
+                        toast(code: code!);
                       }
                       //  }
                     },
@@ -106,27 +106,37 @@ class _LoginFormState extends State<LoginForm> {
     return double.tryParse(s) != null;
   }
 
-  void toast({required bool code, String name = ""}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: code
-              ? Row(
-                  children: [
-                    const Text("Bonjour "),
-                    CardText(
-                      label: name.toUpperCase(),
-                      size: 15,
-                      color: kGreen,
-                      fw: FontWeight.bold,
-                    )
-                  ],
-                )
-              : CardText(
-                  label: "Identifiants incorrects",
-                  size: 14,
-                  color: kOrange,
-                  fw: FontWeight.bold,
-                )),
-    );
+  void toast({required int code, String name = ""}) {
+    String label = "";
+    Color color = kGreen;
+
+    switch (code) {
+      case 401:
+        label = "Identifiants incorrects";
+        color = kOrange;
+        break;
+      case 403:
+        label = "Jeton de session expiré, veuillez vous reconnecter";
+        color = Colors.red;
+        break;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: code == 200
+            ? Row(
+                children: [
+                  const Text(
+                    "Bienvenue ",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    name,
+                    style: TextStyle(color: color, fontWeight: FontWeight.bold),
+                  )
+                ],
+              )
+            : Text(
+                label,
+                style: TextStyle(color: color, fontWeight: FontWeight.bold),
+              )));
   }
 }
