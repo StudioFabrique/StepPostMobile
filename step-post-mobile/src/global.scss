@@ -58,6 +58,23 @@ ion-label {
     animation: loader 1.2s linear infinite;
 }
 
+.toast {
+    color: white;
+    font-weight: bold;
+}
+
+.success-toast {
+    --background: #24A640;
+}
+
+.warning-toast {
+    --background: #FF5E1A;
+}
+
+.error-toast {
+    --background: red;
+}
+
 @keyframes loader {
     0% {
         transform: rotate(0deg);

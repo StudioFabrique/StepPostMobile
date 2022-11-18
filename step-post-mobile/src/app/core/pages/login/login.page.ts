@@ -1,4 +1,5 @@
-import { NavController, ToastController } from '@ionic/angular';
+import { ToasterService } from './../../services/toaster.service';
+import { NavController } from '@ionic/angular';
 import { RegexService } from 'src/app/core/services/regex.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -19,7 +20,7 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private nav: NavController,
     private regex: RegexService,
-    private toastCtrl: ToastController
+    private toaster: ToasterService
   ) {}
 
   ngOnInit() {
@@ -38,8 +39,9 @@ export class LoginPage implements OnInit {
   onSubmit() {
     /* if (this.form.valid) */ {
       this.isLoading = true;
-      this.auth.login('toto@tata.fr', '1234').subscribe({
+      this.auth.login('toto@tata.fr', '12345').subscribe({
         next: this.handleResponse.bind(this),
+        error: this.handleError.bind(this),
       });
     }
   }
@@ -51,6 +53,16 @@ export class LoginPage implements OnInit {
       this.auth.isLogged = true;
       this.nav.navigateRoot('/');
       this.nav.pop();
+      this.toaster.toast(`Bienvenue ${response.username}`, 2);
+    }
+  }
+
+  handleError(error: any) {
+    this.isLoading = false;
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === 401) {
+        this.toaster.toast('Identifiants incorrects', 1);
+      }
     }
   }
 }
