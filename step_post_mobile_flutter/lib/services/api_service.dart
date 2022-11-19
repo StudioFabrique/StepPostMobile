@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
 import 'package:step_post_mobile_flutter/models/statut.dart';
+import 'package:step_post_mobile_flutter/services/shared_handler.dart';
 
 class APIService {
   static final APIService _instance = APIService._internal();
@@ -43,9 +44,20 @@ class APIService {
     }
   }
 
+  Future<Response> deleteData({required String path}) async {
+    dio.options.headers['Authorization'] = "Bearer $token";
+    final Response response = await dio.delete(baseUrl + path);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response;
+    } else {
+      throw (response);
+    }
+  }
+
   Future<bool> getTestToken({required String tokenToTest}) async {
     dio.options.headers['Authorization'] = "Bearer $tokenToTest";
     final response = await dio.get("$baseUrl/auth/handshake");
+    print("response = ${response.statusCode}");
     if (response.statusCode == 200) {
       return response.data['result'];
     } else {
@@ -59,10 +71,11 @@ class APIService {
         data: {'username': username, 'password': password});
     if (response.statusCode == 200) {
       Map<String, dynamic> data = {
-        "token": response.data['token'],
         "name": response.data['username'],
         "httpCode": response.statusCode
       };
+      token = response.data['token'];
+      SharedHandler().addToken(token);
       return data;
     } else {
       throw (response);
@@ -114,6 +127,17 @@ class APIService {
     final response = await putData(path: '/facteur/signature', datas: datas);
     if (response.statusCode == 201) {
       return response.data['message'];
+    } else {
+      throw (response);
+    }
+  }
+
+  Future<String> deleteStatut({required String bordereau}) async {
+    final response =
+        await deleteData(path: "/facteur/statut?bordereau=$bordereau");
+    Map data = response.data;
+    if (response.statusCode == 201) {
+      return data['message'];
     } else {
       throw (response);
     }

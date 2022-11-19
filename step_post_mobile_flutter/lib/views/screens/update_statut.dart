@@ -20,7 +20,7 @@ class UpdateStatut extends StatefulWidget {
 
 class _UpdateStatutState extends State<UpdateStatut> {
   late int statut;
-  int limit = 8;
+  int limit = 9;
   late Function callback;
   bool isUpdated = false;
 
@@ -102,15 +102,13 @@ class _UpdateStatutState extends State<UpdateStatut> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SignaturePad(
+                                        callback: () => onConfirm(value),
                                         state: value,
                                       )));
                         } else {
-                          setState(() {
-                            isUpdated = true;
-                          });
+                          onConfirm(value);
                           Navigator.of(context).pop();
                           Navigator.of(context).pop();
-                          await data.getUpdatedStatuts(state: value);
                         }
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: kBlue),
@@ -120,6 +118,13 @@ class _UpdateStatutState extends State<UpdateStatut> {
             ],
           );
         });
+  }
+
+  void onConfirm(int value) async {
+    setState(() {
+      isUpdated = true;
+    });
+    await context.read<DataRepository>().getUpdatedStatuts(state: value);
   }
 
   @override
@@ -137,7 +142,7 @@ class _UpdateStatutState extends State<UpdateStatut> {
           Container(
             margin: const EdgeInsets.all(16),
             child: MailInfos(
-              date: dataProvider.courrier.date,
+              date: dataProvider.courrier!.date,
               statut: dataProvider.etat,
             ),
           ),

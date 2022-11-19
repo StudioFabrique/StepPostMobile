@@ -8,33 +8,33 @@ import 'package:step_post_mobile_flutter/services/shared_handler.dart';
 
 class DataRepository with ChangeNotifier {
   APIService api = APIService();
-  String _token = "";
   String _name = "";
   bool _isLogged = false;
   bool _isLoading = false;
   String _currentScan = "";
   int _currentIndex = 0;
-  late InfosCourrier _courrier;
+  InfosCourrier? _courrier;
   bool _hasCourrier = false;
   List<Statut> _etats = [];
   List<Scan> _myScans = [];
+  bool _hasBeenUpdated = false;
 
   //  getters
 
-  String get token => _token;
   String get name => _name;
   bool get isLogged => _isLogged;
   bool get isLoading => _isLoading;
   String get currentScan => _currentScan;
   int get currentIndex => _currentIndex;
-  InfosCourrier get courrier => _courrier;
+  InfosCourrier? get courrier => _courrier;
   bool get hasCourrier => _hasCourrier;
-  String get etat => getEtat(_courrier.etat);
+  String get etat => getEtat(_courrier!.etat);
   String getEtat(int value) {
     int index = _etats.indexWhere((element) => element.statutCode == value);
     return _etats[index].etat;
   }
 
+  bool get hasBeenUpdated => _hasBeenUpdated;
   List<Scan> get myScans => _myScans;
 
   //  setters
@@ -59,14 +59,12 @@ class DataRepository with ChangeNotifier {
     notifyListeners();
   }
 
-  set courrier(InfosCourrier value) {
+  set courrier(InfosCourrier? value) {
     _courrier = value;
-    notifyListeners();
   }
 
   set hasCourrier(bool value) {
     _hasCourrier = value;
-    notifyListeners();
   }
 
   set myScans(List<Scan> value) {
@@ -74,10 +72,9 @@ class DataRepository with ChangeNotifier {
     notifyListeners();
   }
 
-  set token(String token) {
-    _token = token;
-    SharedHandler().addToken(token);
-    api.isToken = token;
+  set hasBeenUpdated(bool value) {
+    _hasBeenUpdated = value;
+    notifyListeners();
   }
 
   //  connexion
@@ -87,13 +84,13 @@ class DataRepository with ChangeNotifier {
       isLoading = true;
       final Map<String, dynamic> data =
           await api.login(username: username, password: password);
-      token = data['token']!;
+      //  token = data['token']!;
       _name = data['name']!;
-      isLogged = true;
-      isLoading = false;
       if (_etats.isEmpty) {
         await getStatutsList();
       }
+      isLogged = true;
+      isLoading = false;
       return data['httpCode'];
     } catch (response) {
       isLoading = false;
@@ -110,6 +107,7 @@ class DataRepository with ChangeNotifier {
       _courrier = await api.getCurrentScan(bordereau: _currentScan);
       hasCourrier = true;
       isLoading = false;
+      hasBeenUpdated = false;
     } catch (response) {
       print(" ERROR ERROR ERROR ERROR ${response}");
       if (response.toString().contains("404")) {
@@ -144,7 +142,7 @@ class DataRepository with ChangeNotifier {
   Future<void> postSignature({required dynamic signature}) async {
     try {
       final response = await api.postSignature(
-          courrierId: _courrier.id, signature: signature);
+          courrierId: _courrier!.id, signature: signature);
     } on Response catch (response) {
       Map data = response.data;
       print(response);
@@ -157,8 +155,9 @@ class DataRepository with ChangeNotifier {
     try {
       final response = await api.getTestToken(tokenToTest: tokenToTest);
       if (response) {
+        print("response = $response");
+        APIService().token = tokenToTest;
         _isLogged = true;
-        token = tokenToTest;
         if (_etats.isEmpty) {
           await getStatutsList();
         }
@@ -166,10 +165,33 @@ class DataRepository with ChangeNotifier {
         return 200;
       }
     } catch (response) {
+      print("erreur $response");
       isLoading = false;
       if (response.toString().contains('403')) {
         logout();
         return 403;
+      }
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<String?> deleteStatut({required int bordereau}) async {
+    try {
+      isLoading = true;
+      if (hasBeenUpdated) {
+        final response =
+            await api.deleteStatut(bordereau: bordereau.toString());
+        hasBeenUpdated = false;
+        isLoading = false;
+        await getCurrentScan();
+        return response;
+      }
+    } catch (response) {
+      isLoading = false;
+      print(response);
+      if (response.toString().contains('403')) {
+        return "Le statut n'a pas été supprimé";
       }
       rethrow;
     }
@@ -182,8 +204,8 @@ class DataRepository with ChangeNotifier {
   }
 
   logout() {
-    _token = "";
-    SharedHandler().removeToken(token);
+    APIService().token = "";
+    SharedHandler().removeToken();
     isLogged = false;
   }
 }

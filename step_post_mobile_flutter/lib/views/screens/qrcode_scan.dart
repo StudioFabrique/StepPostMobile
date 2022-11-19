@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 
 import '../../repositories/data_repository.dart';
 
@@ -52,25 +53,14 @@ class _QRCodeScanState extends State<QRCodeScan> {
             flex: 1,
             child: Center(
               child: (result != null)
-                  ? Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          Navigator.of(context).pop();
-                          dataProvider.currentScan = result!.code!;
-                          await dataProvider.getCurrentScan();
-                          dataProvider.currentIndex = 0;
-                        },
-                        style:
-                            ElevatedButton.styleFrom(backgroundColor: kOrange),
-                        child: Text(
-                          '${result!.code}',
-                          style: const TextStyle(
-                            fontSize: 24,
-                          ),
-                        ),
-                      ),
-                    )
+                  ? CustomButton(
+                      label: '${result!.code}',
+                      callback: () async {
+                        Navigator.of(context).pop();
+                        dataProvider.currentScan = result!.code!;
+                        await dataProvider.getCurrentScan();
+                        dataProvider.currentIndex = 0;
+                      })
                   : const Text('Scan a code'),
             ),
           )
@@ -94,3 +84,26 @@ class _QRCodeScanState extends State<QRCodeScan> {
     super.dispose();
   }
 }
+
+/*
+Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          dataProvider.currentScan = result!.code!;
+                          await dataProvider.getCurrentScan();
+                          dataProvider.currentIndex = 0;
+                        },
+                        style:
+                            ElevatedButton.styleFrom(backgroundColor: kOrange),
+                        child: Text(
+                          '${result!.code}',
+                          style: const TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                    )
+
+                    */

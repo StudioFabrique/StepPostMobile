@@ -3,7 +3,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
-import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 
 class LoginForm extends StatefulWidget {
@@ -27,8 +26,10 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   void dispose() {
-    username.dispose();
-    password.dispose();
+    Future.delayed(Duration.zero, () {
+      username.dispose();
+      password.dispose();
+    });
     super.dispose();
   }
 
@@ -85,7 +86,7 @@ class _LoginFormState extends State<LoginForm> {
                           username: "toto@tata.fr", password: "1234");
                       if (code == 200) {
                         toast(code: code!, name: dataProvider.name);
-                      } else {
+                      } else if (code == 401) {
                         toast(code: code!);
                       }
                       //  }
@@ -104,19 +105,6 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void toast({required int code, String name = ""}) {
-    String label = "";
-    Color color = kGreen;
-
-    switch (code) {
-      case 401:
-        label = "Identifiants incorrects";
-        color = kOrange;
-        break;
-      case 403:
-        label = "Jeton de session expiré, veuillez vous reconnecter";
-        color = Colors.red;
-        break;
-    }
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: code == 200
             ? Row(
@@ -127,13 +115,14 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   Text(
                     name,
-                    style: TextStyle(color: color, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(color: kGreen, fontWeight: FontWeight.bold),
                   )
                 ],
               )
             : Text(
-                label,
-                style: TextStyle(color: color, fontWeight: FontWeight.bold),
+                "Identifiants incorrects",
+                style: TextStyle(color: kOrange, fontWeight: FontWeight.bold),
               )));
   }
 }

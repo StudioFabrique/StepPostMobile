@@ -11,7 +11,9 @@ import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 class SignaturePad extends StatefulWidget {
   final int state;
-  const SignaturePad({super.key, required this.state});
+  final Function callback;
+
+  const SignaturePad({super.key, required this.state, required this.callback});
 
   @override
   State<SignaturePad> createState() => _SignaturePadState();
@@ -20,10 +22,12 @@ class SignaturePad extends StatefulWidget {
 class _SignaturePadState extends State<SignaturePad> {
   late int state;
   final GlobalKey<SfSignaturePadState> signatureGlobalKey = GlobalKey();
+  late Function callback;
 
   @override
   void initState() {
     state = widget.state;
+    callback = widget.callback;
     super.initState();
   }
 
@@ -68,11 +72,11 @@ class _SignaturePadState extends State<SignaturePad> {
             children: [
               CardText(
                   label:
-                      "${dataProvider.courrier.prenom.toUpperCase()} ${dataProvider.courrier.nom.toUpperCase()}",
+                      "${dataProvider.courrier!.prenom.toUpperCase()} ${dataProvider.courrier!.nom.toUpperCase()}",
                   fw: FontWeight.bold,
                   size: 20),
               CardText(
-                  label: "Bordereau n° ${dataProvider.courrier.bordereau}",
+                  label: "Bordereau n° ${dataProvider.courrier!.bordereau}",
                   size: 18),
               Padding(
                   padding:
@@ -98,8 +102,9 @@ class _SignaturePadState extends State<SignaturePad> {
                     ),
                     CustomButton(
                       label: "Enregistrer",
-                      callback: () async {
+                      callback: () {
                         _handleSaveButtonPressed();
+                        callback();
                         Navigator.of(context).pop();
                       },
                       width: width,

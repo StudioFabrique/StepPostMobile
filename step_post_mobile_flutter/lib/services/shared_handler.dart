@@ -15,9 +15,9 @@ class SharedHandler {
     return token ?? "";
   }
 
-  Future<bool> removeToken(String value) async {
+  Future<bool> removeToken() async {
     final instance = await SharedPreferences.getInstance();
-    await instance.remove(key);
+    await instance.remove('token');
     return true;
   }
 }

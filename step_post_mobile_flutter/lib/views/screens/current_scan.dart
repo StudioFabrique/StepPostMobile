@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
-import 'package:step_post_mobile_flutter/services/formatter_service.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/screens/update_statut.dart';
 import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
@@ -21,13 +20,9 @@ class CurrentScan extends StatefulWidget {
 }
 
 class _CurrentScanState extends State<CurrentScan> {
-  bool hasBeenUpdated = false;
-
-  callback(bool value) async {
+  callback(bool value) {
     Future.delayed(Duration.zero, () {
-      setState(() {
-        hasBeenUpdated = value;
-      });
+      context.read<DataRepository>().hasBeenUpdated = value;
     });
   }
 
@@ -49,23 +44,23 @@ class _CurrentScanState extends State<CurrentScan> {
             mainAxisSize: MainAxisSize.max,
             children: [
                 SearchForm(callback: dataProvider.onSearchMail),
-                dataProvider.hasCourrier
+                dataProvider.courrier != null
                     ? Column(children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 24),
                           child: MailCard(
-                            mail: dataProvider.courrier,
+                            mail: dataProvider.courrier!,
                           ),
                         ),
                         MailInfos(
-                          date: dataProvider.courrier.date,
+                          date: dataProvider.courrier!.date,
                           statut: dataProvider.etat,
                         ),
                         const SizedBox(
                           height: 24,
                         ),
-                        dataProvider.courrier.etat < 5
+                        dataProvider.courrier!.etat < 5
                             ? CustomButton(
                                 label: "Modifier le Statut",
                                 callback: () {
@@ -80,11 +75,15 @@ class _CurrentScanState extends State<CurrentScan> {
                         const SizedBox(
                           height: 24,
                         ),
-                        hasBeenUpdated
+                        dataProvider.hasBeenUpdated
                             ? CustomButton(
                                 label: "Annuler Statut",
                                 color: kOrange,
-                                callback: () {})
+                                callback: () {
+                                  dataProvider.deleteStatut(
+                                      bordereau:
+                                          dataProvider.courrier!.bordereau);
+                                })
                             : const SizedBox()
                       ])
                     : Container(
@@ -101,7 +100,7 @@ class _CurrentScanState extends State<CurrentScan> {
     final data = Provider.of<DataRepository>(context, listen: false);
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => UpdateStatut(
-        statut: data.courrier.etat,
+        statut: data.courrier!.etat,
         callback: callback,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -118,5 +117,13 @@ class _CurrentScanState extends State<CurrentScan> {
         );
       },
     );
+  }
+
+  toast(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      msg,
+      style: TextStyle(color: kOrange),
+    )));
   }
 }
