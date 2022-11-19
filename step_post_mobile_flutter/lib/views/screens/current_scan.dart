@@ -8,6 +8,7 @@ import 'package:step_post_mobile_flutter/views/screens/update_statut.dart';
 import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 import 'package:step_post_mobile_flutter/views/widgets/mail_card.dart';
+import 'package:step_post_mobile_flutter/views/widgets/mail_infos.dart';
 import 'package:step_post_mobile_flutter/views/widgets/search_form.dart';
 
 class CurrentScan extends StatefulWidget {
@@ -57,23 +58,9 @@ class _CurrentScanState extends State<CurrentScan> {
                             mail: dataProvider.courrier,
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            CardText(
-                              label:
-                                  "${FormatterService().getDate(dataProvider.courrier.date)} à ${FormatterService().getTime(dataProvider.courrier.date)}",
-                              size: 18,
-                              fw: FontWeight.bold,
-                              color: kOrange,
-                            ),
-                            CardText(
-                              label: dataProvider.etat.toUpperCase(),
-                              size: 18,
-                              fw: FontWeight.bold,
-                            )
-                          ],
+                        MailInfos(
+                          date: dataProvider.courrier.date,
+                          statut: dataProvider.etat,
                         ),
                         const SizedBox(
                           height: 24,

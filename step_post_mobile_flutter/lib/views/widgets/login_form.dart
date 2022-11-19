@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -72,10 +73,11 @@ class _LoginFormState extends State<LoginForm> {
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 48,
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
+                  CustomButton(
+                    label: "Se connecter",
+                    callback: () async {
                       //if (_formKey.currentState!.validate()) {
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
@@ -88,11 +90,6 @@ class _LoginFormState extends State<LoginForm> {
                       }
                       //  }
                     },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: kBlue,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30))),
-                    child: const Text("SE CONNECTER"),
                   )
                 ]),
               )

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
-import 'package:step_post_mobile_flutter/utils/constantes.dart';
-import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 
 class Logout extends StatefulWidget {
   const Logout({
@@ -30,21 +29,6 @@ class _LogoutState extends State<Logout> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          elevation: 10,
-          backgroundColor: kBlue,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
-      onPressed: initData,
-      child: const Padding(
-        padding: EdgeInsets.symmetric(vertical: 10),
-        child: CardText(
-          label: "Déconnexion",
-          size: 20,
-          color: Colors.white,
-        ),
-      ),
-    ));
+        child: CustomButton(label: "Déconnexion", callback: initData));
   }
 }

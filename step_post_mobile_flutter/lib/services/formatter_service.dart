@@ -1,8 +1,9 @@
 import 'package:intl/intl.dart';
 
 class FormatterService {
+  final f = DateFormat('dd/MM/yyyy');
 
-  String getDate(DateTime date) => DateFormat.yMEd().format(date);
+  String getDate(DateTime date) => f.format(date);
   String getTime(DateTime date) => DateFormat.Hm().format(date);
 
   String getType(int type) {
@@ -17,5 +18,6 @@ class FormatterService {
       default:
         value = "Colis";
     }
-    return value;}
+    return value;
+  }
 }

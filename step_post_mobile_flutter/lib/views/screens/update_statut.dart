@@ -5,6 +5,7 @@ import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/screens/signature_pad.dart';
 import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
+import 'package:step_post_mobile_flutter/views/widgets/mail_infos.dart';
 import 'package:step_post_mobile_flutter/views/widgets/statut_button.dart';
 
 class UpdateStatut extends StatefulWidget {
@@ -131,35 +132,78 @@ class _UpdateStatutState extends State<UpdateStatut> {
         backgroundColor: kBlue,
       ),
       body: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * .7,
-          child: ListView.builder(
+          child: Column(
+        children: <Widget>[
+          Container(
+            margin: const EdgeInsets.all(16),
+            child: MailInfos(
+              date: dataProvider.courrier.date,
+              statut: dataProvider.etat,
+            ),
+          ),
+          Expanded(
+              child: ListView.builder(
             itemCount: limit,
             itemBuilder: (context, index) {
               return index == 0
-                  ? Container(
-                      margin: const EdgeInsets.only(top: 16),
-                      child: const CardText(
-                        label: "Sélectionner un statut",
-                        size: 18,
-                        fw: FontWeight.bold,
-                        hasAlignment: TextAlign.center,
-                      ))
+                  ? const Divider(
+                      color: Colors.grey,
+                      thickness: 1,
+                    )
                   : index == 1
                       ? const SizedBox(
                           height: 16,
                         )
                       : Padding(
                           padding: const EdgeInsets.all(16),
-                          child: CustomButton(
-                            label: dataProvider.getEtat(index),
-                            callback: updateStatut,
-                            value: index,
-                          ));
+                          child: index > statut
+                              ? SizedBox(
+                                  width: MediaQuery.of(context).size.width * .7,
+                                  child: CustomButton(
+                                    label: dataProvider
+                                        .getEtat(index)
+                                        .toUpperCase(),
+                                    callback: updateStatut,
+                                    value: index,
+                                  ),
+                                )
+                              : null);
             },
-          ),
-        ),
-      ),
+          ))
+        ],
+      )),
     );
   }
 }
+
+
+
+/* 
+          child: ListView.builder(
+            itemCount: limit,
+            itemBuilder: (context, index) {
+              return index == 0
+                  ? Container(
+                      margin: const EdgeInsets.all(16),
+                      child: MailInfos(
+                        date: dataProvider.courrier.date,
+                        statut: dataProvider.etat,
+                      ),
+                    )
+                  : index == 1
+                      ? const SizedBox(
+                          height: 16,
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * .7,
+                            child: CustomButton(
+                              label: dataProvider.getEtat(index).toUpperCase(),
+                              callback: updateStatut,
+                              value: index,
+                            ),
+                          ));
+            },
+          )
+           */

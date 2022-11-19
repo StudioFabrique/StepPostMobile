@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
+import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 class SignaturePad extends StatefulWidget {
@@ -53,10 +55,10 @@ class _SignaturePadState extends State<SignaturePad> {
   @override
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
+    final width = MediaQuery.of(context).size.width * .4;
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-              "${dataProvider.courrier.nom.toUpperCase()} - ${dataProvider.currentScan}"),
+          title: const Text("Signature"),
           centerTitle: true,
           backgroundColor: kBlue,
         ),
@@ -64,8 +66,17 @@ class _SignaturePadState extends State<SignaturePad> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              CardText(
+                  label:
+                      "${dataProvider.courrier.prenom.toUpperCase()} ${dataProvider.courrier.nom.toUpperCase()}",
+                  fw: FontWeight.bold,
+                  size: 20),
+              CardText(
+                  label: "Bordereau n° ${dataProvider.courrier.bordereau}",
+                  size: 18),
               Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 24),
                   child: Container(
                       decoration:
                           BoxDecoration(border: Border.all(color: Colors.grey)),
@@ -74,22 +85,25 @@ class _SignaturePadState extends State<SignaturePad> {
                           backgroundColor: Colors.white,
                           strokeColor: Colors.black,
                           minimumStrokeWidth: 1.0,
-                          maximumStrokeWidth: 4.0))),
+                          maximumStrokeWidth: 1.0))),
               const SizedBox(height: 10),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    TextButton(
-                      onPressed: _handleClearButtonPressed,
-                      child: const Text('Effacer'),
+                    CustomButton(
+                      label: "Effacer",
+                      callback: _handleClearButtonPressed,
+                      width: width,
+                      color: kOrange,
                     ),
-                    TextButton(
-                      onPressed: () async {
+                    CustomButton(
+                      label: "Enregistrer",
+                      callback: () async {
                         _handleSaveButtonPressed();
                         Navigator.of(context).pop();
                       },
-                      child: const Text('Enregistrer'),
-                    ),
+                      width: width,
+                    )
                   ])
             ]));
   }
