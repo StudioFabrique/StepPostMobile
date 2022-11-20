@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
-import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
 
 class ModalConfirm extends StatelessWidget {
   final int value;

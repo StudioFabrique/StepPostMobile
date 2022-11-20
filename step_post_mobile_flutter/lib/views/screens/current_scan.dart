@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/screens/update_statut.dart';
-import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 import 'package:step_post_mobile_flutter/views/widgets/mail_card.dart';
 import 'package:step_post_mobile_flutter/views/widgets/mail_infos.dart';

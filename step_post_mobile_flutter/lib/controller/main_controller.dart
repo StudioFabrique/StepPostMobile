@@ -5,7 +5,7 @@ import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/services/shared_handler.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/screens/login_page.dart';
-import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
 
 class MainController extends StatefulWidget {
   const MainController({super.key});

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/screens/signature_pad.dart';
-import 'package:step_post_mobile_flutter/views/widgets/card_text.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 import 'package:step_post_mobile_flutter/views/widgets/mail_infos.dart';
 import 'package:step_post_mobile_flutter/views/widgets/modal_confirm.dart';
@@ -134,35 +133,3 @@ class _UpdateStatutState extends State<UpdateStatut> {
     );
   }
 }
-
-
-
-/* 
-          child: ListView.builder(
-            itemCount: limit,
-            itemBuilder: (context, index) {
-              return index == 0
-                  ? Container(
-                      margin: const EdgeInsets.all(16),
-                      child: MailInfos(
-                        date: dataProvider.courrier.date,
-                        statut: dataProvider.etat,
-                      ),
-                    )
-                  : index == 1
-                      ? const SizedBox(
-                          height: 16,
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * .7,
-                            child: CustomButton(
-                              label: dataProvider.getEtat(index).toUpperCase(),
-                              callback: updateStatut,
-                              value: index,
-                            ),
-                          ));
-            },
-          )
-           */
