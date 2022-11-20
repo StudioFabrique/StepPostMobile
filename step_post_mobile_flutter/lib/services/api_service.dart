@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
 import 'package:step_post_mobile_flutter/models/statut.dart';
 import 'package:step_post_mobile_flutter/services/shared_handler.dart';
+import 'package:step_post_mobile_flutter/utils/api.dart';
 
 class APIService {
   static final APIService _instance = APIService._internal();
@@ -13,12 +14,20 @@ class APIService {
   factory APIService() => _instance;
 
   APIService._internal() {
-    baseUrl = "http://dev01.step.eco:3000/api";
+    baseUrl = API().url;
     dio = Dio();
+    dio.options.baseUrl = baseUrl;
+    dio.interceptors.add(InterceptorsWrapper(
+      onError: (e, handler) {
+        print("toto ${e.toString()}");
+        return handler.next(e);
+      },
+    ));
   }
 
   set isToken(String value) {
     token = value;
+    dio.options.headers['Authorization'] = 'Bearer $token';
   }
 
   Future<Response> getData({required String path}) async {
