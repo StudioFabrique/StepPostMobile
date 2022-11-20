@@ -47,7 +47,6 @@ class _SignaturePadState extends State<SignaturePad> {
     final bytes = await data.toByteData(format: ui.ImageByteFormat.png);
     await dataProvider.postSignature(
         signature: uint8ListTob64(bytes!.buffer.asUint8List()));
-    await dataProvider.getUpdatedStatuts(state: state);
   }
 
   String uint8ListTob64(Uint8List uint8list) {
@@ -105,7 +104,6 @@ class _SignaturePadState extends State<SignaturePad> {
                       callback: () {
                         _handleSaveButtonPressed();
                         callback();
-                        Navigator.of(context).pop();
                       },
                       width: width,
                     )

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final String label;
   final Function callback;
-  final Color? color;
+  final Color color;
   final dynamic value;
   final double width;
 

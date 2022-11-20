@@ -54,12 +54,12 @@ class APIService {
     }
   }
 
-  Future<bool> getTestToken({required String tokenToTest}) async {
+  Future<String> getTestToken({required String tokenToTest}) async {
     dio.options.headers['Authorization'] = "Bearer $tokenToTest";
     final response = await dio.get("$baseUrl/auth/handshake");
     print("response = ${response.statusCode}");
     if (response.statusCode == 200) {
-      return response.data['result'];
+      return response.data['username'];
     } else {
       throw (response);
     }

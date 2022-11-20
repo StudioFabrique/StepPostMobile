@@ -74,7 +74,6 @@ class DataRepository with ChangeNotifier {
 
   set hasBeenUpdated(bool value) {
     _hasBeenUpdated = value;
-    notifyListeners();
   }
 
   //  connexion
@@ -108,6 +107,7 @@ class DataRepository with ChangeNotifier {
       hasCourrier = true;
       isLoading = false;
       hasBeenUpdated = false;
+      notifyListeners();
     } catch (response) {
       print(" ERROR ERROR ERROR ERROR ${response}");
       if (response.toString().contains("404")) {
@@ -133,6 +133,8 @@ class DataRepository with ChangeNotifier {
       final response =
           await api.getUpdatedStatut(bordereau: _currentScan, state: state);
       await getCurrentScan();
+      hasBeenUpdated = true;
+      notifyListeners();
     } on Response catch (response) {
       print(response);
       rethrow;
@@ -154,10 +156,11 @@ class DataRepository with ChangeNotifier {
     isLoading = true;
     try {
       final response = await api.getTestToken(tokenToTest: tokenToTest);
-      if (response) {
+      if (response.isNotEmpty) {
         print("response = $response");
         APIService().token = tokenToTest;
         _isLogged = true;
+        _name = response;
         if (_etats.isEmpty) {
           await getStatutsList();
         }

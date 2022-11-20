@@ -34,6 +34,7 @@ class _CurrentScanState extends State<CurrentScan> {
   @override
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataRepository>(context);
+    final mail = dataProvider.courrier;
     return dataProvider.isLoading
         ? SpinKitDualRing(
             color: kOrange,
@@ -44,13 +45,13 @@ class _CurrentScanState extends State<CurrentScan> {
             mainAxisSize: MainAxisSize.max,
             children: [
                 SearchForm(callback: dataProvider.onSearchMail),
-                dataProvider.courrier != null
+                mail != null
                     ? Column(children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 24),
                           child: MailCard(
-                            mail: dataProvider.courrier!,
+                            mail: mail,
                           ),
                         ),
                         MailInfos(
@@ -60,7 +61,7 @@ class _CurrentScanState extends State<CurrentScan> {
                         const SizedBox(
                           height: 24,
                         ),
-                        dataProvider.courrier!.etat < 5
+                        mail.etat < 5
                             ? CustomButton(
                                 label: "Modifier le Statut",
                                 callback: () {
@@ -101,7 +102,6 @@ class _CurrentScanState extends State<CurrentScan> {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => UpdateStatut(
         statut: data.courrier!.etat,
-        callback: callback,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);

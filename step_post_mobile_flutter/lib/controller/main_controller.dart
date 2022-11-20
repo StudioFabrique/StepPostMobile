@@ -29,7 +29,9 @@ class _MainControllerState extends State<MainController> {
       //  token = "";
       int? code = await dataProvider.getTestToken(tokenToTest: token);
       if (code == 403) {
-        toast();
+        toastError();
+      } else if (code == 200) {
+        toastSuccess();
       }
     }
   }
@@ -42,7 +44,7 @@ class _MainControllerState extends State<MainController> {
         : const LoginPage();
   }
 
-  void toast() {
+  void toastError() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
           content: CardText(
@@ -52,5 +54,19 @@ class _MainControllerState extends State<MainController> {
         fw: FontWeight.bold,
       )),
     );
+  }
+
+  void toastSuccess() {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Row(
+      children: [
+        const Text("Bienvenue "),
+        Text(
+          context.read<DataRepository>().name,
+          style: TextStyle(
+              color: kGreen, fontSize: 14, fontWeight: FontWeight.bold),
+        )
+      ],
+    )));
   }
 }
