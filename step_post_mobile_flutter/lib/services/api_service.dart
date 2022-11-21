@@ -16,18 +16,18 @@ class APIService {
   APIService._internal() {
     baseUrl = API().url;
     dio = Dio();
-    dio.options.baseUrl = baseUrl;
+    /* dio.options.baseUrl = baseUrl;
     dio.interceptors.add(InterceptorsWrapper(
       onError: (e, handler) {
         print("toto ${e.toString()}");
         return handler.next(e);
       },
-    ));
+    )); */
   }
 
   set isToken(String value) {
     token = value;
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    // dio.options.headers['Authorization'] = 'Bearer $token';
   }
 
   Future<Response> getData({required String path}) async {
@@ -68,6 +68,7 @@ class APIService {
     final response = await dio.get("$baseUrl/auth/handshake");
     print("response = ${response.statusCode}");
     if (response.statusCode == 200) {
+      print(response.data['username']);
       return response.data['username'];
     } else {
       throw (response);

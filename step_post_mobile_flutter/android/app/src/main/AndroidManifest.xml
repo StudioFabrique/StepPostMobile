@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
     package="com.example.step_post_mobile_flutter">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="step_post_mobile_flutter"
         android:name="${applicationName}"

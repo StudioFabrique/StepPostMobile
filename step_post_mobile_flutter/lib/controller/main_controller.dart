@@ -27,6 +27,7 @@ class _MainControllerState extends State<MainController> {
     if (token.isNotEmpty) {
       //  test
       //  token = "";
+      print(token);
       int? code = await dataProvider.getTestToken(tokenToTest: token);
       if (code == 403) {
         toastError();
