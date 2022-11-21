@@ -24,7 +24,7 @@ class MailCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
               children: [
-                CardText(
+                CustomText(
                   label: FormatterService().getType(mail.type),
                   size: 16,
                   fw: FontWeight.bold,
@@ -32,7 +32,7 @@ class MailCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const CardText(label: "Bordereau n°", size: 16),
+                    const CustomText(label: "Bordereau n°", size: 16),
                     Text(
                       mail.bordereau.toString(),
                       style: TextStyle(
@@ -50,9 +50,9 @@ class MailCard extends StatelessWidget {
             Row(
               children: [
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  CardText(label: "${mail.prenom} ${mail.nom}", size: 16),
-                  CardText(label: mail.adresse, size: 16),
-                  CardText(label: "${mail.codePostal} ${mail.ville}", size: 16)
+                  CustomText(label: "${mail.prenom} ${mail.nom}", size: 16),
+                  CustomText(label: mail.adresse, size: 16),
+                  CustomText(label: "${mail.codePostal} ${mail.ville}", size: 16)
                 ])
               ],
             )

@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:step_post_mobile_flutter/models/courrier.dart';
 import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
+import 'package:step_post_mobile_flutter/models/scan.dart';
+import 'package:step_post_mobile_flutter/models/search_scan.dart';
 import 'package:step_post_mobile_flutter/models/statut.dart';
 import 'package:step_post_mobile_flutter/services/shared_handler.dart';
 import 'package:step_post_mobile_flutter/utils/api.dart';
@@ -150,6 +153,34 @@ class APIService {
       return data['message'];
     } else {
       throw (response);
+    }
+  }
+
+  Future<List<Scan>> getMesScans() async {
+    final response = await getData(path: '/facteur/mes-scans');
+    if (response.statusCode == 200) {
+      List<dynamic> data = response.data;
+      List<Scan> scans = data.map<Scan>((dynamic jsonScan) {
+        return Scan.fromJson(jsonScan);
+      }).toList();
+      print(scans);
+      return scans;
+    } else {
+      throw(response);
+    }
+  }
+  
+  Future<List<SearchScan>> getSearchScan({required String bordereau}) async {
+    final response = await getData(path: "/facteur/recherche-scans?bordereau=$bordereau");
+    if (response.statusCode == 200) {
+      Map data = response.data;
+      print(data);
+      List<SearchScan> scans = data['sc'].map<SearchScan>((dynamic jsonScan) {
+        return SearchScan(date: DateTime.parse(jsonScan['date']), statut: jsonScan['s']['statutCode'], courrier: Courrier(id: data['id'], bordereau: data['bordereau'], type: data['type']));
+      }).toList();
+      return scans;
+    } else {
+      throw(response);
     }
   }
 }

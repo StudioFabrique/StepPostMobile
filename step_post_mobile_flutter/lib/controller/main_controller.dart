@@ -48,7 +48,7 @@ class _MainControllerState extends State<MainController> {
   void toastError() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-          content: CardText(
+          content: CustomText(
         label: "Jeton de session expiré, veuillez vous reconnecter",
         size: 14,
         color: kOrange,

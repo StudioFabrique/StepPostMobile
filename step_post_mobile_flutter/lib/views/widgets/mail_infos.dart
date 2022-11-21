@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/services/formatter_service.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
@@ -17,14 +15,14 @@ class MailInfos extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.max,
       children: [
-        CardText(
+        CustomText(
           label:
               "${FormatterService().getDate(date)} à ${FormatterService().getTime(date)}",
           size: 18,
           fw: FontWeight.bold,
           color: kOrange,
         ),
-        CardText(
+        CustomText(
           label: statut.toUpperCase(),
           size: 18,
           fw: FontWeight.bold,

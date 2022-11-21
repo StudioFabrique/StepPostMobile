@@ -69,12 +69,12 @@ class _SignaturePadState extends State<SignaturePad> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CardText(
+              CustomText(
                   label:
                       "${dataProvider.courrier!.prenom.toUpperCase()} ${dataProvider.courrier!.nom.toUpperCase()}",
                   fw: FontWeight.bold,
                   size: 20),
-              CardText(
+              CustomText(
                   label: "Bordereau n° ${dataProvider.courrier!.bordereau}",
                   size: 18),
               Padding(

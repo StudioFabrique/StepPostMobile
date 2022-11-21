@@ -12,7 +12,7 @@ class ModalConfirm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: const CardText(
+      title: const CustomText(
         label: "Mise à jour du statut",
         size: 18,
         fw: FontWeight.bold,
@@ -29,14 +29,14 @@ class ModalConfirm extends StatelessWidget {
         const SizedBox(
           height: 40,
         ),
-        const CardText(
+        const CustomText(
           label: "Confirmez le nouveau statut :",
           size: 14,
           color: Colors.white,
           fw: FontWeight.bold,
           hasAlignment: TextAlign.center,
         ),
-        CardText(
+        CustomText(
           label: context.read<DataRepository>().getEtat(value).toUpperCase(),
           size: 24,
           color: Colors.white,

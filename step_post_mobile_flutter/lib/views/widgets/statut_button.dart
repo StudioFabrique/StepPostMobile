@@ -24,7 +24,7 @@ class StatutButton extends StatelessWidget {
       onPressed: () => {callback(value)},
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: CardText(
+        child: CustomText(
           label: label,
           size: 20,
           color: Colors.white,

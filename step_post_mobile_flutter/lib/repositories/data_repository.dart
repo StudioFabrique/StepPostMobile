@@ -6,6 +6,8 @@ import 'package:step_post_mobile_flutter/models/statut.dart';
 import 'package:step_post_mobile_flutter/services/api_service.dart';
 import 'package:step_post_mobile_flutter/services/shared_handler.dart';
 
+import '../models/search_scan.dart';
+
 class DataRepository with ChangeNotifier {
   APIService api = APIService();
   String _name = "";
@@ -33,6 +35,7 @@ class DataRepository with ChangeNotifier {
     int index = _etats.indexWhere((element) => element.statutCode == value);
     return _etats[index].etat;
   }
+  List<Scan> get mesScans => _myScans;
 
   bool get hasBeenUpdated => _hasBeenUpdated;
   List<Scan> get myScans => _myScans;
@@ -199,6 +202,25 @@ class DataRepository with ChangeNotifier {
       rethrow;
     }
     return null;
+  }
+
+  Future<void> getMesScans() async {
+    try {
+      _myScans = await api.getMesScans();
+      print (mesScans);
+      notifyListeners();
+    } on Response catch(response) {
+      print(response);
+      rethrow;
+    }
+  }
+
+  Future<List<SearchScan>> getSearchScan({required String bordereau}) async {
+    try {
+      return await api.getSearchScan(bordereau: bordereau);
+    } on Response catch (response) {
+      rethrow;
+    }
   }
 
   onSearchMail(String bordereau) async {

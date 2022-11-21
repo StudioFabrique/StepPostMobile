@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CardText extends StatelessWidget {
+class CustomText extends StatelessWidget {
   final String label;
   final double size;
   final FontWeight fw;
   final Color color;
   final TextAlign hasAlignment;
 
-  const CardText(
+  const CustomText(
       {super.key,
       required this.label,
       required this.size,
