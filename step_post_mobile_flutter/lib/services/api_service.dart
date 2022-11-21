@@ -4,6 +4,7 @@ import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
 import 'package:step_post_mobile_flutter/models/scan.dart';
 import 'package:step_post_mobile_flutter/models/search_scan.dart';
 import 'package:step_post_mobile_flutter/models/statut.dart';
+import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/services/shared_handler.dart';
 import 'package:step_post_mobile_flutter/utils/api.dart';
 
@@ -19,13 +20,16 @@ class APIService {
   APIService._internal() {
     baseUrl = API().url;
     dio = Dio();
-    /* dio.options.baseUrl = baseUrl;
+    dio.options.baseUrl = baseUrl;
     dio.interceptors.add(InterceptorsWrapper(
       onError: (e, handler) {
         print("toto ${e.toString()}");
+        if (e.response?.statusCode == 401 || e.response?.statusCode == 403) {
+          print("bye bye");
+        }
         return handler.next(e);
       },
-    )); */
+    ));
   }
 
   set isToken(String value) {

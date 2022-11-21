@@ -23,6 +23,7 @@ class _MainControllerState extends State<MainController> {
 
   void initData() async {
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
+    print("coucou");
     String token = await SharedHandler().getToken();
     if (token.isNotEmpty) {
       //  test

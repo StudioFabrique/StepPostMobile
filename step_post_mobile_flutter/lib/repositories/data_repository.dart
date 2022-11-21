@@ -4,7 +4,6 @@ import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
 import 'package:step_post_mobile_flutter/models/scan.dart';
 import 'package:step_post_mobile_flutter/models/statut.dart';
 import 'package:step_post_mobile_flutter/services/api_service.dart';
-import 'package:step_post_mobile_flutter/services/shared_handler.dart';
 
 import '../models/search_scan.dart';
 
@@ -111,12 +110,9 @@ class DataRepository with ChangeNotifier {
       isLoading = false;
       hasBeenUpdated = false;
       notifyListeners();
-    } catch (response) {
-      print(" ERROR ERROR ERROR ERROR ${response}");
-      if (response.toString().contains("404")) {
-        hasCourrier = false;
-      }
+    } on DioError catch(e) {
       isLoading = false;
+      if (checkDioError(e)) logout();
       rethrow;
     }
   }
@@ -125,32 +121,30 @@ class DataRepository with ChangeNotifier {
     try {
       _etats = await api.getStatutsList();
       notifyListeners();
-    } on Response catch (response) {
-      print(response);
+    } on DioError catch (e) {
+      if (checkDioError(e)) logout();
       rethrow;
     }
   }
 
   Future<void> getUpdatedStatuts({required int state}) async {
     try {
-      final response =
-          await api.getUpdatedStatut(bordereau: _currentScan, state: state);
+      await api.getUpdatedStatut(bordereau: _currentScan, state: state);
       await getCurrentScan();
       hasBeenUpdated = true;
       notifyListeners();
-    } on Response catch (response) {
-      print(response);
+    } on DioError catch (e) {
+      if (checkDioError(e)) logout();
       rethrow;
     }
   }
 
   Future<void> postSignature({required dynamic signature}) async {
     try {
-      final response = await api.postSignature(
+      await api.postSignature(
           courrierId: _courrier!.id, signature: signature);
-    } on Response catch (response) {
-      Map data = response.data;
-      print(response);
+    } on DioError catch (e) {
+      if (checkDioError(e)) logout();
       rethrow;
     }
   }
@@ -160,7 +154,6 @@ class DataRepository with ChangeNotifier {
     try {
       final response = await api.getTestToken(tokenToTest: tokenToTest);
       if (response.isNotEmpty) {
-        print("response = $response");
         APIService().token = tokenToTest;
         _isLogged = true;
         _name = response;
@@ -170,13 +163,9 @@ class DataRepository with ChangeNotifier {
         isLoading = false;
         return 200;
       }
-    } catch (response) {
-      print("erreur $response");
+    } on DioError catch (e) {
       isLoading = false;
-      if (response.toString().contains('403')) {
-        logout();
-        return 403;
-      }
+      if (checkDioError(e)) logout();
       rethrow;
     }
     return null;
@@ -193,12 +182,9 @@ class DataRepository with ChangeNotifier {
         await getCurrentScan();
         return response;
       }
-    } catch (response) {
+    } on DioError catch (e) {
       isLoading = false;
-      print(response);
-      if (response.toString().contains('403')) {
-        return "Le statut n'a pas été supprimé";
-      }
+         if (checkDioError(e)) logout();
       rethrow;
     }
     return null;
@@ -209,8 +195,8 @@ class DataRepository with ChangeNotifier {
       _myScans = await api.getMesScans();
       print (mesScans);
       notifyListeners();
-    } on Response catch(response) {
-      print(response);
+    } on DioError catch(e) {
+      if (checkDioError(e)) logout();
       rethrow;
     }
   }
@@ -218,7 +204,8 @@ class DataRepository with ChangeNotifier {
   Future<List<SearchScan>> getSearchScan({required String bordereau}) async {
     try {
       return await api.getSearchScan(bordereau: bordereau);
-    } on Response catch (response) {
+    } on DioError catch (e) {
+      if (checkDioError(e)) logout();
       rethrow;
     }
   }
@@ -230,7 +217,10 @@ class DataRepository with ChangeNotifier {
 
   logout() {
     APIService().token = "";
-    SharedHandler().removeToken();
     isLogged = false;
+  }
+
+  bool checkDioError(DioError e) {
+    return e.response?.statusCode == 403 || e.response?.statusCode == 401;
   }
 }
