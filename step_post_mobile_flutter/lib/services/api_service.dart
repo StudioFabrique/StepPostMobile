@@ -26,13 +26,12 @@ class APIService {
     ));
   }
 
-  set isToken(String value) {
+  setToken(String value) {
     token = value;
-    // dio.options.headers['Authorization'] = 'Bearer $token';
+    dio.options.headers['Authorization'] = 'Bearer $token';
   }
 
   Future<Response> getData({required String path}) async {
-    dio.options.headers['Authorization'] = "Bearer $token";
     final Response response = await dio.get(
       baseUrl + path,
     );
@@ -45,7 +44,6 @@ class APIService {
 
   Future<Response> putData(
       {required String path, required Map<String, dynamic> datas}) async {
-    dio.options.headers['Authorization'] = "Bearer $token";
     final response = await dio.put(baseUrl + path, data: datas);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response;
@@ -55,7 +53,6 @@ class APIService {
   }
 
   Future<Response> deleteData({required String path}) async {
-    dio.options.headers['Authorization'] = "Bearer $token";
     final Response response = await dio.delete(baseUrl + path);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response;
@@ -65,11 +62,10 @@ class APIService {
   }
 
   Future<String> getTestToken({required String tokenToTest}) async {
-    dio.options.headers['Authorization'] = "Bearer $tokenToTest";
+    dio.options.headers['Authorization'] = 'Beaer $tokenToTest';
     final response = await dio.get("$baseUrl/auth/handshake");
-    print("response = ${response.statusCode}");
     if (response.statusCode == 200) {
-      print(response.data['username']);
+      setToken(tokenToTest);
       return response.data['username'];
     } else {
       throw (response);
@@ -85,7 +81,7 @@ class APIService {
         "name": response.data['username'],
         "httpCode": response.statusCode
       };
-      token = response.data['token'];
+      setToken(response.data['token']);
       SharedHandler().addToken(token);
       return data;
     } else {

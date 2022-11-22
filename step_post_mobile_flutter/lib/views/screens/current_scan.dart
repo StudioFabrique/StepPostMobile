@@ -37,64 +37,77 @@ class _CurrentScanState extends State<CurrentScan> {
     final mail = dataProvider.courrier;
     return dataProvider.isLoading
         ? SpinKitDualRing(
-            color: kOrange,
-            size: 80,
-          )
+      color: kOrange,
+      size: 80,
+    )
         : Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-                SearchForm(callback: dataProvider.onSearchMail),
-                mail != null
-                    ? Column(children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 24),
-                          child: MailCard(
-                            mail: mail,
-                          ),
-                        ),
-                        MailInfos(
-                          date: dataProvider.courrier!.date,
-                          statut: dataProvider.etat,
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        mail.etat < 5
-                            ? CustomButton(
-                                label: "Modifier le Statut",
-                                callback: () {
-                                  Navigator.of(context).push(_createRoute());
-                                },
-                              )
-                            : const CustomText(
-                                label: 'Aucune action disponible',
-                                size: 20,
-                                fw: FontWeight.bold,
-                              ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        dataProvider.hasBeenUpdated
-                            ? CustomButton(
-                                label: "Annuler Statut",
-                                color: kOrange,
-                                callback: () {
-                                  dataProvider.deleteStatut(
-                                      bordereau:
-                                          dataProvider.courrier!.bordereau);
-                                })
-                            : const SizedBox()
-                      ])
-                    : Container(
-                        margin: const EdgeInsets.only(top: 100),
-                        child: Image.asset(
-                          "assets/images/203_1_1.png",
-                          width: MediaQuery.of(context).size.width,
-                          fit: BoxFit.cover,
-                        )),
-              ]);
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          SearchForm(callback: dataProvider.onSearchMail),
+          mail != null
+              ? Column(children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 16, vertical: 24),
+              child: MailCard(
+                mail: mail,
+              ),
+            ),
+            MailInfos(
+              date: dataProvider.courrier!.date,
+              statut: dataProvider.etat,
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            mail.etat < 5
+                ? CustomButton(
+              label: "Modifier le Statut",
+              callback: () {
+                Navigator.of(context).push(_createRoute());
+              },
+            )
+                : const CustomText(
+              label: 'Aucune action disponible',
+              size: 20,
+              fw: FontWeight.bold,
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            dataProvider.hasBeenUpdated
+                ? CustomButton(
+                label: "Annuler Statut",
+                color: kOrange,
+                callback: () {
+                  dataProvider.deleteStatut(
+                      bordereau:
+                      dataProvider.courrier!.bordereau);
+                })
+                : const SizedBox()
+          ])
+              : Container(
+            margin: const EdgeInsets.only(top: 100),
+            child: Column(
+              children: [
+                Image.asset(
+                  "assets/images/203_1_1.png",
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
+                ),
+                CustomText(
+                  label: dataProvider.courrier == null
+                      ? "Aucune recherche effectuée"
+                      : "Aucun résultat"
+                  ,
+                  size: 20,
+                  fw: FontWeight.bold,
+                )
+              ],
+            ),
+          ),
+        ]);
   }
 
   Route _createRoute() {
@@ -109,7 +122,7 @@ class _CurrentScanState extends State<CurrentScan> {
         const curve = Curves.ease;
 
         var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),
@@ -122,8 +135,8 @@ class _CurrentScanState extends State<CurrentScan> {
   toast(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
-      msg,
-      style: TextStyle(color: kOrange),
-    )));
+          msg,
+          style: TextStyle(color: kOrange),
+        )));
   }
 }

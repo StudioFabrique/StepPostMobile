@@ -23,12 +23,8 @@ class _MainControllerState extends State<MainController> {
 
   void initData() async {
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
-    print("coucou");
     String token = await SharedHandler().getToken();
     if (token.isNotEmpty) {
-      //  test
-      //  token = "";
-      print(token);
       int? code = await dataProvider.getTestToken(tokenToTest: token);
       if (code == 403) {
         toastError();

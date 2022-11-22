@@ -83,7 +83,6 @@ class DataRepository with ChangeNotifier {
       isLoading = true;
       final Map<String, dynamic> data =
           await api.login(username: username, password: password);
-      //  token = data['token']!;
       _name = data['name']!;
       if (_etats.isEmpty) {
         await getStatutsList();
@@ -153,7 +152,6 @@ class DataRepository with ChangeNotifier {
     try {
       final response = await api.getTestToken(tokenToTest: tokenToTest);
       if (response.isNotEmpty) {
-        APIService().token = tokenToTest;
         _isLogged = true;
         _name = response;
         if (_etats.isEmpty) {
@@ -192,9 +190,10 @@ class DataRepository with ChangeNotifier {
 
   Future<void> getMesScans() async {
     try {
+      isLoading = true;
       _myScans = await api.getMesScans();
-      print (mesScans);
       notifyListeners();
+      isLoading = false;
     } on DioError catch(e) {
       if (checkDioError(e)) logout();
       rethrow;
