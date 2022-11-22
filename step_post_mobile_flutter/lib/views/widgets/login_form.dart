@@ -83,7 +83,7 @@ class _LoginFormState extends State<LoginForm> {
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
                       int? code = await dataProvider.login(
-                          username: "test@test.fr", password: "1234");
+                          username: "toto@tata.fr", password: "1234");
                       if (code == 200) {
                         toast(code: code!, name: dataProvider.name);
                       } else if (code == 401) {

@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 
-class SearchForm extends StatelessWidget {
-  final TextEditingController formValue = TextEditingController();
-  final _mailKey = GlobalKey<FormState>();
+class SearchForm extends StatefulWidget {
   final Function callback;
 
-  SearchForm({super.key, required this.callback});
+  const SearchForm({Key? key, required this.callback}) : super(key: key);
+
+  @override
+  State<SearchForm> createState() => _SearchFormState();
+}
+
+class _SearchFormState extends State<SearchForm> {
+  late TextEditingController formValue;
+  late Function callback;
+  final _mailKey = GlobalKey<FormState>();
+  late FocusScopeNode currentFocus = FocusScope.of(context);
+
+  @override
+  void initState() {
+    formValue = TextEditingController();
+    callback = widget.callback;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    formValue.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +41,18 @@ class SearchForm extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width * .8,
               child: TextFormField(
+                onTap: () {
+                  if (!currentFocus.hasPrimaryFocus) {
+                    setState(() {
+                      currentFocus.unfocus();
+                    });
+                  }
+                },
+                onChanged: (newValue) {
+                  setState(() {
+                    formValue.text;
+                  });
+                },
                 controller: formValue,
                 validator: (value) {
                   if (value == null || !isNumeric(s: value)) {
@@ -27,7 +60,11 @@ class SearchForm extends StatelessWidget {
                   }
                 },
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
+                    suffixIcon: formValue.text.isEmpty
+                        ? null
+                        : IconButton(onPressed: () => clearTextFormField(), icon: const Icon(Icons.clear))
+                    ,
                     border: UnderlineInputBorder(),
                     focusColor: Colors.orange,
                     labelText: 'Saisissez un n° de bordereau'),
@@ -35,9 +72,12 @@ class SearchForm extends StatelessWidget {
             ),
             Ink(
                 decoration:
-                    ShapeDecoration(color: kBlue, shape: const CircleBorder()),
+                ShapeDecoration(color: kBlue, shape: const CircleBorder()),
                 child: IconButton(
                   onPressed: () {
+                    setState(() {
+                      currentFocus.unfocus();
+                    });
                     if (_mailKey.currentState!.validate()) {
                       callback(formValue.text);
                     }
@@ -54,12 +94,14 @@ class SearchForm extends StatelessWidget {
   bool isNumeric({required String s}) {
     return double.tryParse(s) != null;
   }
+
+  clearTextFormField() {
+    formValue.clear();
+    setState(() {});
+  }
 }
 
 
 
 
-/* _SearchFormState extends State<SearchForm> {
-  late TextEditingController bordereau;
-  final _mailKey = GlobalKey<FormState>();
-  late Function callback; */
+

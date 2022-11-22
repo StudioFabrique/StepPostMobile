@@ -5,8 +5,6 @@ import 'package:step_post_mobile_flutter/models/scan.dart';
 import 'package:step_post_mobile_flutter/models/statut.dart';
 import 'package:step_post_mobile_flutter/services/api_service.dart';
 
-import '../models/search_scan.dart';
-
 class DataRepository with ChangeNotifier {
   APIService api = APIService();
   String _name = "";
@@ -203,11 +201,12 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  Future<List<SearchScan>> getSearchScan({required String bordereau}) async {
+  Future<List<Scan>> getSearchScan({required String bordereau}) async {
     try {
       return await api.getSearchScan(bordereau: bordereau);
     } on DioError catch (e) {
       if (checkDioError(e)) logout();
+      if (e.response?.statusCode == 404) return [];
       rethrow;
     }
   }

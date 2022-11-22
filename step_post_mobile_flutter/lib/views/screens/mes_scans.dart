@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/models/scan.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
+import 'package:step_post_mobile_flutter/views/screens/search_scan_view.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_scan.dart';
-import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
 import 'package:step_post_mobile_flutter/views/widgets/search_form.dart';
+
+import '../widgets/no_result.dart';
 
 class MesScans extends StatefulWidget {
   const MesScans({Key? key}) : super(key: key);
@@ -22,12 +24,19 @@ class _MesScansState extends State<MesScans> {
   }
 
   void initData() async {
-    await context.read<DataRepository>().getMesScans();
+    if (context.read<DataRepository>().mesScans.isEmpty) {
+      await context.read<DataRepository>().getMesScans();
+    }
   }
 
   void callback(dynamic value) async {
-    await context.read<DataRepository>().getSearchScan(bordereau: value);
-  }
+    List<Scan> searchScans = await context.read<DataRepository>().getSearchScan(bordereau: value);
+    openSearchScansView(searchScans, value);
+   }
+
+   void openSearchScansView(List<Scan> scans, String bordereau) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScanView(scans: scans, bordereau: bordereau,)));
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +45,7 @@ class _MesScansState extends State<MesScans> {
     return Center(
       child:
       mesScans.isEmpty
-          ? Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const CustomText(label: "Aucun courrier n'a été scanné aujourd'hui", size: 20, fw: FontWeight.bold,),
-          Image.asset("assets/images/203_1_1.png",
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,),
-        ],)
+          ? const NoResult(message: "Aucun courrier n'a été scanné aujourd'hui",)
           : ListView.builder(itemBuilder: (context, index) {
         return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),

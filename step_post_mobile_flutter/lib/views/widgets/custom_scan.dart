@@ -27,6 +27,7 @@ class _CustomScanState extends State<CustomScan> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 10,
         color: FormatterService().getColor(scan.etat),
         child: Padding(
           padding: const EdgeInsets.all(16),
