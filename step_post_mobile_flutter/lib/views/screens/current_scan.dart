@@ -28,7 +28,6 @@ class _CurrentScanState extends State<CurrentScan> {
 
   @override
   void initState() {
-    print ("hello initstate");
     super.initState();
   }
 
@@ -109,10 +108,6 @@ class _CurrentScanState extends State<CurrentScan> {
   }
 
   checkUpdatedStatutResponse(int value) async {
-    await onConfirm(value);
-  }
-
-  Future<void> onConfirm(int value) async {
     await context.read<DataRepository>().getUpdatedStatuts(state: value);
   }
 
