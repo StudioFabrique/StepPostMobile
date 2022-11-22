@@ -58,6 +58,7 @@ class _SearchFormState extends State<SearchForm> {
                   if (value == null || !isNumeric(s: value)) {
                     return "Ceci n'est pas un n° de bordereau valide";
                   }
+                  return null;
                 },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -65,7 +66,7 @@ class _SearchFormState extends State<SearchForm> {
                         ? null
                         : IconButton(onPressed: () => clearTextFormField(), icon: const Icon(Icons.clear))
                     ,
-                    border: UnderlineInputBorder(),
+                    border: const UnderlineInputBorder(),
                     focusColor: Colors.orange,
                     labelText: 'Saisissez un n° de bordereau'),
               ),
