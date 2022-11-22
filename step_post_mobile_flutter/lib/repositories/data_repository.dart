@@ -13,7 +13,6 @@ class DataRepository with ChangeNotifier {
   String _currentScan = "";
   int _currentIndex = 0;
   InfosCourrier? _courrier;
-  bool _hasCourrier = false;
   List<Statut> _etats = [];
   List<Scan> _myScans = [];
   bool _hasBeenUpdated = false;
@@ -26,7 +25,6 @@ class DataRepository with ChangeNotifier {
   String get currentScan => _currentScan;
   int get currentIndex => _currentIndex;
   InfosCourrier? get courrier => _courrier;
-  bool get hasCourrier => _hasCourrier;
   String get etat => getEtat(_courrier!.etat);
   String getEtat(int value) {
     int index = _etats.indexWhere((element) => element.statutCode == value);
@@ -61,10 +59,6 @@ class DataRepository with ChangeNotifier {
 
   set courrier(InfosCourrier? value) {
     _courrier = value;
-  }
-
-  set hasCourrier(bool value) {
-    _hasCourrier = value;
   }
 
   set myScans(List<Scan> value) {
@@ -103,7 +97,6 @@ class DataRepository with ChangeNotifier {
     try {
       isLoading = true;
       _courrier = await api.getCurrentScan(bordereau: _currentScan);
-      hasCourrier = true;
       isLoading = false;
       hasBeenUpdated = false;
       notifyListeners();
@@ -129,7 +122,11 @@ class DataRepository with ChangeNotifier {
       final response = await api.getUpdatedStatut(bordereau: _currentScan, state: state);
       await getCurrentScan();
       hasBeenUpdated = true;
-      _myScans.insert(0, response);
+      if (_myScans.isEmpty) {
+        await getMesScans();
+      } else {
+        _myScans.insert(0, response);
+      }
       notifyListeners();
     } on DioError catch (e) {
       if (checkDioError(e)) logout();

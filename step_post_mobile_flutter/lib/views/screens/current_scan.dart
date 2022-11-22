@@ -28,6 +28,7 @@ class _CurrentScanState extends State<CurrentScan> {
 
   @override
   void initState() {
+    print ("hello initstate");
     super.initState();
   }
 
@@ -96,11 +97,8 @@ class _CurrentScanState extends State<CurrentScan> {
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.cover,
                 ),
-                CustomText(
-                  label: dataProvider.courrier == null
-                      ? "Aucune recherche effectuée"
-                      : "Aucun résultat"
-                  ,
+                const CustomText(
+                  label: "Aucun résultat",
                   size: 20,
                   fw: FontWeight.bold,
                 )
@@ -110,11 +108,19 @@ class _CurrentScanState extends State<CurrentScan> {
         ]);
   }
 
+  checkUpdatedStatutResponse(int value) async {
+    await onConfirm(value);
+  }
+
+  Future<void> onConfirm(int value) async {
+    await context.read<DataRepository>().getUpdatedStatuts(state: value);
+  }
+
   Route _createRoute() {
     final data = Provider.of<DataRepository>(context, listen: false);
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => UpdateStatut(
-        statut: data.courrier!.etat,
+        statut: data.courrier!.etat, updatedStatut: checkUpdatedStatutResponse,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);

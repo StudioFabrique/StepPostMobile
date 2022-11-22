@@ -20,12 +20,7 @@ class _TabViewControllerState extends State<TabViewController> {
 
   @override
   void initState() {
-    //initData();
     super.initState();
-  }
-
-  void initData() async {
-    // final dataProvider = Provider.of<DataRepository>(context, listen: false);
   }
 
   @override
@@ -62,7 +57,6 @@ class _TabViewControllerState extends State<TabViewController> {
   }
 
   void barTapped(int index) {
-    final provider = Provider.of<DataRepository>(context, listen: false);
-    provider.currentIndex = index;
+    context.read<DataRepository>().currentIndex = index;
   }
 }

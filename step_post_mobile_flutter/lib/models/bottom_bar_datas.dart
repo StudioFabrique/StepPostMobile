@@ -4,6 +4,7 @@ import 'package:step_post_mobile_flutter/views/screens/current_scan.dart';
 import 'package:step_post_mobile_flutter/views/screens/logout.dart';
 import 'package:step_post_mobile_flutter/views/screens/mes_scans.dart';
 
+
 class BottomBarDatas {
   List<TabMenuItem> items = [
     TabMenuItem(

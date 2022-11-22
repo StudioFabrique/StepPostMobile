@@ -9,10 +9,12 @@ import 'package:step_post_mobile_flutter/views/widgets/modal_confirm.dart';
 
 class UpdateStatut extends StatefulWidget {
   final int statut;
+  final Function updatedStatut;
 
   const UpdateStatut({
     super.key,
     required this.statut,
+    required this.updatedStatut
   });
 
   @override
@@ -24,34 +26,18 @@ class _UpdateStatutState extends State<UpdateStatut> {
   int limit = 9;
   late Function callback;
   bool isUpdated = false;
+  late Function updatedStatut;
 
   @override
   void initState() {
     statut = widget.statut;
+    updatedStatut = widget.updatedStatut;
     initData();
     super.initState();
   }
 
   void initData() {
     if (statut == 1) limit = 3;
-  }
-
-  void withSignature(int value) async {
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => SignaturePad(
-                  callback: () async {
-                    await onConfirm(value);
-                    dismiss();
-                  },
-                  state: value,
-                )));
-  }
-
-  void withoutSignature(int value) async {
-    await onConfirm(value);
-    dismiss();
   }
 
   updateStatut(int value) async {
@@ -63,21 +49,24 @@ class _UpdateStatutState extends State<UpdateStatut> {
               value: value,
               callback: value == 5
                   ? () {
-                      withSignature(value);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SignaturePad(
+                          callback: ()  {
+                            updatedStatut(value);
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                          state: value,
+                        )));
                     }
                   : () {
-                      withoutSignature(value);
+                      updatedStatut(value);
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     });
         });
-  }
-
-  void dismiss() {
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-  }
-
-  Future<void> onConfirm(int value) async {
-    await context.read<DataRepository>().getUpdatedStatuts(state: value);
   }
 
   @override
