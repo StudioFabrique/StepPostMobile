@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/models/scan.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_scan.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
 import 'package:step_post_mobile_flutter/views/widgets/search_form.dart';
 
 class MesScans extends StatefulWidget {
@@ -32,15 +33,26 @@ class _MesScansState extends State<MesScans> {
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataRepository>(context);
     List<Scan> mesScans = dataProvider.mesScans;
-    print("toto $mesScans");
-    return Center( child: ListView.builder(itemBuilder: (context, index) {
+    return Center(
+      child:
+      mesScans.isEmpty
+          ? Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const CustomText(label: "Aucun courrier n'a été scanné aujourd'hui", size: 20, fw: FontWeight.bold,),
+          Image.asset("assets/images/203_1_1.png",
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,),
+        ],)
+          : ListView.builder(itemBuilder: (context, index) {
         return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child:
             index == 0
-            ? SearchForm(callback: callback)
-            : Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16),
+                ? SearchForm(callback: callback)
+                : Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: CustomScan(scan: mesScans[index - 1])));
       },
         itemCount: mesScans.length + 1,),

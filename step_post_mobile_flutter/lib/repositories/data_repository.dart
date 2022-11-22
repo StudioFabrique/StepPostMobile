@@ -93,9 +93,9 @@ class DataRepository with ChangeNotifier {
       isLogged = true;
       isLoading = false;
       return data['httpCode'];
-    } catch (response) {
+    } on DioError catch (e) {
       isLoading = false;
-      if (response.toString().contains("401")) {
+      if (e.response?.statusCode == 401) {
         return 401;
       }
       rethrow;
@@ -129,9 +129,10 @@ class DataRepository with ChangeNotifier {
 
   Future<void> getUpdatedStatuts({required int state}) async {
     try {
-      await api.getUpdatedStatut(bordereau: _currentScan, state: state);
+      final response = await api.getUpdatedStatut(bordereau: _currentScan, state: state);
       await getCurrentScan();
       hasBeenUpdated = true;
+      _myScans.insert(0, response);
       notifyListeners();
     } on DioError catch (e) {
       if (checkDioError(e)) logout();
@@ -165,7 +166,7 @@ class DataRepository with ChangeNotifier {
       }
     } on DioError catch (e) {
       isLoading = false;
-      if (checkDioError(e)) logout();
+      if (e.response?.statusCode == 403) return 403;
       rethrow;
     }
     return null;
@@ -177,6 +178,7 @@ class DataRepository with ChangeNotifier {
       if (hasBeenUpdated) {
         final response =
             await api.deleteStatut(bordereau: bordereau.toString());
+        _myScans.removeAt(0);
         hasBeenUpdated = false;
         isLoading = false;
         await getCurrentScan();
