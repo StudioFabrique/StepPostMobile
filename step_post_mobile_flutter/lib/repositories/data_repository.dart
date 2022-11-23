@@ -16,6 +16,7 @@ class DataRepository with ChangeNotifier {
   List<Statut> _etats = [];
   List<Scan> _myScans = [];
   bool _hasBeenUpdated = false;
+  bool _error404 = true;
 
   //  getters
 
@@ -29,11 +30,10 @@ class DataRepository with ChangeNotifier {
     int index = _etats.indexWhere((element) => element.statutCode == value);
     return _etats[index].etat;
   }
-
   List<Scan> get mesScans => _myScans;
-
   bool get hasBeenUpdated => _hasBeenUpdated;
   List<Scan> get myScans => _myScans;
+  bool get error404 => _error404;
 
   //  setters
 
@@ -86,9 +86,14 @@ class DataRepository with ChangeNotifier {
     try {
       _courrier = await api.getCurrentScan(bordereau: _currentScan);
       hasBeenUpdated = false;
+      _error404 = false;
       notifyListeners();
     } on DioError catch (e) {
       if (checkDioError(e)) logout();
+      if (e.response?.statusCode == 404) {
+        _error404 = true;
+        notifyListeners();
+      }
       rethrow;
     }
   }

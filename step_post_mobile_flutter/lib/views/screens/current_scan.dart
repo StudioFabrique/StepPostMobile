@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
@@ -43,13 +42,13 @@ class _CurrentScanState extends State<CurrentScan> {
         mainAxisSize: MainAxisSize.max,
         children: [
           SearchForm(callback: dataProvider.onSearchMail),
-          mail != null
+          !dataProvider.error404
               ? Column(children: [
             Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: 16, vertical: 24),
               child: MailCard(
-                mail: mail,
+                mail: mail!,
               ),
             ),
             MailInfos(

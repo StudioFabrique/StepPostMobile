@@ -22,11 +22,11 @@ class CustomButton extends StatelessWidget {
       width: width,
       height: 50,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(backgroundColor: color),
+        style: ElevatedButton.styleFrom(backgroundColor: color, elevation: 10,),
         onPressed: value != null ? () => callback(value) : () => callback(),
         child: Text(
           label,
-          style: GoogleFonts.rubik(fontSize: 18),
+          style: GoogleFonts.rubik(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
     );
