@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
@@ -25,11 +26,11 @@ class _ScannerState extends State<Scanner> {
                   MaterialPageRoute(builder: (context) => const QRCodeScan()));
             },
             style: ElevatedButton.styleFrom(backgroundColor: kBlue),
-            child: const Padding(
-              padding: EdgeInsets.all(24),
+            child:  Padding(
+              padding: const EdgeInsets.all(24),
               child: Text(
                 'Scan un QR Code',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style: GoogleFonts.rubik(fontSize: 25, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -38,7 +39,7 @@ class _ScannerState extends State<Scanner> {
           ),
           Text(
             dataProvider.currentScan,
-            style: const TextStyle(fontSize: 40),
+            style: GoogleFonts.rubik(fontSize: 40),
           )
         ],
       ),

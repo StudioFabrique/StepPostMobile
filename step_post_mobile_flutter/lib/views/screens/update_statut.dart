@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
@@ -74,7 +75,7 @@ class _UpdateStatutState extends State<UpdateStatut> {
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ajouter un statut"),
+        title: Text("Ajouter un statut", style: GoogleFonts.rubik(),),
         centerTitle: true,
         backgroundColor: kBlue,
       ),

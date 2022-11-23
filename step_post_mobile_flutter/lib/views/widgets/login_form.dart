@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
@@ -109,20 +110,20 @@ class _LoginFormState extends State<LoginForm> {
         content: code == 200
             ? Row(
                 children: [
-                  const Text(
+                  Text(
                     "Bienvenue ",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: GoogleFonts.rubik(fontWeight: FontWeight.bold),
                   ),
                   Text(
                     name,
                     style:
-                        TextStyle(color: kGreen, fontWeight: FontWeight.bold),
+                        GoogleFonts.rubik(color: kGreen, fontWeight: FontWeight.bold),
                   )
                 ],
               )
             : Text(
                 "Identifiants incorrects",
-                style: TextStyle(color: kOrange, fontWeight: FontWeight.bold),
+                style: GoogleFonts.rubik(color: kOrange, fontWeight: FontWeight.bold),
               )));
   }
 }

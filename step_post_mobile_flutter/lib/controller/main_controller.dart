@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/controller/tab_view_controller.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
@@ -58,10 +59,10 @@ class _MainControllerState extends State<MainController> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Row(
       children: [
-        const Text("Bienvenue "),
+        Text("Bienvenue ", style: GoogleFonts.rubik(),),
         Text(
           context.read<DataRepository>().name,
-          style: TextStyle(
+          style: GoogleFonts.rubik(
               color: kGreen, fontSize: 14, fontWeight: FontWeight.bold),
         )
       ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/models/scan.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
@@ -44,8 +45,8 @@ class _CustomScanState extends State<CustomScan> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Bordereau n°", style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
-                      Text(scan.courrier.bordereau.toString(), style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: textColor),),
+                      Text("Bordereau n°", style: GoogleFonts.rubik(color: textColor, fontWeight: FontWeight.bold)),
+                      Text(scan.courrier.bordereau.toString(), style: GoogleFonts.rubik(fontSize: 28, fontWeight: FontWeight.bold, color: textColor),),
                     ],
                   ),
 
@@ -53,17 +54,14 @@ class _CustomScanState extends State<CustomScan> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(FormatterService().getType(scan.courrier.type), style: TextStyle(fontWeight: FontWeight.bold, color: textColor),),
-                      Text(FormatterService().getDate(scan.date), style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
-                      Text(FormatterService().getTime(scan.date), style: TextStyle(fontWeight: FontWeight.bold, color: textColor))
+                      Text(FormatterService().getType(scan.courrier.type), style: GoogleFonts.rubik(fontWeight: FontWeight.bold, color: textColor),),
+                      Text(FormatterService().getDate(scan.date), style: GoogleFonts.rubik(fontWeight: FontWeight.bold, color: textColor)),
+                      Text(FormatterService().getTime(scan.date), style: GoogleFonts.rubik(fontWeight: FontWeight.bold, color: textColor))
                     ],
                   )
                 ],
               ),
-              Container(
-                child:
-                Text(context.read<DataRepository>().getEtat(scan.etat).toUpperCase(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textColor)),
-              )
+              Text(context.read<DataRepository>().getEtat(scan.etat).toUpperCase(), style: GoogleFonts.rubik(fontSize: 20, fontWeight: FontWeight.bold, color: textColor))
             ],
           ),
         )

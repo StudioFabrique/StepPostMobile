@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomButton extends StatelessWidget {
   final String label;
@@ -25,7 +26,7 @@ class CustomButton extends StatelessWidget {
         onPressed: value != null ? () => callback(value) : () => callback(),
         child: Text(
           label,
-          style: const TextStyle(fontSize: 18),
+          style: GoogleFonts.rubik(fontSize: 18),
         ),
       ),
     );

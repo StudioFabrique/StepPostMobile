@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
@@ -55,14 +56,14 @@ class ModalConfirm extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(backgroundColor: kOrange),
-              child: const Text("ANNULER"),
+              child: Text("ANNULER", style: GoogleFonts.rubik(),),
             ),
             ElevatedButton(
                 onPressed: () {
                   callback();
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: kBlue),
-                child: const Text("CONFIRMER"))
+                child: Text("CONFIRMER", style: GoogleFonts.rubik(),))
           ],
         )
       ],

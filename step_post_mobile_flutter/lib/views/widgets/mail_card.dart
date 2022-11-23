@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:step_post_mobile_flutter/services/formatter_service.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
@@ -12,7 +11,6 @@ class MailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dataProvider = Provider.of<DataRepository>(context);
     return Card(
       elevation: 10,
       child: Padding(
@@ -35,7 +33,7 @@ class MailCard extends StatelessWidget {
                     const CustomText(label: "Bordereau n°", size: 16),
                     Text(
                       mail.bordereau.toString(),
-                      style: TextStyle(
+                      style: GoogleFonts.rubik(
                           color: kBlue,
                           fontSize: 24,
                           fontWeight: FontWeight.bold),

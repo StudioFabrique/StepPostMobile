@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
@@ -61,7 +62,7 @@ class _QRCodeScanState extends State<QRCodeScan> {
                         await dataProvider.getCurrentScan();
                         dataProvider.currentIndex = 0;
                       })
-                  : const Text('Scan a code'),
+                  : Text('Scan a code', style: GoogleFonts.rubik()),
             ),
           )
         ],

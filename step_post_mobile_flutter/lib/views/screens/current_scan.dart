@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
@@ -137,7 +138,7 @@ class _CurrentScanState extends State<CurrentScan> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           msg,
-          style: TextStyle(color: kOrange),
+          style: GoogleFonts.rubik(color: kOrange),
         )));
   }
 }

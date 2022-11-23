@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomText extends StatelessWidget {
   final String label;
@@ -19,7 +20,7 @@ class CustomText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: TextStyle(fontSize: size, color: color, fontWeight: fw),
+      style: GoogleFonts.rubik(fontSize: size, color: color, fontWeight: fw),
       textAlign: hasAlignment,
     );
   }
