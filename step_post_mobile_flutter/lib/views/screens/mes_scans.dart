@@ -18,6 +18,7 @@ class MesScans extends StatefulWidget {
 }
 
 class _MesScansState extends State<MesScans> {
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -25,10 +26,14 @@ class _MesScansState extends State<MesScans> {
     super.initState();
   }
 
-  void initData() async {
-    if (context.read<DataRepository>().mesScans.isEmpty) {
-      await context.read<DataRepository>().getMesScans();
-    }
+  Future<void> initData() async {
+    setState(() {
+      isLoading = true;
+    });
+    await context.read<DataRepository>().initData();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void callback(dynamic value) async {
@@ -46,10 +51,18 @@ class _MesScansState extends State<MesScans> {
     List<Scan> mesScans = dataProvider.mesScans;
     return Center(
       child:
-      dataProvider.isLoading
+      isLoading
           ? SpinKitDualRing(color: kOrange, size: 80,)
           : mesScans.isEmpty
-          ? const NoResult(message: "Aucun courrier n'a été scanné aujourd'hui",)
+          ? Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+            SearchForm(callback: callback),
+            Container(
+                margin: const EdgeInsets.only(top: 100),
+                child: const NoResult(message: "Aucun courrier n'a été scanné",))
+        ],
+      )
           : ListView.builder(itemBuilder: (context, index) {
         return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),

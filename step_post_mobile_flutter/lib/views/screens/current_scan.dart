@@ -21,6 +21,8 @@ class CurrentScan extends StatefulWidget {
 }
 
 class _CurrentScanState extends State<CurrentScan> {
+  bool isLoading = false;
+
   callback(bool value) {
     Future.delayed(Duration.zero, () {
       context.read<DataRepository>().hasBeenUpdated = value;
@@ -36,12 +38,7 @@ class _CurrentScanState extends State<CurrentScan> {
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataRepository>(context);
     final mail = dataProvider.courrier;
-    return dataProvider.isLoading
-        ? SpinKitDualRing(
-      color: kOrange,
-      size: 80,
-    )
-        : Column(
+    return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -109,7 +106,13 @@ class _CurrentScanState extends State<CurrentScan> {
   }
 
   checkUpdatedStatutResponse(int value) async {
+    setState(() {
+      isLoading = true;
+    });
     await context.read<DataRepository>().getUpdatedStatuts(state: value);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   Route _createRoute() {

@@ -61,7 +61,7 @@ class _CustomScanState extends State<CustomScan> {
                   )
                 ],
               ),
-              Text(context.read<DataRepository>().getEtat(scan.etat).toUpperCase(), style: GoogleFonts.rubik(fontSize: 20, fontWeight: FontWeight.bold, color: textColor))
+              Text(context.read<DataRepository>().getEtat(scan.etat).toUpperCase(), style: GoogleFonts.rubik(fontSize: 18, fontWeight: FontWeight.bold, color: textColor))
             ],
           ),
         )

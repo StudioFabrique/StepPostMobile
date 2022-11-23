@@ -17,6 +17,7 @@ class _LoginFormState extends State<LoginForm> {
   late TextEditingController username;
   late TextEditingController password;
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -38,7 +39,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataRepository>(context);
     return Center(
-        child: dataProvider.isLoading == false
+        child: !isLoading
             ? Form(
                 key: _formKey,
                 child: Column(children: <Widget>[
@@ -83,8 +84,14 @@ class _LoginFormState extends State<LoginForm> {
                       //if (_formKey.currentState!.validate()) {
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
+                      setState(() {
+                        isLoading = true;
+                      });
                       int? code = await dataProvider.login(
-                          username: "toto@tata.fr", password: "1234");
+                          username: "test@test.fr", password: "1234");
+                      setState(() {
+                        isLoading = false;
+                      });
                       if (code == 200) {
                         toast(code: code!, name: dataProvider.name);
                       } else if (code == 401) {

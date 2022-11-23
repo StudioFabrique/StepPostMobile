@@ -9,14 +9,16 @@ class NoResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomText(label: message, size: 20, fw: FontWeight.bold,),
-        Image.asset("assets/images/203_1_1.png",
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.cover,),
-      ],);
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          CustomText(label: message, size: 20, fw: FontWeight.bold,),
+          Image.asset("assets/images/203_1_1.png",
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,),
+        ],),
+    );
   }
 }

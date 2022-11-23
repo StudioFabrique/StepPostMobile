@@ -159,7 +159,6 @@ class APIService {
       List<Scan> scans = data.map<Scan>((dynamic jsonScan) {
         return Scan.fromJson(jsonScan);
       }).toList();
-      print(scans);
       return scans;
     } else {
       throw(response);

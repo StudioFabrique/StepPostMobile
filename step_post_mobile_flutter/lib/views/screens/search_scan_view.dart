@@ -16,16 +16,14 @@ class SearchScanView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataRepository>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Résultat n° : $bordereau"),
         centerTitle: true,
         backgroundColor: kBlue,
       ),
-      body:
-      dataProvider.isLoading
-          ? SpinKitDualRing(color: kOrange, size: 80)
-          : scans.isEmpty
+      body:scans.isEmpty
           ? const NoResult(message: "Aucun courrier n'a été trouvé")
           : Container(
         margin: const EdgeInsets.symmetric(vertical: 16),
