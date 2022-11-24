@@ -72,6 +72,7 @@ class APIService {
     }
   }
 
+  /// requête pour authentifier un user, stocke le token retourné dans le storage
   Future<Map<String, dynamic>> login(
       {required String username, required String password}) async {
     final response = await dio.post("$baseUrl/auth/facteur/login",

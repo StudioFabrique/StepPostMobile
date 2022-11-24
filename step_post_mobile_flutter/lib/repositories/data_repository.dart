@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
 import 'package:step_post_mobile_flutter/models/scan.dart';
@@ -8,7 +9,6 @@ import 'package:step_post_mobile_flutter/services/shared_handler.dart';
 
 class DataRepository with ChangeNotifier {
   APIService api = APIService();
-  String _name = "";
   bool _isLogged = false;
   String _currentScan = "";
   int _currentIndex = 0;
@@ -20,7 +20,6 @@ class DataRepository with ChangeNotifier {
 
   //  getters
 
-  String get name => _name;
   bool get isLogged => _isLogged;
   String get currentScan => _currentScan;
   int get currentIndex => _currentIndex;
@@ -61,22 +60,24 @@ class DataRepository with ChangeNotifier {
     _hasBeenUpdated = value;
   }
 
-  //  connexion
-  Future<int?> login(
+  /// connexion de l'utilisateur puis chargement de la liste des statuts
+  Future<Map<String, dynamic>?> login(
       {required String username, required String password}) async {
     try {
       final Map<String, dynamic> data =
           await api.login(username: username, password: password);
-      _name = data['name']!;
       if (_etats.isEmpty) {
         await getStatutsList();
       }
       isLogged = true;
       notifyListeners();
-      return data['httpCode'];
+      return data;
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
-        return 401;
+        Map<String, dynamic> data = {
+          "httpCode": 401
+        };
+        return data;
       }
       rethrow;
     }
@@ -141,7 +142,6 @@ class DataRepository with ChangeNotifier {
       final response = await api.getTestToken(tokenToTest: tokenToTest);
       if (response.isNotEmpty) {
         _isLogged = true;
-        _name = response;
         if (_etats.isEmpty) {
           await getStatutsList();
         }

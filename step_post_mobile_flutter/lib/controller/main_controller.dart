@@ -23,6 +23,7 @@ class _MainControllerState extends State<MainController> {
     super.initState();
   }
 
+  /// test la validité d'un potentiel jeton de session dans le storage
   void initData() async {
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
     String token = await SharedHandler().getToken();
@@ -36,6 +37,8 @@ class _MainControllerState extends State<MainController> {
     }
   }
 
+  /// si l'utilisateur est authentifié l'application devient accessible
+  /// à l'uilisateur, sinon la page de connexion est affichée
   @override
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataRepository>(context);
@@ -58,15 +61,7 @@ class _MainControllerState extends State<MainController> {
 
   void toastSuccess() {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Row(
-      children: [
-        Text("Bienvenue ", style: GoogleFonts.rubik(),),
-        Text(
-          context.read<DataRepository>().name,
-          style: GoogleFonts.rubik(
-              color: kGreen, fontSize: 14, fontWeight: FontWeight.bold),
-        )
-      ],
-    )));
+        content:
+        Text("Bienvenue ", style: GoogleFonts.rubik())));
   }
 }

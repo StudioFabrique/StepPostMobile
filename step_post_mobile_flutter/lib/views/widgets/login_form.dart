@@ -35,102 +35,104 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  /// formulaire de connexion
   @override
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataRepository>(context);
     return Center(
         child: !isLoading
             ? Form(
-                key: _formKey,
-                child: Column(children: <Widget>[
-                  TextFormField(
-                    controller: username,
-                    validator: (value) {
-                      if (value == null || !mailRegEX.hasMatch(value)) {
-                        return "Entrez une adresse email valide";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                        border: const UnderlineInputBorder(),
-                        focusColor: kBlue,
-                        labelText: "Entrez votre Email"),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  TextFormField(
-                    controller: password,
-                    validator: (value) {
-                      if (value == null || !isNumeric(s: value)) {
-                        return "Entrez un mot de passe valide";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                        border: const UnderlineInputBorder(),
-                        focusColor: kBlue,
-                        labelText: "Entrez votre mot de passe"),
-                    obscureText: true,
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(
-                    height: 48,
-                  ),
-                  CustomButton(
-                    label: "Se connecter",
-                    callback: () async {
-                      //if (_formKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      setState(() {
-                        isLoading = true;
-                      });
-                      int? code = await dataProvider.login(
-                          username: "test@test.fr", password: "1234");
-                      setState(() {
-                        isLoading = false;
-                      });
-                      if (code == 200) {
-                        toast(code: code!, name: dataProvider.name);
-                      } else if (code == 401) {
-                        toast(code: code!);
-                      }
-                      //  }
-                    },
-                  )
-                ]),
-              )
+          key: _formKey,
+          child: Column(children: <Widget>[
+            TextFormField(
+              controller: username,
+              validator: (value) {
+                if (value == null || !mailRegEX.hasMatch(value)) {
+                  return "Entrez une adresse email valide";
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                  border: const UnderlineInputBorder(),
+                  focusColor: kBlue,
+                  labelText: "Entrez votre Email"),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            TextFormField(
+              controller: password,
+              validator: (value) {
+                if (value == null || !isNumeric(s: value)) {
+                  return "Entrez un mot de passe valide";
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                  border: const UnderlineInputBorder(),
+                  focusColor: kBlue,
+                  labelText: "Entrez votre mot de passe"),
+              obscureText: true,
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(
+              height: 48,
+            ),
+            CustomButton(
+              label: "Se connecter",
+              callback: () async {
+                if (_formKey.currentState!.validate()) {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  final data = await dataProvider.login(
+                      username: username.text, password: password.text);
+                  setState(() {
+                    isLoading = false;
+                  });
+                  if (data!['httpCode'] == 200) {
+                    toast(code: data['httpCode']!, name: data['name']);
+                  } else if (data['httpCode'] == 401) {
+                    toast(code: data['httpCode']);
+                  }
+                }
+              },
+            )
+          ]),
+        )
             : SpinKitDualRing(
-                color: kOrange,
-                size: 60,
-              ));
+          color: kOrange,
+          size: 60,
+        ));
   }
 
+  /// vérifie si s est une chaîne de caractères composée uniquement de chiffres
   bool isNumeric({required String s}) {
     return double.tryParse(s) != null;
   }
 
+  /// affiche un toast en fonctiondu résultat de la tentative de connexion
+  /// de l'utilisateur
   void toast({required int code, String name = ""}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: code == 200
             ? Row(
-                children: [
-                  Text(
-                    "Bienvenue ",
-                    style: GoogleFonts.rubik(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    name,
-                    style:
-                        GoogleFonts.rubik(color: kGreen, fontWeight: FontWeight.bold),
-                  )
-                ],
-              )
+          children: [
+            Text(
+              "Bienvenue ",
+              style: GoogleFonts.rubik(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              name,
+              style:
+              GoogleFonts.rubik(color: kGreen, fontWeight: FontWeight.bold),
+            )
+          ],
+        )
             : Text(
-                "Identifiants incorrects",
-                style: GoogleFonts.rubik(color: kOrange, fontWeight: FontWeight.bold),
-              )));
+          "Identifiants incorrects",
+          style: GoogleFonts.rubik(color: kOrange, fontWeight: FontWeight.bold),
+        )));
   }
 }

@@ -19,11 +19,6 @@ class _TabViewControllerState extends State<TabViewController> {
   final List<TabMenuItem> items = BottomBarDatas().getItems();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataRepository>(context);
     return Scaffold(

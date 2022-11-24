@@ -52,7 +52,7 @@ class _CurrentScanState extends State<CurrentScan> {
               ),
             ),
             MailInfos(
-              date: dataProvider.courrier!.date,
+              date: mail.date,
               statut: dataProvider.etat,
             ),
             const SizedBox(
@@ -80,7 +80,7 @@ class _CurrentScanState extends State<CurrentScan> {
                 callback: () {
                   dataProvider.deleteStatut(
                       bordereau:
-                      dataProvider.courrier!.bordereau);
+                      mail.bordereau);
                 })
                 : const SizedBox()
           ])
