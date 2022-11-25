@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/screens/update_statut.dart';
@@ -21,6 +22,7 @@ class CurrentScan extends StatefulWidget {
 
 class _CurrentScanState extends State<CurrentScan> {
   bool isLoading = false;
+  InfosCourrier? mail;
 
   callback(bool value) {
     Future.delayed(Duration.zero, () {
@@ -35,14 +37,14 @@ class _CurrentScanState extends State<CurrentScan> {
 
   @override
   Widget build(BuildContext context) {
-    final dataProvider = Provider.of<DataRepository>(context);
-    final mail = dataProvider.courrier;
+    ///final dataProvider = Provider.of<DataRepository>(context);
+    mail = context.watch<DataRepository>().courrier;
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          SearchForm(callback: dataProvider.onSearchMail),
-          !dataProvider.error404
+          SearchForm(callback: context.watch<DataRepository>().onSearchMail),
+          mail != null
               ? Column(children: [
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -52,13 +54,13 @@ class _CurrentScanState extends State<CurrentScan> {
               ),
             ),
             MailInfos(
-              date: mail.date,
-              statut: dataProvider.etat,
+              date: mail!.date,
+              statut: context.watch<DataRepository>().etat,
             ),
             const SizedBox(
               height: 24,
             ),
-            mail.etat < 5
+            mail!.etat < 5
                 ? CustomButton(
               label: "Modifier le Statut",
               callback: () {
@@ -73,14 +75,14 @@ class _CurrentScanState extends State<CurrentScan> {
             const SizedBox(
               height: 24,
             ),
-            dataProvider.hasBeenUpdated
+            context.watch<DataRepository>().hasBeenUpdated
                 ? CustomButton(
                 label: "Annuler Statut",
                 color: kOrange,
                 callback: () {
-                  dataProvider.deleteStatut(
+                  context.read<DataRepository>().deleteStatut(
                       bordereau:
-                      mail.bordereau);
+                      mail!.bordereau);
                 })
                 : const SizedBox()
           ])
@@ -115,10 +117,9 @@ class _CurrentScanState extends State<CurrentScan> {
   }
 
   Route _createRoute() {
-    final data = Provider.of<DataRepository>(context, listen: false);
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => UpdateStatut(
-        statut: data.courrier!.etat, updatedStatut: checkUpdatedStatutResponse,
+        statut: context.watch<DataRepository>().courrier!.etat, updatedStatut: checkUpdatedStatutResponse,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);
@@ -136,11 +137,4 @@ class _CurrentScanState extends State<CurrentScan> {
     );
   }
 
-  toast(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          msg,
-          style: GoogleFonts.rubik(color: kOrange),
-        )));
-  }
 }

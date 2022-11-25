@@ -71,7 +71,11 @@ class _MesScansState extends State<MesScans> {
                 ? SearchForm(callback: callback)
                 : Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
-                child: CustomScan(scan: mesScans[index - 1])));
+                child: InkWell(
+                  onDoubleTap: () {
+                    callback(mesScans[index - 1].courrier.bordereau.toString());
+                  },
+                    child: CustomScan(scan: mesScans[index - 1]))));
       },
         itemCount: mesScans.length + 1,),
     );
