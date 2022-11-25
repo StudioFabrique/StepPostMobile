@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:step_post_mobile_flutter/repositories/scan_result_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
 
@@ -58,8 +59,8 @@ class _QRCodeScanState extends State<QRCodeScan> {
                       label: '${result!.code}',
                       callback: () async {
                         Navigator.of(context).pop();
-                        dataProvider.currentScan = result!.code!;
-                        await dataProvider.getCurrentScan();
+                        await context.read<ScanResultRepository>().getCurrentScan(bordereau: result!.code!);
+                        //await dataProvider.getCurrentScan();
                         dataProvider.currentIndex = 0;
                       })
                   : Text('Scan a code', style: GoogleFonts.rubik()),

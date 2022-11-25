@@ -1,146 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
-import 'package:step_post_mobile_flutter/utils/constantes.dart';
-import 'package:step_post_mobile_flutter/views/screens/update_statut.dart';
-import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
-import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
+import 'package:step_post_mobile_flutter/repositories/scan_result_repository.dart';
 import 'package:step_post_mobile_flutter/views/widgets/mail_card.dart';
-import 'package:step_post_mobile_flutter/views/widgets/mail_infos.dart';
-import 'package:step_post_mobile_flutter/views/widgets/search_form.dart';
 
-class CurrentScan extends StatefulWidget {
-  const CurrentScan({
-    super.key,
-  });
-
-  @override
-  State<CurrentScan> createState() => _CurrentScanState();
-}
-
-class _CurrentScanState extends State<CurrentScan> {
-  bool isLoading = false;
-
-  callback(bool value) {
-    Future.delayed(Duration.zero, () {
-      context.read<DataRepository>().hasBeenUpdated = value;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
+class CurrentScan extends StatelessWidget {
+  const CurrentScan({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final dataProvider = Provider.of<DataRepository>(context);
-    final mail = dataProvider.courrier;
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          SearchForm(callback: dataProvider.onSearchMail),
-          !dataProvider.error404
-              ? Column(children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 16, vertical: 24),
-              child: MailCard(
-                mail: mail!,
-              ),
-            ),
-            MailInfos(
-              date: mail.date,
-              statut: dataProvider.etat,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            mail.etat < 5
-                ? CustomButton(
-              label: "Modifier le Statut",
-              callback: () {
-                Navigator.of(context).push(_createRoute());
-              },
-            )
-                : const CustomText(
-              label: 'Aucune action disponible',
-              size: 20,
-              fw: FontWeight.bold,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            dataProvider.hasBeenUpdated
-                ? CustomButton(
-                label: "Annuler Statut",
-                color: kOrange,
-                callback: () {
-                  dataProvider.deleteStatut(
-                      bordereau:
-                      mail.bordereau);
-                })
-                : const SizedBox()
-          ])
-              : Container(
-            margin: const EdgeInsets.only(top: 100),
-            child: Column(
-              children: [
-                Image.asset(
-                  "assets/images/203_1_1.png",
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.cover,
-                ),
-                const CustomText(
-                  label: "Aucun résultat",
-                  size: 20,
-                  fw: FontWeight.bold,
-                )
-              ],
-            ),
-          ),
-        ]);
-  }
-
-  checkUpdatedStatutResponse(int value) async {
-    setState(() {
-      isLoading = true;
-    });
-    await context.read<DataRepository>().getUpdatedStatuts(state: value);
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  Route _createRoute() {
-    final data = Provider.of<DataRepository>(context, listen: false);
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => UpdateStatut(
-        statut: data.courrier!.etat, updatedStatut: checkUpdatedStatutResponse,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
-
-        var tween =
-        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
-    );
-  }
-
-  toast(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          msg,
-          style: GoogleFonts.rubik(color: kOrange),
-        )));
+    final mail = context.watch<ScanResultRepository>().mail;
+    return
+      mail != null
+      ? MailCard(mail: mail!)
+      : SizedBox();
   }
 }

@@ -198,11 +198,10 @@ class DataRepository with ChangeNotifier {
     await getCurrentScan();
   }
 
-  logout() {
+  static logout() {
     APIService().setToken("");
     SharedHandler().removeToken();
-    isLogged = false;
-    notifyListeners();
+    self:isLogged = false;
   }
 
   bool checkDioError(DioError e) {
