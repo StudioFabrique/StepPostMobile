@@ -14,7 +14,6 @@ class _SearchFormState extends State<SearchForm> {
   late TextEditingController formValue;
   late Function callback;
   final _mailKey = GlobalKey<FormState>();
-  late FocusScopeNode currentFocus = FocusScope.of(context);
 
   @override
   void initState() {
@@ -41,13 +40,6 @@ class _SearchFormState extends State<SearchForm> {
             SizedBox(
               width: MediaQuery.of(context).size.width * .8,
               child: TextFormField(
-                onTap: () {
-                  if (!currentFocus.hasPrimaryFocus) {
-                    setState(() {
-                      currentFocus.unfocus();
-                    });
-                  }
-                },
                 onChanged: (newValue) {
                   setState(() {
                     formValue.text;
@@ -64,21 +56,19 @@ class _SearchFormState extends State<SearchForm> {
                 decoration: InputDecoration(
                     suffixIcon: formValue.text.isEmpty
                         ? null
-                        : IconButton(onPressed: () => clearTextFormField(), icon: const Icon(Icons.clear))
-                    ,
+                        : IconButton(
+                            onPressed: () => clearTextFormField(),
+                            icon: const Icon(Icons.clear)),
                     border: const UnderlineInputBorder(),
-                    focusColor: Colors.orange,
                     labelText: 'Saisissez un n° de bordereau'),
               ),
             ),
             Ink(
                 decoration:
-                ShapeDecoration(color: kBlue, shape: const CircleBorder()),
+                    ShapeDecoration(color: kBlue, shape: const CircleBorder()),
                 child: IconButton(
                   onPressed: () {
-                    setState(() {
-                      currentFocus.unfocus();
-                    });
+                    FocusScope.of(context).requestFocus(FocusNode());
                     if (_mailKey.currentState!.validate()) {
                       callback(formValue.text);
                     }
@@ -101,8 +91,3 @@ class _SearchFormState extends State<SearchForm> {
     setState(() {});
   }
 }
-
-
-
-
-

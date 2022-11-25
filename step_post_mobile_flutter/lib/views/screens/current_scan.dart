@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
+import 'package:step_post_mobile_flutter/repositories/update_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/screens/update_statut.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
@@ -82,7 +82,10 @@ class _CurrentScanState extends State<CurrentScan> {
                 callback: () {
                   context.read<DataRepository>().deleteStatut(
                       bordereau:
-                      mail!.bordereau);
+                      mail!.bordereau,
+                      state: context.read<UpdateRepository>().oldValue!
+                  );
+                  context.read<UpdateRepository>().oldValue = null;
                 })
                 : const SizedBox()
           ])
@@ -107,6 +110,7 @@ class _CurrentScanState extends State<CurrentScan> {
   }
 
   checkUpdatedStatutResponse(int value) async {
+    context.read<UpdateRepository>().oldValue = mail!.etat;
     setState(() {
       isLoading = true;
     });

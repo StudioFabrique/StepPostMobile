@@ -110,7 +110,7 @@ class DataRepository with ChangeNotifier {
     try {
       final response =
           await api.getUpdatedStatut(bordereau: _currentScan, state: state);
-      await getCurrentScan();
+      _courrier!.etat = state;
       hasBeenUpdated = true;
       if (_myScans.isEmpty) {
         await getMesScans();
@@ -152,14 +152,16 @@ class DataRepository with ChangeNotifier {
     return null;
   }
 
-  Future<String?> deleteStatut({required int bordereau}) async {
+  Future<String?> deleteStatut({required int bordereau, required int state}) async {
     try {
+      print(state);
       if (hasBeenUpdated) {
+        //int oldEtat = _courrier!.etat;
         final response =
             await api.deleteStatut(bordereau: bordereau.toString());
         _myScans.removeAt(0);
         hasBeenUpdated = false;
-        await getCurrentScan();
+        _courrier!.etat = state;
         notifyListeners();
         return response;
       }
