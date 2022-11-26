@@ -162,12 +162,13 @@ class APIService {
       }).toList();
       return scans;
     } else {
-      throw(response);
+      throw (response);
     }
   }
-  
+
   Future<List<Scan>> getSearchScan({required String bordereau}) async {
-    final response = await getData(path: "/facteur/recherche-scans?bordereau=$bordereau");
+    final response =
+        await getData(path: "/facteur/recherche-scans?bordereau=$bordereau");
     if (response.statusCode == 200) {
       Map data = response.data;
       print(data);
@@ -182,7 +183,7 @@ class APIService {
       }).toList();
       return scans;
     } else {
-      throw(response);
+      throw (response);
     }
   }
 }

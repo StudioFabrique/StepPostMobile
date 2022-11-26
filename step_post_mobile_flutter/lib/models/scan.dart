@@ -1,5 +1,3 @@
-import 'package:step_post_mobile_flutter/models/statut.dart';
-
 import 'courrier.dart';
 
 class Scan {
@@ -15,9 +13,8 @@ class Scan {
 
   factory Scan.fromJson(Map<String, dynamic> map) {
     return Scan(
-      date: DateTime.parse((map['date'])),
-      etat:  map['s']['statutCode'],
-      courrier : Courrier.fromJson(map['courrier'])
-    );
+        date: DateTime.parse((map['date'])),
+        etat: map['s']['statutCode'],
+        courrier: Courrier.fromJson(map['courrier']));
   }
 }
