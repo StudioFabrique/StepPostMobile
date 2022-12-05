@@ -43,6 +43,7 @@ class _TabViewControllerState extends State<TabViewController> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const QRCodeScan()));
         },
+        elevation: 10,
         child: const Icon(
           Icons.camera_alt_outlined,
           color: Colors.white,
