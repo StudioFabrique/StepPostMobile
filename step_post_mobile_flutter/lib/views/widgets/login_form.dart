@@ -82,12 +82,12 @@ class _LoginFormState extends State<LoginForm> {
             CustomButton(
               label: "Se connecter",
               callback: () async {
-                //if (_formKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate()) {
                   setState(() {
                     isLoading = true;
                   });
                   final data = await dataProvider.login(
-                      username: "toto@tata.fr", password: "1234");
+                      username: username.text, password: password.text);
                   setState(() {
                     isLoading = false;
                   });
@@ -96,7 +96,7 @@ class _LoginFormState extends State<LoginForm> {
                   } else if (data['httpCode'] == 401) {
                     toast(code: data['httpCode']);
                   }
-                //}
+                }
               },
             )
           ]),
