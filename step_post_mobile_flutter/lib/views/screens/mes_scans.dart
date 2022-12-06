@@ -82,7 +82,7 @@ class _MesScansState extends State<MesScans> {
                                         horizontal: 16),
                                     child: InkWell(
                                         onDoubleTap: () {
-                                          callback(mesScans[index - 1]
+                                          callback(mesScans[index]
                                               .courrier
                                               .bordereau
                                               .toString());
