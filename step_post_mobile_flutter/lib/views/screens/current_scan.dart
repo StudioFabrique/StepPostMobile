@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
-import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
-import 'package:step_post_mobile_flutter/repositories/update_repository.dart';
-import 'package:step_post_mobile_flutter/utils/constantes.dart';
-import 'package:step_post_mobile_flutter/views/screens/update_statut.dart';
-import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
-import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
-import 'package:step_post_mobile_flutter/views/widgets/mail_card.dart';
-import 'package:step_post_mobile_flutter/views/widgets/mail_infos.dart';
-import 'package:step_post_mobile_flutter/views/widgets/search_form.dart';
+import 'package:step_post_mobile_flutter/views/widgets/no_result.dart';
+
+import '../../models/infos_courriers.dart';
+import '../../repositories/data_repository.dart';
+import '../../repositories/update_repository.dart';
+import '../../utils/constantes.dart';
+import '../../views/screens/update_statut.dart';
+import '../../views/widgets/custom_button.dart';
+import '../../views/widgets/custom_text.dart';
+import '../../views/widgets/mail_card.dart';
+import '../../views/widgets/mail_infos.dart';
+import '../../views/widgets/search_form.dart';
+import '../../views/widgets/welcome_widget.dart';
 
 class CurrentScan extends StatefulWidget {
   const CurrentScan({
@@ -46,66 +49,56 @@ class _CurrentScanState extends State<CurrentScan> {
           SearchForm(callback: context.watch<DataRepository>().onSearchMail),
           mail != null
               ? Column(children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 16, vertical: 24),
-              child: MailCard(
-                mail: mail!,
-              ),
-            ),
-            MailInfos(
-              date: mail!.date,
-              statut: context.watch<DataRepository>().etat,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            mail!.etat < 5
-                ? CustomButton(
-              label: "Modifier le Statut",
-              callback: () {
-                Navigator.of(context).push(_createRoute());
-              },
-            )
-                : const CustomText(
-              label: 'Aucune action disponible',
-              size: 20,
-              fw: FontWeight.bold,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            context.watch<DataRepository>().hasBeenUpdated
-                ? CustomButton(
-                label: "Annuler Statut",
-                color: kOrange,
-                callback: () {
-                  context.read<DataRepository>().deleteStatut(
-                      bordereau:
-                      mail!.bordereau,
-                      state: context.read<UpdateRepository>().oldValue!
-                  );
-                  context.read<UpdateRepository>().oldValue = null;
-                })
-                : const SizedBox()
-          ])
-              : Container(
-            margin: const EdgeInsets.only(top: 100),
-            child: Column(
-              children: [
-                Image.asset(
-                  "assets/images/203_1_1.png",
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.cover,
-                ),
-                const CustomText(
-                  label: "Aucun résultat",
-                  size: 20,
-                  fw: FontWeight.bold,
-                )
-              ],
-            ),
-          ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 24),
+                    child: MailCard(
+                      mail: mail!,
+                    ),
+                  ),
+                  MailInfos(
+                    date: mail!.date,
+                    statut: context.watch<DataRepository>().etat,
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  mail!.etat < 5
+                      ? CustomButton(
+                          label: "Modifier le Statut",
+                          callback: () {
+                            Navigator.of(context).push(_createRoute());
+                          },
+                        )
+                      : const CustomText(
+                          label: 'Aucune action disponible',
+                          size: 20,
+                          fw: FontWeight.bold,
+                        ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  context.watch<DataRepository>().hasBeenUpdated
+                      ? CustomButton(
+                          label: "Annuler Statut",
+                          color: kOrange,
+                          callback: () {
+                            context.read<DataRepository>().deleteStatut(
+                                bordereau: mail!.bordereau,
+                                state:
+                                    context.read<UpdateRepository>().oldValue!);
+                            context.read<UpdateRepository>().oldValue = null;
+                          })
+                      : const SizedBox()
+                ])
+              : context.watch<DataRepository>().isWelcome
+                  ? Container(
+                      margin: const EdgeInsets.only(top: 50),
+                      child: const NoResult(
+                        message: "Aucun courrier n'a été trouvé",
+                      ),
+                    )
+                  : const WelcomeWidget(),
         ]);
   }
 
@@ -123,7 +116,8 @@ class _CurrentScanState extends State<CurrentScan> {
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => UpdateStatut(
-        statut: context.watch<DataRepository>().courrier!.etat, updatedStatut: checkUpdatedStatutResponse,
+        statut: context.watch<DataRepository>().courrier!.etat,
+        updatedStatut: checkUpdatedStatutResponse,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);
@@ -131,7 +125,7 @@ class _CurrentScanState extends State<CurrentScan> {
         const curve = Curves.ease;
 
         var tween =
-        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),
@@ -140,5 +134,4 @@ class _CurrentScanState extends State<CurrentScan> {
       },
     );
   }
-
 }

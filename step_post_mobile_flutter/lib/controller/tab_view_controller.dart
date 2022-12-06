@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:step_post_mobile_flutter/models/bottom_bar_datas.dart';
-import 'package:step_post_mobile_flutter/models/tab_menu_item.dart';
-import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
-import 'package:step_post_mobile_flutter/utils/constantes.dart';
-import 'package:step_post_mobile_flutter/views/screens/qrcode_scan.dart';
+
+import '../models/bottom_bar_datas.dart';
+import '../models/tab_menu_item.dart';
+import '../repositories/data_repository.dart';
+import '../utils/constantes.dart';
+import '../views/screens/qrcode_scan.dart';
 
 class TabViewController extends StatefulWidget {
   const TabViewController({super.key});
@@ -20,19 +21,20 @@ class _TabViewControllerState extends State<TabViewController> {
 
   @override
   Widget build(BuildContext context) {
-    final dataProvider = Provider.of<DataRepository>(context);
+    //final dataProvider = Provider.of<DataRepository>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: kBlue,
-        title: items[dataProvider.currentIndex].appBarTitle,
+        title: items[context.watch<DataRepository>().currentIndex].appBarTitle,
         centerTitle: true,
       ),
-      body: items[dataProvider.currentIndex].page,
+      body: items[context.watch<DataRepository>().currentIndex].page,
       bottomNavigationBar: BottomNavigationBar(
         key: globalKey,
         backgroundColor: kBlue,
         unselectedItemColor: Colors.white,
-        currentIndex: dataProvider.currentIndex,
+        currentIndex: context.watch<DataRepository>().currentIndex,
         items: items.map((item) => item.item).toList(),
         onTap: barTapped,
       ),

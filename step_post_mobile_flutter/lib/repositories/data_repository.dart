@@ -16,9 +16,11 @@ class DataRepository with ChangeNotifier {
   List<Statut> _etats = [];
   List<Scan> _myScans = [];
   bool _hasBeenUpdated = false;
+  bool _welcome = false;
 
   //  getters
 
+  bool get isWelcome => _welcome;
   bool get isLogged => _isLogged;
   String get currentScan => _currentScan;
   int get currentIndex => _currentIndex;
@@ -28,11 +30,16 @@ class DataRepository with ChangeNotifier {
     int index = _etats.indexWhere((element) => element.statutCode == value);
     return _etats[index].etat;
   }
+
   List<Scan> get mesScans => _myScans;
   bool get hasBeenUpdated => _hasBeenUpdated;
   List<Scan> get myScans => _myScans;
 
   //  setters
+
+  set isWelcome(bool value) {
+    _welcome = value;
+  }
 
   set isLogged(bool value) {
     _isLogged = value;
@@ -47,8 +54,7 @@ class DataRepository with ChangeNotifier {
     _currentScan = value;
   }
 
-  set courrier(InfosCourrier? value) {
-  }
+  set courrier(InfosCourrier? value) {}
 
   set myScans(List<Scan> value) {
     _myScans = value;
@@ -72,9 +78,7 @@ class DataRepository with ChangeNotifier {
       return data;
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
-        Map<String, dynamic> data = {
-          "httpCode": 401
-        };
+        Map<String, dynamic> data = {"httpCode": 401};
         return data;
       }
       rethrow;
@@ -82,6 +86,7 @@ class DataRepository with ChangeNotifier {
   }
 
   Future<void> getCurrentScan() async {
+    if (!_welcome) _welcome = true;
     try {
       _courrier = await api.getCurrentScan(bordereau: _currentScan);
       hasBeenUpdated = false;
@@ -152,7 +157,8 @@ class DataRepository with ChangeNotifier {
     return null;
   }
 
-  Future<String?> deleteStatut({required int bordereau, required int state}) async {
+  Future<String?> deleteStatut(
+      {required int bordereau, required int state}) async {
     try {
       print(state);
       if (hasBeenUpdated) {
@@ -202,6 +208,8 @@ class DataRepository with ChangeNotifier {
     SharedHandler().removeToken();
     isLogged = false;
     _myScans = [];
+    _courrier = null;
+    _welcome = false;
     notifyListeners();
   }
 

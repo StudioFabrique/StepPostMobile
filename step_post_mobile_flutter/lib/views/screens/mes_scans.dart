@@ -37,12 +37,19 @@ class _MesScansState extends State<MesScans> {
   }
 
   void callback(dynamic value) async {
-    List<Scan> searchScans = await context.read<DataRepository>().getSearchScan(bordereau: value);
+    List<Scan> searchScans =
+        await context.read<DataRepository>().getSearchScan(bordereau: value);
     openSearchScansView(searchScans, value);
   }
 
   void openSearchScansView(List<Scan> scans, String bordereau) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScanView(scans: scans, bordereau: bordereau,)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SearchScanView(
+                  scans: scans,
+                  bordereau: bordereau,
+                )));
   }
 
   @override
@@ -50,34 +57,42 @@ class _MesScansState extends State<MesScans> {
     final dataProvider = Provider.of<DataRepository>(context);
     List<Scan> mesScans = dataProvider.mesScans;
     return Center(
-      child:
-      isLoading
-          ? SpinKitDualRing(color: kOrange, size: 80,)
-          : mesScans.isEmpty
-          ? Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-            SearchForm(callback: callback),
-            Container(
-                margin: const EdgeInsets.only(top: 100),
-                child: const NoResult(message: "Aucun courrier n'a été scanné",))
-        ],
-      )
-          : ListView.builder(itemBuilder: (context, index) {
-        return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child:
-            index == 0
-                ? SearchForm(callback: callback)
-                : Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                child: InkWell(
-                  onDoubleTap: () {
-                    callback(mesScans[index - 1].courrier.bordereau.toString());
-                  },
-                    child: CustomScan(scan: mesScans[index - 1]))));
-      },
-        itemCount: mesScans.length + 1,),
-    );
+        child: isLoading
+            ? SpinKitDualRing(
+                color: kOrange,
+                size: 80,
+              )
+            : Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                SearchForm(callback: callback),
+                mesScans.isEmpty
+                    ? Container(
+                        margin: const EdgeInsets.only(top: 50),
+                        child: const NoResult(
+                          message:
+                              "Aucun statut de courrier n'a encore été modifié",
+                        ))
+                    : Expanded(
+                        child: ListView.builder(
+                          itemBuilder: (context, index) {
+                            return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    child: InkWell(
+                                        onDoubleTap: () {
+                                          callback(mesScans[index - 1]
+                                              .courrier
+                                              .bordereau
+                                              .toString());
+                                        },
+                                        child: CustomScan(
+                                            scan: mesScans[index]))));
+                          },
+                          itemCount: mesScans.length,
+                        ),
+                      ),
+              ]));
   }
 }
