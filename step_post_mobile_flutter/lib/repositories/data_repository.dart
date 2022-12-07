@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
-import 'package:step_post_mobile_flutter/models/scan.dart';
-import 'package:step_post_mobile_flutter/models/statut.dart';
-import 'package:step_post_mobile_flutter/services/api_service.dart';
-import 'package:step_post_mobile_flutter/services/shared_handler.dart';
+import '../models/infos_courriers.dart';
+import '../models/scan.dart';
+import '../models/statut.dart';
+import '../services/api_service.dart';
+import '../services/shared_handler.dart';
 
 class DataRepository with ChangeNotifier {
   APIService api = APIService();
