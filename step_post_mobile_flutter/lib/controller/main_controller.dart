@@ -16,7 +16,6 @@ class MainController extends StatefulWidget {
 }
 
 class _MainControllerState extends State<MainController> {
-  
   @override
   void initState() {
     initData();
@@ -28,11 +27,14 @@ class _MainControllerState extends State<MainController> {
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
     String token = await SharedHandler().getToken();
     if (token.isNotEmpty) {
-      int? code = await dataProvider.getTestToken(tokenToTest: token);
-      if (code == 403) {
-        toastError();
-      } else if (code == 200) {
-        toastSuccess();
+      Map<String, dynamic>? map =
+          await dataProvider.getTestToken(tokenToTest: token);
+      if (map != null) {
+        if (map['code'] == 403) {
+          toastError();
+        } else if (map['code'] == 200) {
+          toastSuccess(map['username']);
+        }
       }
     }
   }
@@ -41,8 +43,7 @@ class _MainControllerState extends State<MainController> {
   /// à l'uilisateur, sinon la page de connexion est affichée
   @override
   Widget build(BuildContext context) {
-    final dataProvider = Provider.of<DataRepository>(context);
-    return dataProvider.isLogged
+    return context.watch<DataRepository>().isLogged
         ? const TabViewController()
         : const LoginPage();
   }
@@ -59,9 +60,18 @@ class _MainControllerState extends State<MainController> {
     );
   }
 
-  void toastSuccess() {
+  void toastSuccess(String username) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content:
-        Text("Bienvenue ", style: GoogleFonts.rubik())));
+      content: Row(
+        children: [
+          Text("Bienvenue ", style: GoogleFonts.rubik()),
+          Text(
+            username,
+            style:
+                GoogleFonts.rubik(color: kGreen, fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+    ));
   }
 }

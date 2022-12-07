@@ -139,19 +139,21 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  Future<int?> getTestToken({required String tokenToTest}) async {
+  Future<Map<String, dynamic>?> getTestToken(
+      {required String tokenToTest}) async {
     try {
       final response = await api.getTestToken(tokenToTest: tokenToTest);
+      Map<String, dynamic> data = {"code": 200, "username": response};
       if (response.isNotEmpty) {
         _isLogged = true;
         if (_etats.isEmpty) {
           await getStatutsList();
         }
         notifyListeners();
-        return 200;
+        return data;
       }
     } on DioError catch (e) {
-      if (e.response?.statusCode == 403) return 403;
+      if (e.response?.statusCode == 403) return {"code": 403};
       rethrow;
     }
     return null;

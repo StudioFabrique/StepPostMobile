@@ -21,7 +21,6 @@ class _TabViewControllerState extends State<TabViewController> {
 
   @override
   Widget build(BuildContext context) {
-    //final dataProvider = Provider.of<DataRepository>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
