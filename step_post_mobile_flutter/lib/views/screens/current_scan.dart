@@ -4,7 +4,6 @@ import 'package:step_post_mobile_flutter/views/widgets/no_result.dart';
 
 import '../../models/infos_courriers.dart';
 import '../../repositories/data_repository.dart';
-import '../../repositories/update_repository.dart';
 import '../../utils/constantes.dart';
 import '../../views/screens/update_statut.dart';
 import '../../views/widgets/custom_button.dart';
@@ -56,9 +55,12 @@ class _CurrentScanState extends State<CurrentScan> {
                       mail: mail!,
                     ),
                   ),
-                  MailInfos(
-                    date: mail!.date,
-                    statut: context.watch<DataRepository>().etat,
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: MailInfos(
+                      date: mail!.date,
+                      statut: context.watch<DataRepository>().etat,
+                    ),
                   ),
                   const SizedBox(
                     height: 24,
@@ -84,10 +86,8 @@ class _CurrentScanState extends State<CurrentScan> {
                           color: kOrange,
                           callback: () {
                             context.read<DataRepository>().deleteStatut(
-                                bordereau: mail!.bordereau,
-                                state:
-                                    context.read<UpdateRepository>().oldValue!);
-                            context.read<UpdateRepository>().oldValue = null;
+                                  bordereau: mail!.bordereau,
+                                );
                           })
                       : const SizedBox()
                 ])
@@ -103,7 +103,6 @@ class _CurrentScanState extends State<CurrentScan> {
   }
 
   checkUpdatedStatutResponse(int value) async {
-    context.read<UpdateRepository>().oldValue = mail!.etat;
     setState(() {
       isLoading = true;
     });

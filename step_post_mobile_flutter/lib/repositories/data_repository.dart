@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import '../models/infos_courriers.dart';
 import '../models/scan.dart';
 import '../models/statut.dart';
@@ -116,6 +117,8 @@ class DataRepository with ChangeNotifier {
       final response =
           await api.getUpdatedStatut(bordereau: _currentScan, state: state);
       _courrier!.etat = state;
+      _courrier!.date = response.date;
+      print(response.date);
       hasBeenUpdated = true;
       if (_myScans.isEmpty) {
         await getMesScans();
@@ -159,17 +162,15 @@ class DataRepository with ChangeNotifier {
     return null;
   }
 
-  Future<String?> deleteStatut(
-      {required int bordereau, required int state}) async {
+  Future<String?> deleteStatut({required int bordereau}) async {
     try {
-      print(state);
       if (hasBeenUpdated) {
         //int oldEtat = _courrier!.etat;
         final response =
             await api.deleteStatut(bordereau: bordereau.toString());
         _myScans.removeAt(0);
         hasBeenUpdated = false;
-        _courrier!.etat = state;
+        await getCurrentScan();
         notifyListeners();
         return response;
       }

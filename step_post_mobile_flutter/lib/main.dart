@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:step_post_mobile_flutter/controller/main_controller.dart';
-import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
-import 'package:step_post_mobile_flutter/repositories/update_repository.dart';
+
+import './controller/main_controller.dart';
+import './repositories/data_repository.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => DataRepository()),
-      ChangeNotifierProvider(create: (_) => UpdateRepository())
     ],
     child: const MyApp(),
   ));
