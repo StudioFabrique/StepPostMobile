@@ -7,7 +7,7 @@ class FormatterService {
   final f = DateFormat('dd/MM/yyyy');
 
   String getDate(DateTime date) => f.format(date);
-  String getTime(DateTime date) => DateFormat.Hm().format(date);
+  String getTime(DateTime date) => DateFormat.Hm().format(date.toLocal());
 
   String getType(int type) {
     String value = "";
