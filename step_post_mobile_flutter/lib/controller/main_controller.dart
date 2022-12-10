@@ -16,7 +16,6 @@ class MainController extends StatefulWidget {
 }
 
 class _MainControllerState extends State<MainController> {
-  
   @override
   void initState() {
     initData();
@@ -60,8 +59,7 @@ class _MainControllerState extends State<MainController> {
   }
 
   void toastSuccess() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content:
-        Text("Bienvenue ", style: GoogleFonts.rubik())));
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Bienvenue ", style: GoogleFonts.rubik())));
   }
 }
