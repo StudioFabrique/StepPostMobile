@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:step_post_mobile_flutter/models/courrier.dart';
-import 'package:step_post_mobile_flutter/models/infos_courriers.dart';
-import 'package:step_post_mobile_flutter/models/scan.dart';
-import 'package:step_post_mobile_flutter/models/statut.dart';
-import 'package:step_post_mobile_flutter/services/shared_handler.dart';
-import 'package:step_post_mobile_flutter/utils/api.dart';
+
+import '../models/courrier.dart';
+import '../models/infos_courriers.dart';
+import '../models/scan.dart';
+import '../models/statut.dart';
+import './shared_handler.dart';
+import '../utils/api.dart';
 
 class APIService {
   static final APIService _instance = APIService._internal();
