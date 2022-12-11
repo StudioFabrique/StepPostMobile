@@ -12,7 +12,8 @@ class APIService {
 
   late String baseUrl;
   late Dio dio;
-  String token = "";
+  String accessToken = "";
+  String refreshToken = "";
 
   factory APIService() => _instance;
 
@@ -21,15 +22,51 @@ class APIService {
     dio = Dio();
     dio.options.baseUrl = baseUrl;
     dio.interceptors.add(InterceptorsWrapper(
-      onError: (e, handler) {
+      onRequest: (request, handler) async {
+        if (accessToken.isNotEmpty) {
+          request.headers['Authorization'] = 'Bearer $accessToken';
+        } else {
+          await setToken();
+        }
+        return handler.next(request);
+      },
+      onError: (e, handler) async {
+        if (e.response?.statusCode == 401) {
+          try {
+            final response = await dio.post("$baseUrl/auth/refreshtoken",
+                data: {'refreshToken': refreshToken});
+            if (response.statusCode == 200) {
+              //get new tokens ...
+              await SharedHandler().addTokens({
+                "accessToken": response.data['accessToken'],
+                "refreshToken": response.data['refreshToken']
+              });
+              await setToken();
+              //set bearer
+              e.requestOptions.headers["Authorization"] = "Bearer $accessToken";
+              //create request with new access token
+              final opts = Options(
+                  method: e.requestOptions.method,
+                  headers: e.requestOptions.headers);
+              final cloneReq = await dio.request(e.requestOptions.path,
+                  options: opts,
+                  data: e.requestOptions.data,
+                  queryParameters: e.requestOptions.queryParameters);
+
+              return handler.resolve(cloneReq);
+            }
+          } catch (e) {
+            print('coucou $e');
+          }
+        }
         return handler.next(e);
       },
     ));
   }
 
-  setToken(String value) {
-    token = value;
-    dio.options.headers['Authorization'] = 'Bearer $token';
+  setToken() async {
+    accessToken = await SharedHandler().getToken("accessToken");
+    refreshToken = await SharedHandler().getToken("refreshToken");
   }
 
   Future<Response> getData({required String path}) async {
@@ -63,10 +100,9 @@ class APIService {
   }
 
   Future<String> getTestToken({required String tokenToTest}) async {
-    dio.options.headers['Authorization'] = 'Beaer $tokenToTest';
     final response = await dio.get("$baseUrl/auth/handshake");
     if (response.statusCode == 200) {
-      setToken(tokenToTest);
+      //setToken(tokenToTest);
       return response.data['username'];
     } else {
       throw (response);
@@ -83,8 +119,11 @@ class APIService {
         "name": response.data['username'],
         "httpCode": response.statusCode
       };
-      setToken(response.data['token']);
-      SharedHandler().addToken(token);
+      await SharedHandler().addTokens({
+        "accessToken": response.data['accessToken'],
+        "refreshToken": response.data['refreshToken']
+      });
+      await setToken();
       return data;
     } else {
       throw (response);

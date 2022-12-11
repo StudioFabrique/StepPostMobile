@@ -24,6 +24,7 @@ class _MainControllerState extends State<MainController> {
 
   /// test la validité d'un potentiel jeton de session dans le storage
   void initData() async {
+    /* 
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
     String token = await SharedHandler().getToken();
     if (token.isNotEmpty) {
@@ -36,7 +37,7 @@ class _MainControllerState extends State<MainController> {
           toastSuccess(map['username']);
         }
       }
-    }
+    } */
   }
 
   /// si l'utilisateur est authentifié l'application devient accessible

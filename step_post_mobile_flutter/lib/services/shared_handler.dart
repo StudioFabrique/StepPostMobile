@@ -1,23 +1,24 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedHandler {
-  final String key = "token";
-
-  Future<bool> addToken(String token) async {
+  Future<bool> addTokens(Map<String, String> tokens) async {
     final instance = await SharedPreferences.getInstance();
-    await instance.setString(key, token);
+    tokens.forEach((key, value) async {
+      await instance.setString(key, value);
+    });
     return true;
   }
 
-  Future<String> getToken() async {
+  Future<String> getToken(String key) async {
     final instance = await SharedPreferences.getInstance();
-    final String? token = instance.getString("token");
+    final String? token = instance.getString(key);
     return token ?? "";
   }
 
-  Future<bool> removeToken() async {
+  Future<bool> removeTokens() async {
     final instance = await SharedPreferences.getInstance();
-    await instance.remove('token');
+    await instance.remove('accessToken');
+    await instance.remove('refreshToken');
     return true;
   }
 }

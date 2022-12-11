@@ -206,9 +206,9 @@ class DataRepository with ChangeNotifier {
     await getCurrentScan();
   }
 
-  logout() {
-    APIService().setToken("");
-    SharedHandler().removeToken();
+  logout() async {
+    APIService().setToken();
+    await SharedHandler().removeTokens();
     isLogged = false;
     _myScans = [];
     _courrier = null;
