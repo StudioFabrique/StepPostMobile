@@ -142,10 +142,9 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  Future<Map<String, dynamic>?> getTestToken(
-      {required String tokenToTest}) async {
+  Future<Map<String, dynamic>?> getHandshake() async {
     try {
-      final response = await api.getTestToken(tokenToTest: tokenToTest);
+      final response = await api.getHandshake();
       Map<String, dynamic> data = {"code": 200, "username": response};
       if (response.isNotEmpty) {
         _isLogged = true;

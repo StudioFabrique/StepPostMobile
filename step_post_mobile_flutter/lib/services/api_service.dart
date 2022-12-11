@@ -27,6 +27,7 @@ class APIService {
           request.headers['Authorization'] = 'Bearer $accessToken';
         } else {
           await setToken();
+          request.headers['Authorization'] = 'Bearer $accessToken';
         }
         return handler.next(request);
       },
@@ -56,7 +57,7 @@ class APIService {
               return handler.resolve(cloneReq);
             }
           } catch (e) {
-            print('coucou $e');
+            print(e);
           }
         }
         return handler.next(e);
@@ -99,10 +100,9 @@ class APIService {
     }
   }
 
-  Future<String> getTestToken({required String tokenToTest}) async {
+  Future<String> getHandshake() async {
     final response = await dio.get("$baseUrl/auth/handshake");
     if (response.statusCode == 200) {
-      //setToken(tokenToTest);
       return response.data['username'];
     } else {
       throw (response);
