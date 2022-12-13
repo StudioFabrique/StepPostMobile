@@ -120,12 +120,6 @@ class DataRepository with ChangeNotifier {
       _courrier!.date = response.date;
       print(response.date);
       hasBeenUpdated = true;
-      if (_myScans.isEmpty) {
-        await getMesScans();
-        if (_myScans.isEmpty) _myScans.insert(0, response);
-      } else {
-        _myScans.insert(0, response);
-      }
       notifyListeners();
     } on DioError catch (e) {
       if (checkDioError(e)) logout();
@@ -167,7 +161,6 @@ class DataRepository with ChangeNotifier {
         //int oldEtat = _courrier!.etat;
         final response =
             await api.deleteStatut(bordereau: bordereau.toString());
-        _myScans.removeAt(0);
         hasBeenUpdated = false;
         await getCurrentScan();
         notifyListeners();
@@ -220,8 +213,6 @@ class DataRepository with ChangeNotifier {
   }
 
   Future<void> initData() async {
-    if (_myScans.isEmpty) {
-      await getMesScans();
-    }
+    await getMesScans();
   }
 }
