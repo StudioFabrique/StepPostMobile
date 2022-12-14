@@ -80,14 +80,14 @@ class _LoginFormState extends State<LoginForm> {
                     height: 48,
                   ),
                   CustomButton(
-                      label: "Se connecter",
-                      callback: () async {
-                        // if (_formKey.currentState!.validate()) {
+                    label: "Se connecter",
+                    callback: () async {
+                      if (_formKey.currentState!.validate()) {
                         setState(() {
                           isLoading = true;
                         });
                         final data = await dataProvider.login(
-                            username: 'toto@tata.fr', password: '1234');
+                            username: username.text, password: password.text);
                         setState(() {
                           isLoading = false;
                         });
@@ -97,8 +97,8 @@ class _LoginFormState extends State<LoginForm> {
                           toast(code: data['httpCode']);
                         }
                       }
-                      //  },
-                      )
+                    },
+                  )
                 ]),
               )
             : SpinKitDualRing(
