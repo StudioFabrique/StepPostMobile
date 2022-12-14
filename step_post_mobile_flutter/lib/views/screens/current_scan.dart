@@ -80,7 +80,8 @@ class _CurrentScanState extends State<CurrentScan> {
                   const SizedBox(
                     height: 24,
                   ),
-                  context.watch<DataRepository>().hasBeenUpdated
+                  context.watch<DataRepository>().hasBeenUpdated &&
+                          mail!.etat != 5
                       ? CustomButton(
                           label: "Annuler Statut",
                           color: kOrange,
