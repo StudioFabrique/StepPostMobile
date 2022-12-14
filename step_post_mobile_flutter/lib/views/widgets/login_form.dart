@@ -93,7 +93,10 @@ class _LoginFormState extends State<LoginForm> {
                         });
                         if (data!['httpCode'] == 200) {
                           toast(code: data['httpCode']!, name: data['name']);
-                        } else if (data['httpCode'] == 401) {
+                        } else if (data['httpCode'] == 400) {
+                          setState(() {
+                            isLoading = false;
+                          });
                           toast(code: data['httpCode']);
                         }
                       }

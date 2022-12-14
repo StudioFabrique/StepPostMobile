@@ -78,8 +78,8 @@ class DataRepository with ChangeNotifier {
       notifyListeners();
       return data;
     } on DioError catch (e) {
-      if (e.response?.statusCode == 401) {
-        Map<String, dynamic> data = {"httpCode": 401};
+      if (e.response?.statusCode == 400) {
+        Map<String, dynamic> data = {"httpCode": e.response?.statusCode};
         return data;
       }
       rethrow;
