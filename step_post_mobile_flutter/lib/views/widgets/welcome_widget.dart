@@ -15,7 +15,7 @@ class WelcomeWidget extends StatelessWidget {
         children: [
           Image.asset(
             "assets/images/welcome.png",
-            //width: MediaQuery.of(context).size.width * .75,
+            width: MediaQuery.of(context).size.width * .75,
             fit: BoxFit.cover,
           ),
           const SizedBox(
