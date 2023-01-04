@@ -16,7 +16,7 @@ class NoResult extends StatelessWidget {
         children: [
           Image.asset(
             "assets/images/203_1_1.png",
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width * .75,
             fit: BoxFit.cover,
           ),
           SizedBox(
