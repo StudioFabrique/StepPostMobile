@@ -94,7 +94,7 @@ class _CurrentScanState extends State<CurrentScan> {
                 ])
               : context.watch<DataRepository>().isWelcome
                   ? Container(
-                      margin: const EdgeInsets.only(top: 50),
+                      margin: const EdgeInsets.only(top: 24),
                       child: const NoResult(
                         message: "Aucun courrier n'a été trouvé",
                       ),
