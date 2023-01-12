@@ -50,7 +50,12 @@ class MailCard extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   CustomText(label: "${mail.prenom} ${mail.nom}", size: 16),
                   CustomText(label: mail.adresse, size: 16),
-                  CustomText(label: "${mail.codePostal} ${mail.ville}", size: 16)
+                  CustomText(
+                      label: "${mail.codePostal} ${mail.ville}", size: 16),
+                  CustomText(
+                      label:
+                          "tél: ${mail.telephone != null ? mail.telephone : 'non disponible'}",
+                      size: 16)
                 ])
               ],
             )

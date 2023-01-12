@@ -219,7 +219,8 @@ class APIService {
             courrier: Courrier(
                 id: data['id'],
                 bordereau: data['bordereau'],
-                type: data['type']));
+                type: data['type'],
+                telephone: data['telephone'] ?? null));
       }).toList();
       return scans;
     } else {

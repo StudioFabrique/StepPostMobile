@@ -5,6 +5,7 @@ import 'package:step_post_mobile_flutter/models/scan.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/services/formatter_service.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
+import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
 
 class CustomScan extends StatefulWidget {
   final Scan scan;
@@ -28,7 +29,7 @@ class _CustomScanState extends State<CustomScan> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 10,
+        elevation: 10,
         color: FormatterService().getColor(scan.etat),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -45,28 +46,57 @@ class _CustomScanState extends State<CustomScan> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Bordereau n°", style: GoogleFonts.rubik(color: textColor, fontWeight: FontWeight.bold)),
-                      Text(scan.courrier.bordereau.toString(), style: GoogleFonts.rubik(fontSize: 28, fontWeight: FontWeight.bold, color: textColor),),
+                      Text("Bordereau n°",
+                          style: GoogleFonts.rubik(
+                              color: textColor, fontWeight: FontWeight.bold)),
+                      Text(
+                        scan.courrier.bordereau.toString(),
+                        style: GoogleFonts.rubik(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: textColor),
+                      ),
                     ],
                   ),
-
-                  const SizedBox(height: 24,),
+                  const SizedBox(
+                    height: 24,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(FormatterService().getType(scan.courrier.type), style: GoogleFonts.rubik(fontWeight: FontWeight.bold, color: textColor),),
-                      Text(FormatterService().getDate(scan.date), style: GoogleFonts.rubik(fontWeight: FontWeight.bold, color: textColor)),
-                      Text(FormatterService().getTime(scan.date), style: GoogleFonts.rubik(fontWeight: FontWeight.bold, color: textColor))
+                      Text(
+                        FormatterService().getType(scan.courrier.type),
+                        style: GoogleFonts.rubik(
+                            fontWeight: FontWeight.bold, color: textColor),
+                      ),
+                      Text(FormatterService().getDate(scan.date),
+                          style: GoogleFonts.rubik(
+                              fontWeight: FontWeight.bold, color: textColor)),
+                      Text(FormatterService().getTime(scan.date),
+                          style: GoogleFonts.rubik(
+                              fontWeight: FontWeight.bold, color: textColor)),
+                      CustomText(
+                        label:
+                            "tél: ${scan.courrier.telephone != null ? scan.courrier.telephone : 'non disponible'}",
+                        size: 16,
+                        fw: FontWeight.bold,
+                        color: textColor,
+                      )
                     ],
                   )
                 ],
               ),
-              Text(context.read<DataRepository>().getEtat(scan.etat).toUpperCase(), style: GoogleFonts.rubik(fontSize: 18, fontWeight: FontWeight.bold, color: textColor))
+              Text(
+                  context
+                      .read<DataRepository>()
+                      .getEtat(scan.etat)
+                      .toUpperCase(),
+                  style: GoogleFonts.rubik(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: textColor))
             ],
           ),
-        )
-    );
+        ));
   }
 }
-
-

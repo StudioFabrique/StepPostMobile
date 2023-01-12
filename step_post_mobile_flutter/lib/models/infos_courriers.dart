@@ -14,6 +14,7 @@ class InfosCourrier {
   String? complement;
   String codePostal;
   String ville;
+  String? telephone;
   int etat;
   DateTime date;
 
@@ -28,6 +29,7 @@ class InfosCourrier {
       this.complement,
       required this.codePostal,
       required this.ville,
+      this.telephone,
       required this.etat,
       required this.date});
 
@@ -44,6 +46,7 @@ class InfosCourrier {
           map['complement'] != null ? map['complement'] as String : null,
       codePostal: map['codePostal'] as String,
       ville: map['ville'] as String,
+      telephone: map['telephone'] ?? null,
       etat: map['etat'] as int,
       date: DateTime.parse((map['date'])),
     );
