@@ -5,7 +5,6 @@ import 'package:step_post_mobile_flutter/models/scan.dart';
 import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/services/formatter_service.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
-import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
 
 class CustomScan extends StatefulWidget {
   final Scan scan;
@@ -75,13 +74,6 @@ class _CustomScanState extends State<CustomScan> {
                       Text(FormatterService().getTime(scan.date),
                           style: GoogleFonts.rubik(
                               fontWeight: FontWeight.bold, color: textColor)),
-                      CustomText(
-                        label:
-                            "tél: ${scan.courrier.telephone != null ? scan.courrier.telephone : 'non disponible'}",
-                        size: 16,
-                        fw: FontWeight.bold,
-                        color: textColor,
-                      )
                     ],
                   )
                 ],
