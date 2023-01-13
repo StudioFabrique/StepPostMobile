@@ -26,7 +26,7 @@ class MailCard extends StatelessWidget {
                   children: [
                     CustomText(
                       label: FormatterService().getType(mail.type),
-                      size: 16,
+                      size: 20,
                       fw: FontWeight.bold,
                     ),
                     Column(
@@ -56,20 +56,19 @@ class MailCard extends StatelessWidget {
                       CustomText(
                           label: "${mail.codePostal} ${mail.ville}", size: 16),
                       Row(children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: CustomText(
-                              label:
-                                  "Tél: ${mail.telephone != null ? mail.telephone : 'non disponible'}",
-                              size: 16),
-                        ),
                         mail.telephone != null
-                            ? IconButton(
-                                icon: Icon(Icons.phone),
-                                onPressed: () async {
-                                  await FlutterPhoneDirectCaller.callNumber(
-                                      mail.telephone!);
-                                })
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: TextButton.icon(
+                                    icon: Icon(Icons.phone_android,
+                                        color: kBlue, size: 16),
+                                    onPressed: () async {
+                                      await FlutterPhoneDirectCaller.callNumber(
+                                          mail.telephone!);
+                                    },
+                                    label: CustomText(
+                                        label: "${mail.telephone}", size: 16)),
+                              )
                             : SizedBox()
                       ])
                     ],

@@ -8,8 +8,8 @@ class InfosCourrier {
   int bordereau;
   int type;
   String nom;
-  String prenom;
-  String civilite;
+  String? prenom;
+  String? civilite;
   String adresse;
   String? complement;
   String codePostal;
@@ -23,8 +23,8 @@ class InfosCourrier {
       required this.bordereau,
       required this.type,
       required this.nom,
-      required this.prenom,
-      required this.civilite,
+      this.prenom,
+      this.civilite,
       required this.adresse,
       this.complement,
       required this.codePostal,
@@ -39,8 +39,8 @@ class InfosCourrier {
       bordereau: map['bordereau'] as int,
       type: map['type'] as int,
       nom: map['nom'] as String,
-      prenom: map['prenom'] as String,
-      civilite: map['civilite'] as String,
+      prenom: map['prenom'] ?? null,
+      civilite: map['civilite'] ?? null,
       adresse: map['adresse'] as String,
       complement:
           map['complement'] != null ? map['complement'] as String : null,

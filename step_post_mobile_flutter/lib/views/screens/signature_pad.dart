@@ -71,7 +71,7 @@ class _SignaturePadState extends State<SignaturePad> {
             children: [
               CustomText(
                   label:
-                      "${dataProvider.courrier!.prenom.toUpperCase()} ${dataProvider.courrier!.nom.toUpperCase()}",
+                      "${dataProvider.courrier!.prenom != null ? dataProvider.courrier!.prenom!.toUpperCase() : null} ${dataProvider.courrier!.nom.toUpperCase()}",
                   fw: FontWeight.bold,
                   size: 20),
               CustomText(
