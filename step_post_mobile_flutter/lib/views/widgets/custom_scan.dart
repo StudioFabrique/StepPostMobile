@@ -75,13 +75,6 @@ class _CustomScanState extends State<CustomScan> {
                       Text(FormatterService().getTime(scan.date),
                           style: GoogleFonts.rubik(
                               fontWeight: FontWeight.bold, color: textColor)),
-                      CustomText(
-                        label:
-                            "tél: ${scan.courrier.telephone != null ? scan.courrier.telephone : 'non disponible'}",
-                        size: 16,
-                        fw: FontWeight.bold,
-                        color: textColor,
-                      )
                     ],
                   )
                 ],

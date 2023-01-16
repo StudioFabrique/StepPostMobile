@@ -217,10 +217,10 @@ class APIService {
             date: DateTime.parse(jsonScan['date']),
             etat: jsonScan['s']['statutCode'],
             courrier: Courrier(
-                id: data['id'],
-                bordereau: data['bordereau'],
-                type: data['type'],
-                telephone: data['telephone'] ?? null));
+              id: data['id'],
+              bordereau: data['bordereau'],
+              type: data['type'],
+            ));
       }).toList();
       return scans;
     } else {
