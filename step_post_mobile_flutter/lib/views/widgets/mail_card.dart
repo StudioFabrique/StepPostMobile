@@ -63,8 +63,12 @@ class MailCard extends StatelessWidget {
                                     icon: Icon(Icons.phone_android,
                                         color: kBlue, size: 16),
                                     onPressed: () async {
-                                      await FlutterPhoneDirectCaller.callNumber(
-                                          mail.telephone!);
+                                      try {
+                                        await FlutterPhoneDirectCaller
+                                            .callNumber(mail.telephone!);
+                                      } catch (error) {
+                                        print(error);
+                                      }
                                     },
                                     label: CustomText(
                                         label: "${mail.telephone}", size: 16)),
