@@ -3,11 +3,7 @@ class Courrier {
   int bordereau;
   int type;
 
-  Courrier({
-    required this.id,
-    required this.bordereau,
-    required this.type,
-  });
+  Courrier({required this.id, required this.bordereau, required this.type});
 
   factory Courrier.fromJson(Map<String, dynamic> map) {
     return Courrier(
