@@ -71,7 +71,10 @@ class MailCard extends StatelessWidget {
                                       }
                                     },
                                     label: CustomText(
-                                        label: "${mail.telephone}", size: 16)),
+                                        label: mail.telephone!.isNotEmpty
+                                            ? mail.telephone!
+                                            : 'non disponible',
+                                        size: 16)),
                               )
                             : SizedBox()
                       ])
