@@ -1,10 +1,16 @@
 # step_post_mobile_flutter
 
-Application mobile pour Step Post, une activité de Step
+A new Flutter project.
 
-Application développée avec le framework Flutter en Dart.
+## Getting Started
 
-Pour changer l'url de l'API : 
-    - aller dans /lib/utils/api.dart
-    - commenter l'url indésirable
-    - décommenter l'url souhaitée
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
