@@ -43,7 +43,7 @@ class InfosCourrier {
           map['complement'] != null ? map['complement'] as String : null,
       codePostal: map['codePostal'] as String,
       ville: map['ville'] as String,
-      telephone: map['telephone'] ?? null,
+      telephone: map['telephone'] ?? '',
       etat: map['etat'] as int,
       date: DateTime.parse((map['date'])),
     );

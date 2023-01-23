@@ -56,7 +56,7 @@ class MailCard extends StatelessWidget {
                       CustomText(
                           label: "${mail.codePostal} ${mail.ville}", size: 16),
                       Row(children: [
-                        mail.telephone != null
+                        mail.telephone!.isNotEmpty
                             ? Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: TextButton.icon(
@@ -71,10 +71,7 @@ class MailCard extends StatelessWidget {
                                       }
                                     },
                                     label: CustomText(
-                                        label: mail.telephone!.isNotEmpty
-                                            ? mail.telephone!
-                                            : 'non disponible',
-                                        size: 16)),
+                                        label: mail.telephone!, size: 16)),
                               )
                             : SizedBox()
                       ])
