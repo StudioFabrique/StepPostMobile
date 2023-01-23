@@ -56,24 +56,24 @@ class MailCard extends StatelessWidget {
                       CustomText(
                           label: "${mail.codePostal} ${mail.ville}", size: 16),
                       Row(children: [
-                        mail.telephone!.isNotEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: TextButton.icon(
-                                    icon: Icon(Icons.phone_android,
-                                        color: kBlue, size: 16),
-                                    onPressed: () async {
-                                      try {
-                                        await FlutterPhoneDirectCaller
-                                            .callNumber(mail.telephone!);
-                                      } catch (error) {
-                                        print(error);
-                                      }
-                                    },
-                                    label: CustomText(
-                                        label: mail.telephone!, size: 16)),
-                              )
-                            : SizedBox()
+                        Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: TextButton.icon(
+                                icon: Icon(Icons.phone_android,
+                                    color: kBlue, size: 16),
+                                onPressed: () async {
+                                  try {
+                                    await FlutterPhoneDirectCaller.callNumber(
+                                        mail.telephone!);
+                                  } catch (error) {
+                                    print(error);
+                                  }
+                                },
+                                label: CustomText(
+                                    label: mail.telephone!.isNotEmpty
+                                        ? mail.telephone!
+                                        : "non renseigné",
+                                    size: 16)))
                       ])
                     ],
                   )
