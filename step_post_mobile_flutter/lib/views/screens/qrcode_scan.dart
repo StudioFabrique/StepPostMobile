@@ -62,7 +62,11 @@ class _QRCodeScanState extends State<QRCodeScan> {
                         await dataProvider.getCurrentScan();
                         dataProvider.currentIndex = 1;
                       })
-                  : Text('Scan a code', style: GoogleFonts.rubik()),
+                  : Text('Scannez un code',
+                      style: GoogleFonts.rubik(
+                          color: kBlue,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
             ),
           )
         ],
