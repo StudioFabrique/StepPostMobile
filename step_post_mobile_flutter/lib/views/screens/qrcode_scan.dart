@@ -26,7 +26,7 @@ class _QRCodeScanState extends State<QRCodeScan> {
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid) {
-      controller!.pauseCamera();
+      controller!.resumeCamera();
     } else if (Platform.isIOS) {
       controller!.resumeCamera();
     }
@@ -72,6 +72,7 @@ class _QRCodeScanState extends State<QRCodeScan> {
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
+    controller.resumeCamera();
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
@@ -85,26 +86,3 @@ class _QRCodeScanState extends State<QRCodeScan> {
     super.dispose();
   }
 }
-
-/*
-Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          Navigator.of(context).pop();
-                          dataProvider.currentScan = result!.code!;
-                          await dataProvider.getCurrentScan();
-                          dataProvider.currentIndex = 0;
-                        },
-                        style:
-                            ElevatedButton.styleFrom(backgroundColor: kOrange),
-                        child: Text(
-                          '${result!.code}',
-                          style: const TextStyle(
-                            fontSize: 24,
-                          ),
-                        ),
-                      ),
-                    )
-
-                    */
