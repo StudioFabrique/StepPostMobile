@@ -12,11 +12,8 @@ class UpdateStatut extends StatefulWidget {
   final int statut;
   final Function updatedStatut;
 
-  const UpdateStatut({
-    super.key,
-    required this.statut,
-    required this.updatedStatut
-  });
+  const UpdateStatut(
+      {super.key, required this.statut, required this.updatedStatut});
 
   @override
   State<UpdateStatut> createState() => _UpdateStatutState();
@@ -24,7 +21,7 @@ class UpdateStatut extends StatefulWidget {
 
 class _UpdateStatutState extends State<UpdateStatut> {
   late int statut;
-  int limit = 9;
+  late int limit;
   late Function callback;
   bool isUpdated = false;
   late Function updatedStatut;
@@ -38,6 +35,7 @@ class _UpdateStatutState extends State<UpdateStatut> {
   }
 
   void initData() {
+    limit = context.read<DataRepository>().getLimit() + 1;
     if (statut == 1) limit = 3;
   }
 
@@ -48,19 +46,19 @@ class _UpdateStatutState extends State<UpdateStatut> {
         builder: (context) {
           return ModalConfirm(
               value: value,
-              callback: value == 5
+              callback: value == 5 || value == 9
                   ? () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SignaturePad(
-                          callback: ()  {
-                            updatedStatut(value);
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                          },
-                          state: value,
-                        )));
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignaturePad(
+                                    callback: () {
+                                      updatedStatut(value);
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pop();
+                                    },
+                                    state: value,
+                                  )));
                     }
                   : () {
                       updatedStatut(value);
@@ -75,7 +73,10 @@ class _UpdateStatutState extends State<UpdateStatut> {
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ajouter un statut", style: GoogleFonts.rubik(),),
+        title: Text(
+          "Ajouter un statut",
+          style: GoogleFonts.rubik(),
+        ),
         centerTitle: true,
         backgroundColor: kBlue,
       ),
@@ -108,9 +109,11 @@ class _UpdateStatutState extends State<UpdateStatut> {
                               ? SizedBox(
                                   width: MediaQuery.of(context).size.width * .7,
                                   child: CustomButton(
-                                    label: dataProvider
-                                        .getEtat(index)
-                                        .toUpperCase(),
+                                    label: !(index == 9)
+                                        ? dataProvider
+                                            .getEtat(index)
+                                            .toUpperCase()
+                                        : "PROCURATION",
                                     callback: updateStatut,
                                     value: index,
                                   ),

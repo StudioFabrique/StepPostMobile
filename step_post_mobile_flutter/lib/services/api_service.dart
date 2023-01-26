@@ -182,6 +182,20 @@ class APIService {
     }
   }
 
+  Future<String> postProcuration(
+      {required int courrierId, required String procuration}) async {
+    Map<String, dynamic> datas = {
+      "courrierId": courrierId,
+      "procuration": procuration
+    };
+    final response = await putData(path: '/facteur/procuration', datas: datas);
+    if (response.statusCode == 201) {
+      return response.data['message'];
+    } else {
+      throw (response);
+    }
+  }
+
   Future<String> deleteStatut({required String bordereau}) async {
     final response =
         await deleteData(path: "/facteur/statut?bordereau=$bordereau");

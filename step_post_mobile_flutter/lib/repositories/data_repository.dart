@@ -32,6 +32,8 @@ class DataRepository with ChangeNotifier {
     return _etats[index].etat;
   }
 
+  int getLimit() => _etats.length;
+
   List<Scan> get mesScans => _myScans;
   bool get hasBeenUpdated => _hasBeenUpdated;
   List<Scan> get myScans => _myScans;
@@ -105,6 +107,9 @@ class DataRepository with ChangeNotifier {
   Future<void> getStatutsList() async {
     try {
       _etats = await api.getStatutsList();
+      /* for (Statut item in _etats) {
+        print(item.etat);
+      } */
       notifyListeners();
     } on DioError catch (e) {
       if (checkDioError(e)) logout();
@@ -130,6 +135,16 @@ class DataRepository with ChangeNotifier {
   Future<void> postSignature({required dynamic signature}) async {
     try {
       await api.postSignature(courrierId: _courrier!.id, signature: signature);
+    } on DioError catch (e) {
+      if (checkDioError(e)) logout();
+      rethrow;
+    }
+  }
+
+  Future<void> postProcuration({required String procuration}) async {
+    try {
+      await api.postProcuration(
+          courrierId: _courrier!.id, procuration: procuration);
     } on DioError catch (e) {
       if (checkDioError(e)) logout();
       rethrow;
