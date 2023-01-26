@@ -7,6 +7,7 @@ import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
+import 'package:step_post_mobile_flutter/views/widgets/procuration_form.dart';
 //import 'package:step_post_mobile_flutter/views/widgets/procuration_form.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
@@ -25,20 +26,20 @@ class _SignaturePadState extends State<SignaturePad> {
   final GlobalKey<SfSignaturePadState> signatureGlobalKey = GlobalKey();
   late Function callback;
   String procurationName = '';
-  late TextEditingController procurationNameController;
+  //late TextEditingController procurationNameController;
 
   @override
   void initState() {
     state = widget.state;
     print(state);
     callback = widget.callback;
-    procurationNameController = TextEditingController();
+    //procurationNameController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    procurationNameController.dispose();
+    // procurationNameController.dispose();
     super.dispose();
   }
 
@@ -54,8 +55,7 @@ class _SignaturePadState extends State<SignaturePad> {
     await dataProvider.postSignature(
         signature: uint8ListTob64(bytes!.buffer.asUint8List()));
     if (state == 9) {
-      await dataProvider.postProcuration(
-          procuration: procurationNameController.text);
+      await dataProvider.postProcuration(procuration: procurationName);
     }
   }
 
@@ -63,6 +63,10 @@ class _SignaturePadState extends State<SignaturePad> {
     String base64String = base64Encode(uint8list);
     String header = "data:image/png;base64,";
     return header + base64String;
+  }
+
+  void _onProcurationNameChange(value) {
+    procurationName = value;
   }
 
   @override
@@ -85,13 +89,8 @@ class _SignaturePadState extends State<SignaturePad> {
                           "${dataProvider.courrier!.prenom != null ? dataProvider.courrier!.prenom!.toUpperCase() : null} ${dataProvider.courrier!.nom.toUpperCase()}",
                       fw: FontWeight.bold,
                       size: 20)
-                  : TextField(
-                      controller: procurationNameController,
-                      decoration: InputDecoration(
-                          border: const UnderlineInputBorder(),
-                          focusColor: kBlue,
-                          labelText: "Entrez le prénom et le nom"),
-                    ),
+                  : ProcurationForm(
+                      onProcurationNameChange: _onProcurationNameChange),
               CustomText(
                   label: "Bordereau n° ${dataProvider.courrier!.bordereau}",
                   size: 18),
