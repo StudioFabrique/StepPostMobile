@@ -7,6 +7,7 @@ import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
 import 'package:step_post_mobile_flutter/utils/constantes.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
 import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
+//import 'package:step_post_mobile_flutter/views/widgets/procuration_form.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 class SignaturePad extends StatefulWidget {
@@ -23,16 +24,21 @@ class _SignaturePadState extends State<SignaturePad> {
   late int state;
   final GlobalKey<SfSignaturePadState> signatureGlobalKey = GlobalKey();
   late Function callback;
+  String procurationName = '';
+  late TextEditingController procurationNameController;
 
   @override
   void initState() {
     state = widget.state;
+    print(state);
     callback = widget.callback;
+    procurationNameController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
+    procurationNameController.dispose();
     super.dispose();
   }
 
@@ -47,6 +53,10 @@ class _SignaturePadState extends State<SignaturePad> {
     final bytes = await data.toByteData(format: ui.ImageByteFormat.png);
     await dataProvider.postSignature(
         signature: uint8ListTob64(bytes!.buffer.asUint8List()));
+    if (state == 9) {
+      await dataProvider.postProcuration(
+          procuration: procurationNameController.text);
+    }
   }
 
   String uint8ListTob64(Uint8List uint8list) {
@@ -69,11 +79,19 @@ class _SignaturePadState extends State<SignaturePad> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CustomText(
-                  label:
-                      "${dataProvider.courrier!.prenom != null ? dataProvider.courrier!.prenom!.toUpperCase() : null} ${dataProvider.courrier!.nom.toUpperCase()}",
-                  fw: FontWeight.bold,
-                  size: 20),
+              state != 9
+                  ? CustomText(
+                      label:
+                          "${dataProvider.courrier!.prenom != null ? dataProvider.courrier!.prenom!.toUpperCase() : null} ${dataProvider.courrier!.nom.toUpperCase()}",
+                      fw: FontWeight.bold,
+                      size: 20)
+                  : TextField(
+                      controller: procurationNameController,
+                      decoration: InputDecoration(
+                          border: const UnderlineInputBorder(),
+                          focusColor: kBlue,
+                          labelText: "Entrez le prénom et le nom"),
+                    ),
               CustomText(
                   label: "Bordereau n° ${dataProvider.courrier!.bordereau}",
                   size: 18),
