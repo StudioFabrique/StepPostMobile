@@ -3,13 +3,13 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:step_post_mobile_flutter/repositories/data_repository.dart';
-import 'package:step_post_mobile_flutter/utils/constantes.dart';
-import 'package:step_post_mobile_flutter/views/widgets/custom_text.dart';
-import 'package:step_post_mobile_flutter/views/widgets/custom_button.dart';
-import 'package:step_post_mobile_flutter/views/widgets/procuration_form.dart';
-//import 'package:step_post_mobile_flutter/views/widgets/procuration_form.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
+
+import '../../repositories/data_repository.dart';
+import '../../utils/constantes.dart';
+import '../widgets/custom_text.dart';
+import '../widgets/custom_button.dart';
+import '../widgets/procuration_form.dart';
 
 class SignaturePad extends StatefulWidget {
   final int state;
@@ -74,57 +74,78 @@ class _SignaturePadState extends State<SignaturePad> {
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
     final width = MediaQuery.of(context).size.width * .4;
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text("Signature"),
           centerTitle: true,
           backgroundColor: kBlue,
         ),
         body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              state != 9
-                  ? CustomText(
+              state == 9
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: ProcurationForm(
+                          onProcurationNameChange: _onProcurationNameChange),
+                    )
+                  : const SizedBox(),
+              Column(
+                children: [
+                  CustomText(
+                    label: 'Destinataire',
+                    size: 20,
+                    fw: FontWeight.bold,
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  CustomText(
                       label:
                           "${dataProvider.courrier!.prenom != null ? dataProvider.courrier!.prenom!.toUpperCase() : null} ${dataProvider.courrier!.nom.toUpperCase()}",
-                      fw: FontWeight.bold,
-                      size: 20)
-                  : ProcurationForm(
-                      onProcurationNameChange: _onProcurationNameChange),
-              CustomText(
-                  label: "Bordereau n° ${dataProvider.courrier!.bordereau}",
-                  size: 18),
-              Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 24),
-                  child: Container(
-                      decoration:
-                          BoxDecoration(border: Border.all(color: Colors.grey)),
-                      child: SfSignaturePad(
-                          key: signatureGlobalKey,
-                          backgroundColor: Colors.white,
-                          strokeColor: Colors.black,
-                          minimumStrokeWidth: 1.0,
-                          maximumStrokeWidth: 1.0))),
-              const SizedBox(height: 10),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    CustomButton(
-                      label: "Effacer",
-                      callback: _handleClearButtonPressed,
-                      width: width,
-                      color: kOrange,
-                    ),
-                    CustomButton(
-                      label: "Enregistrer",
-                      callback: () {
-                        _handleSaveButtonPressed();
-                        callback();
-                      },
-                      width: width,
-                    )
-                  ])
+                      size: 20),
+                  CustomText(
+                    label: "Bordereau n° ${dataProvider.courrier!.bordereau}",
+                    size: 18,
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          child: SfSignaturePad(
+                              key: signatureGlobalKey,
+                              backgroundColor: Colors.white,
+                              strokeColor: Colors.black,
+                              minimumStrokeWidth: 1.0,
+                              maximumStrokeWidth: 1.0))),
+                  const SizedBox(height: 32),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        CustomButton(
+                          label: "Effacer",
+                          callback: _handleClearButtonPressed,
+                          width: width,
+                          color: kOrange,
+                        ),
+                        CustomButton(
+                          label: "Enregistrer",
+                          callback: () {
+                            _handleSaveButtonPressed();
+                            callback();
+                          },
+                          width: width,
+                        )
+                      ])
+                ],
+              )
             ]));
   }
 }

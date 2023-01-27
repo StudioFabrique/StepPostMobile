@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './custom_text.dart';
 import '../../utils/constantes.dart';
 
 class ProcurationForm extends StatefulWidget {
@@ -32,16 +33,38 @@ class _ProcurationFormState extends State<ProcurationForm> {
     onProcurationNameChange(procurationNameController.text);
   }
 
+  void _clearTextField() {
+    procurationNameController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: TextField(
-      controller: procurationNameController,
-      decoration: InputDecoration(
-          border: const UnderlineInputBorder(),
-          focusColor: kBlue,
-          labelText: "Entrez le prénom et le nom"),
-      onChanged: (text) => _procurationNameChangedHandler(),
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CustomText(
+          label: 'A distribuer par procuration à :',
+          size: 18,
+          fw: FontWeight.bold,
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        TextField(
+          controller: procurationNameController,
+          decoration: InputDecoration(
+              suffixIcon: procurationNameController.text.isEmpty
+                  ? null
+                  : IconButton(
+                      onPressed: () => _clearTextField,
+                      icon: const Icon(Icons.clear)),
+              border: const UnderlineInputBorder(),
+              focusColor: kBlue,
+              labelText: "Entrez le prénom et le nom"),
+          onChanged: (text) => _procurationNameChangedHandler(),
+        ),
+      ],
     ));
   }
 }
