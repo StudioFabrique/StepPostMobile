@@ -29,7 +29,9 @@ class _CustomScanState extends State<CustomScan> {
   Widget build(BuildContext context) {
     return Card(
         elevation: 10,
-        color: FormatterService().getColor(scan.etat),
+        color: scan.etat != 9
+            ? FormatterService().getColor(scan.etat)
+            : FormatterService().getColor(5),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
@@ -79,10 +81,12 @@ class _CustomScanState extends State<CustomScan> {
                 ],
               ),
               Text(
-                  context
-                      .read<DataRepository>()
-                      .getEtat(scan.etat)
-                      .toUpperCase(),
+                  scan.etat != 9
+                      ? context
+                          .read<DataRepository>()
+                          .getEtat(scan.etat)
+                          .toUpperCase()
+                      : "Procuration",
                   style: GoogleFonts.rubik(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
