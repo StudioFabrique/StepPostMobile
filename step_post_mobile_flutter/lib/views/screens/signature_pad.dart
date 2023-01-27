@@ -43,6 +43,43 @@ class _SignaturePadState extends State<SignaturePad> {
     super.dispose();
   }
 
+  Future<void> _emptyProcurationDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Procuration',
+            style: TextStyle(color: const Color(0xff140a82)),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                CustomText(
+                  label: 'Merci de saisir un prénom et un nom svp.',
+                  size: 18,
+                  color: const Color(0xff140a82),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Fermer',
+                style: TextStyle(color: const Color(0xff140a82)),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _handleClearButtonPressed() {
     signatureGlobalKey.currentState!.clear();
   }
@@ -52,10 +89,17 @@ class _SignaturePadState extends State<SignaturePad> {
     final data =
         await signatureGlobalKey.currentState!.toImage(pixelRatio: 3.0);
     final bytes = await data.toByteData(format: ui.ImageByteFormat.png);
-    await dataProvider.postSignature(
-        signature: uint8ListTob64(bytes!.buffer.asUint8List()));
-    if (state == 9) {
+    if (state != 9) {
+      await dataProvider.postSignature(
+          signature: uint8ListTob64(bytes!.buffer.asUint8List()));
+      callback();
+    } else if (state == 9 && procurationName.isNotEmpty) {
+      await dataProvider.postSignature(
+          signature: uint8ListTob64(bytes!.buffer.asUint8List()));
       await dataProvider.postProcuration(procuration: procurationName);
+      callback();
+    } else if (state == 9 && procurationName.isEmpty) {
+      _emptyProcurationDialog();
     }
   }
 
@@ -139,7 +183,7 @@ class _SignaturePadState extends State<SignaturePad> {
                           label: "Enregistrer",
                           callback: () {
                             _handleSaveButtonPressed();
-                            callback();
+                            //callback();
                           },
                           width: width,
                         )
