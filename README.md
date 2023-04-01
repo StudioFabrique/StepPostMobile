@@ -3,6 +3,7 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/StudioFabrique/StepPostMobile)
 ![GitHub file size in bytes](https://img.shields.io/github/size/StudioFabrique/StepPostMobile/step_post_mobile_flutter/android/app/build.gradle)
 ![Pub Version](https://img.shields.io/pub/v/pubspec)
+![GitHub top language](https://img.shields.io/github/languages/top/StudioFabrique/StepPostMobile?color=green&label=Dart)
 
 # Step Post Mobile
 
