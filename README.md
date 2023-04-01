@@ -1,4 +1,4 @@
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/StudioFabrique/StepPostMobile)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/StudioFabrique/StepPostMobile?color=red)
 ![GitHub repo size](https://img.shields.io/github/repo-size/StudioFabrique/StepPostMobile)
 ![GitHub top language](https://img.shields.io/github/languages/top/StudioFabrique/StepPostMobile)
 ![GitHub file size in bytes](https://img.shields.io/github/size/StudioFabrique/StepPostMobile/step_post_mobile_flutter/android/app/build.gradle)
