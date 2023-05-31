@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:step_post_mobile_flutter/views/screens/Offline.dart';
 
 import './tab_view_controller.dart';
 import '../repositories/data_repository.dart';
@@ -39,9 +40,11 @@ class _MainControllerState extends State<MainController> {
   /// à l'uilisateur, sinon la page de connexion est affichée
   @override
   Widget build(BuildContext context) {
-    return context.watch<DataRepository>().isLogged
-        ? const TabViewController()
-        : const LoginPage();
+    return context.watch<DataRepository>().offline
+        ? const Offline()
+        : context.watch<DataRepository>().isLogged
+            ? const TabViewController()
+            : const LoginPage();
   }
 
   void toastError() {

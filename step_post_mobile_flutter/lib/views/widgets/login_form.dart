@@ -38,7 +38,6 @@ class _LoginFormState extends State<LoginForm> {
   /// formulaire de connexion
   @override
   Widget build(BuildContext context) {
-    final dataProvider = Provider.of<DataRepository>(context);
     return Center(
         child: !isLoading
             ? Form(
@@ -81,26 +80,8 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   CustomButton(
                     label: "Se connecter",
-                    callback: () async {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        final data = await dataProvider.login(
-                            username: username.text, password: password.text);
-                        setState(() {
-                          isLoading = false;
-                        });
-                        if (data!['httpCode'] == 200) {
-                          toast(code: data['httpCode']!, name: data['name']);
-                        } else if (data['httpCode'] == 400) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                          toast(code: data['httpCode']);
-                        }
-                      }
-                    },
+                    //click bouton
+                    callback: handleLogin,
                   )
                 ]),
               )
@@ -108,6 +89,33 @@ class _LoginFormState extends State<LoginForm> {
                 color: kOrange,
                 size: 60,
               ));
+  }
+
+  void handleLogin() async {
+    print("toto");
+    final dataProvider = Provider.of<DataRepository>(context, listen: false);
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      final data = await dataProvider.login(
+          username: username.text, password: password.text);
+      setState(() {
+        isLoading = false;
+      });
+      if (data!['httpCode'] == 200) {
+        toast(code: data['httpCode']!, name: data['name']);
+      } else if (data['httpCode'] == 400) {
+        setState(() {
+          isLoading = false;
+        });
+        toast(code: data['httpCode']);
+      } else if (data['httpCode'] == 500) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   /// vérifie si s est une chaîne de caractères composée uniquement de chiffres

@@ -60,7 +60,9 @@ class _QRCodeScanState extends State<QRCodeScan> {
                         Navigator.of(context).pop();
                         dataProvider.currentScan = result!.code!;
                         await dataProvider.getCurrentScan();
-                        dataProvider.currentIndex = 1;
+                        if (dataProvider.currentIndex != 2) {
+                          dataProvider.currentIndex = 1;
+                        }
                       })
                   : Text('Scannez un code',
                       style: GoogleFonts.rubik(

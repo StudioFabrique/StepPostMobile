@@ -126,6 +126,7 @@ class APIService {
       await setToken();
       return data;
     } else {
+      print('toto: $response');
       throw (response);
     }
   }

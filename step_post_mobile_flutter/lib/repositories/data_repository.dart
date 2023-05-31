@@ -18,6 +18,7 @@ class DataRepository with ChangeNotifier {
   List<Scan> _myScans = [];
   bool _hasBeenUpdated = false;
   bool _welcome = false;
+  bool _offline = false;
 
   //  getters
 
@@ -31,6 +32,8 @@ class DataRepository with ChangeNotifier {
     int index = _etats.indexWhere((element) => element.statutCode == value);
     return _etats[index].etat;
   }
+
+  bool get offline => _offline;
 
   int getLimit() => _etats.length;
 
@@ -67,6 +70,11 @@ class DataRepository with ChangeNotifier {
     _hasBeenUpdated = value;
   }
 
+  set offline(bool value) {
+    _offline = value;
+    notifyListeners();
+  }
+
   /// connexion de l'utilisateur puis chargement de la liste des statuts
   Future<Map<String, dynamic>?> login(
       {required String username, required String password}) async {
@@ -76,12 +84,19 @@ class DataRepository with ChangeNotifier {
       if (_etats.isEmpty) {
         await getStatutsList();
       }
+      _offline = false;
       isLogged = true;
       notifyListeners();
       return data;
     } on DioError catch (e) {
       if (e.response?.statusCode == 400) {
         Map<String, dynamic> data = {"httpCode": e.response?.statusCode};
+        return data;
+      }
+      if (e.message.contains("SocketException")) {
+        Map<String, dynamic> data = {"httpCode": 500};
+        _offline = true;
+        notifyListeners();
         return data;
       }
       rethrow;
@@ -157,14 +172,24 @@ class DataRepository with ChangeNotifier {
       Map<String, dynamic> data = {"code": 200, "username": response};
       if (response.isNotEmpty) {
         _isLogged = true;
+        _offline = false;
         if (_etats.isEmpty) {
           await getStatutsList();
         }
         notifyListeners();
+        print("offline = $_offline");
         return data;
       }
     } on DioError catch (e) {
-      if (e.response?.statusCode == 403) return {"code": 403};
+      if (e.response?.statusCode == 403) {
+        _offline = false;
+        print("offline = $_offline");
+        notifyListeners();
+        await logout();
+        return {"code": 403};
+      }
+      if (e.message.contains("SocketException")) return {"code": 500};
+      _offline = true;
       rethrow;
     }
     return null;

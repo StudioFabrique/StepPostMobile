@@ -3,6 +3,7 @@ import 'package:step_post_mobile_flutter/models/tab_menu_item.dart';
 import 'package:step_post_mobile_flutter/views/screens/current_scan.dart';
 import 'package:step_post_mobile_flutter/views/screens/logout.dart';
 import 'package:step_post_mobile_flutter/views/screens/mes_scans.dart';
+import 'package:step_post_mobile_flutter/views/screens/storage.dart';
 
 class BottomBarDatas {
   List<TabMenuItem> items = [
@@ -12,6 +13,8 @@ class BottomBarDatas {
         label: 'Scan en cours',
         iconData: Icons.mail,
         page: const CurrentScan()),
+    TabMenuItem(
+        label: 'Storage', iconData: Icons.offline_bolt, page: const Storage()),
     TabMenuItem(
         label: "Déconnexion",
         iconData: Icons.exit_to_app_outlined,

@@ -30,6 +30,7 @@ class _TabViewControllerState extends State<TabViewController> {
       ),
       body: items[context.watch<DataRepository>().currentIndex].page,
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         key: globalKey,
         backgroundColor: kBlue,
         unselectedItemColor: Colors.white,
