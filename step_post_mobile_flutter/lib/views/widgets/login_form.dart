@@ -92,7 +92,6 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void handleLogin() async {
-    print("toto");
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
     if (_formKey.currentState!.validate()) {
       setState(() {

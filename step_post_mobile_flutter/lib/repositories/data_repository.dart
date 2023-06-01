@@ -19,6 +19,7 @@ class DataRepository with ChangeNotifier {
   bool _hasBeenUpdated = false;
   bool _welcome = false;
   bool _offline = false;
+  String _offlineScan = "";
 
   //  getters
 
@@ -34,12 +35,11 @@ class DataRepository with ChangeNotifier {
   }
 
   bool get offline => _offline;
-
   int getLimit() => _etats.length;
-
   List<Scan> get mesScans => _myScans;
   bool get hasBeenUpdated => _hasBeenUpdated;
   List<Scan> get myScans => _myScans;
+  String get offlineScan => _offlineScan;
 
   //  setters
 
@@ -72,6 +72,10 @@ class DataRepository with ChangeNotifier {
 
   set offline(bool value) {
     _offline = value;
+  }
+
+  set offlineScan(String value) {
+    _offlineScan = value;
     notifyListeners();
   }
 
@@ -177,19 +181,18 @@ class DataRepository with ChangeNotifier {
           await getStatutsList();
         }
         notifyListeners();
-        print("offline = $_offline");
         return data;
       }
     } on DioError catch (e) {
-      if (e.response?.statusCode == 403) {
+      if (e.response?.statusCode == 401) {
         _offline = false;
-        print("offline = $_offline");
         notifyListeners();
+      }
+      if (e.response?.statusCode == 403) {
         await logout();
         return {"code": 403};
       }
       if (e.message.contains("SocketException")) return {"code": 500};
-      _offline = true;
       rethrow;
     }
     return null;
