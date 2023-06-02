@@ -117,6 +117,7 @@ class _CurrentScanState extends State<CurrentScan> {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => UpdateStatut(
         statut: context.watch<DataRepository>().courrier!.etat,
+        date: context.watch<DataRepository>().courrier!.date,
         updatedStatut: checkUpdatedStatutResponse,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {

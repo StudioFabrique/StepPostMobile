@@ -7,11 +7,13 @@ import 'package:step_post_mobile_flutter/views/widgets/mail_infos.dart';
 class OfflineCard extends StatefulWidget {
   final String numBordereau;
   final String statut;
+  final DateTime date;
   final Function handleChange;
   const OfflineCard(
       {super.key,
       required this.numBordereau,
       required this.statut,
+      required this.date,
       required this.handleChange});
 
   @override
@@ -21,6 +23,7 @@ class OfflineCard extends StatefulWidget {
 class _OfflineCardState extends State<OfflineCard> {
   late String numBordereau;
   late String statut;
+  late DateTime date;
   late Function handleChange;
   late TextEditingController numBordereauValue;
   final TextStyle labelStyle = new TextStyle(
@@ -31,6 +34,7 @@ class _OfflineCardState extends State<OfflineCard> {
     super.initState();
     numBordereau = widget.numBordereau;
     statut = widget.statut;
+    date = widget.date;
     handleChange = widget.handleChange;
     numBordereauValue = new TextEditingController(text: numBordereau);
   }
@@ -41,6 +45,7 @@ class _OfflineCardState extends State<OfflineCard> {
     numBordereau;
     statut;
     handleChange;
+    date;
   }
 
   String formatDate() {
@@ -84,7 +89,7 @@ class _OfflineCardState extends State<OfflineCard> {
                 height: 24,
               ),
               numBordereauValue.text.length > 0
-                  ? MailInfos(date: new DateTime.now(), statut: statut)
+                  ? MailInfos(date: date, statut: statut)
                   : SizedBox()
             ],
           ),

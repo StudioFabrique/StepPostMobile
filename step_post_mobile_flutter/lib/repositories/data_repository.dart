@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:step_post_mobile_flutter/services/statut_service.dart';
 
 import '../models/infos_courriers.dart';
 import '../models/scan.dart';
@@ -14,12 +15,11 @@ class DataRepository with ChangeNotifier {
   String _currentScan = "";
   int _currentIndex = 0;
   InfosCourrier? _courrier;
-  List<Statut> _etats = [];
+  List<Statut> _etats = StatutService().getStatuts();
   List<Scan> _myScans = [];
   bool _hasBeenUpdated = false;
   bool _welcome = false;
   bool _offline = false;
-  String _offlineScan = "";
 
   //  getters
 
@@ -39,7 +39,6 @@ class DataRepository with ChangeNotifier {
   List<Scan> get mesScans => _myScans;
   bool get hasBeenUpdated => _hasBeenUpdated;
   List<Scan> get myScans => _myScans;
-  String get offlineScan => _offlineScan;
 
   //  setters
 
@@ -49,6 +48,7 @@ class DataRepository with ChangeNotifier {
 
   set isLogged(bool value) {
     _isLogged = value;
+    notifyListeners();
   }
 
   set currentIndex(int value) {
@@ -72,10 +72,6 @@ class DataRepository with ChangeNotifier {
 
   set offline(bool value) {
     _offline = value;
-  }
-
-  set offlineScan(String value) {
-    _offlineScan = value;
     notifyListeners();
   }
 
@@ -85,22 +81,12 @@ class DataRepository with ChangeNotifier {
     try {
       final Map<String, dynamic> data =
           await api.login(username: username, password: password);
-      if (_etats.isEmpty) {
-        await getStatutsList();
-      }
-      _offline = false;
       isLogged = true;
       notifyListeners();
       return data;
     } on DioError catch (e) {
       if (e.response?.statusCode == 400) {
         Map<String, dynamic> data = {"httpCode": e.response?.statusCode};
-        return data;
-      }
-      if (e.message.contains("SocketException")) {
-        Map<String, dynamic> data = {"httpCode": 500};
-        _offline = true;
-        notifyListeners();
         return data;
       }
       rethrow;
@@ -119,19 +105,6 @@ class DataRepository with ChangeNotifier {
         _courrier = null;
         notifyListeners();
       }
-      rethrow;
-    }
-  }
-
-  Future<void> getStatutsList() async {
-    try {
-      _etats = await api.getStatutsList();
-      /* for (Statut item in _etats) {
-        print(item.etat);
-      } */
-      notifyListeners();
-    } on DioError catch (e) {
-      if (checkDioError(e)) logout();
       rethrow;
     }
   }
@@ -176,10 +149,6 @@ class DataRepository with ChangeNotifier {
       Map<String, dynamic> data = {"code": 200, "username": response};
       if (response.isNotEmpty) {
         _isLogged = true;
-        _offline = false;
-        if (_etats.isEmpty) {
-          await getStatutsList();
-        }
         notifyListeners();
         return data;
       }
@@ -192,8 +161,6 @@ class DataRepository with ChangeNotifier {
         await logout();
         return {"code": 403};
       }
-      if (e.message.contains("SocketException")) return {"code": 500};
-      rethrow;
     }
     return null;
   }

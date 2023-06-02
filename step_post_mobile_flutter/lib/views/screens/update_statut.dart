@@ -10,10 +10,14 @@ import 'package:step_post_mobile_flutter/views/widgets/modal_confirm.dart';
 
 class UpdateStatut extends StatefulWidget {
   final int statut;
+  final DateTime date;
   final Function updatedStatut;
 
   const UpdateStatut(
-      {super.key, required this.statut, required this.updatedStatut});
+      {super.key,
+      required this.statut,
+      required this.updatedStatut,
+      required this.date});
 
   @override
   State<UpdateStatut> createState() => _UpdateStatutState();
@@ -25,10 +29,12 @@ class _UpdateStatutState extends State<UpdateStatut> {
   late Function callback;
   bool isUpdated = false;
   late Function updatedStatut;
+  late DateTime date;
 
   @override
   void initState() {
     statut = widget.statut;
+    date = widget.date;
     updatedStatut = widget.updatedStatut;
     initData();
     super.initState();
@@ -78,7 +84,8 @@ class _UpdateStatutState extends State<UpdateStatut> {
           style: GoogleFonts.rubik(),
         ),
         centerTitle: true,
-        backgroundColor: kBlue,
+        backgroundColor:
+            context.read<DataRepository>().offline ? Colors.red : kBlue,
       ),
       body: Center(
           child: Column(
@@ -86,8 +93,8 @@ class _UpdateStatutState extends State<UpdateStatut> {
           Container(
             margin: const EdgeInsets.all(16),
             child: MailInfos(
-              date: dataProvider.courrier!.date,
-              statut: dataProvider.etat,
+              date: date,
+              statut: dataProvider.getEtat(statut),
             ),
           ),
           Expanded(

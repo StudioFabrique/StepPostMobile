@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import '../models/courrier.dart';
 import '../models/infos_courriers.dart';
 import '../models/scan.dart';
-import '../models/statut.dart';
 import './shared_handler.dart';
 import '../utils/api.dart';
 
@@ -126,7 +125,6 @@ class APIService {
       await setToken();
       return data;
     } else {
-      print('toto: $response');
       throw (response);
     }
   }
@@ -137,19 +135,6 @@ class APIService {
     if (response.statusCode == 200) {
       Map<String, dynamic> data = response.data;
       return InfosCourrier.fromJson(data);
-    } else {
-      throw (response);
-    }
-  }
-
-  Future<List<Statut>> getStatutsList() async {
-    Response response = await getData(path: '/facteur/statuts');
-    if (response.statusCode == 200) {
-      List<dynamic> data = response.data;
-      List<Statut> etats = data.map<Statut>((dynamic jsonStatut) {
-        return Statut.fromJson(jsonStatut);
-      }).toList();
-      return etats;
     } else {
       throw (response);
     }

@@ -18,6 +18,7 @@ class _OfflineState extends State<Offline> {
   bool isUpdating = false;
   String statut = "pris en charge";
   String numBordereau = "";
+  final DateTime date = new DateTime.now();
 
   void handleScanned(String value) {
     setState(() {
@@ -41,6 +42,7 @@ class _OfflineState extends State<Offline> {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => UpdateStatut(
         statut: 2,
+        date: date,
         updatedStatut: handleUpdateMail,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -79,15 +81,19 @@ class _OfflineState extends State<Offline> {
                 OfflineCard(
                   numBordereau: numBordereau,
                   statut: statut,
+                  date: date,
                   handleChange: handleChange,
                 ),
                 SizedBox(
                   height: 32,
                 ),
                 CustomButton(
-                    label: "Modifier le Statut",
-                    color: Colors.red,
-                    callback: _createRoute),
+                  label: "Modifier le Statut",
+                  color: Colors.red,
+                  callback: () {
+                    Navigator.push(context, _createRoute());
+                  },
+                ),
               ],
             ),
       floatingActionButton: FloatingActionButton(
