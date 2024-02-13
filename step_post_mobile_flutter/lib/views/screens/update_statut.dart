@@ -73,6 +73,7 @@ class _UpdateStatutState extends State<UpdateStatut> {
     final dataProvider = Provider.of<DataRepository>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white,
         title: Text(
           "Ajouter un statut",
           style: GoogleFonts.rubik(),

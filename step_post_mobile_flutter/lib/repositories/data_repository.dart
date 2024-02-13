@@ -79,7 +79,7 @@ class DataRepository with ChangeNotifier {
       isLogged = true;
       notifyListeners();
       return data;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
         Map<String, dynamic> data = {"httpCode": e.response?.statusCode};
         return data;
@@ -94,8 +94,8 @@ class DataRepository with ChangeNotifier {
       _courrier = await api.getCurrentScan(bordereau: _currentScan);
       hasBeenUpdated = false;
       notifyListeners();
-    } on DioError catch (e) {
-      if (checkDioError(e)) logout();
+    } on DioException catch (e) {
+      if (checkDioException(e)) logout();
       if (e.response?.statusCode == 404) {
         _courrier = null;
         notifyListeners();
@@ -111,8 +111,8 @@ class DataRepository with ChangeNotifier {
         print(item.etat);
       } */
       notifyListeners();
-    } on DioError catch (e) {
-      if (checkDioError(e)) logout();
+    } on DioException catch (e) {
+      if (checkDioException(e)) logout();
       rethrow;
     }
   }
@@ -126,8 +126,8 @@ class DataRepository with ChangeNotifier {
       print(response.date);
       hasBeenUpdated = true;
       notifyListeners();
-    } on DioError catch (e) {
-      if (checkDioError(e)) logout();
+    } on DioException catch (e) {
+      if (checkDioException(e)) logout();
       rethrow;
     }
   }
@@ -135,8 +135,8 @@ class DataRepository with ChangeNotifier {
   Future<void> postSignature({required dynamic signature}) async {
     try {
       await api.postSignature(courrierId: _courrier!.id, signature: signature);
-    } on DioError catch (e) {
-      if (checkDioError(e)) logout();
+    } on DioException catch (e) {
+      if (checkDioException(e)) logout();
       rethrow;
     }
   }
@@ -145,8 +145,8 @@ class DataRepository with ChangeNotifier {
     try {
       await api.postProcuration(
           courrierId: _courrier!.id, procuration: procuration);
-    } on DioError catch (e) {
-      if (checkDioError(e)) logout();
+    } on DioException catch (e) {
+      if (checkDioException(e)) logout();
       rethrow;
     }
   }
@@ -163,7 +163,7 @@ class DataRepository with ChangeNotifier {
         notifyListeners();
         return data;
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response?.statusCode == 403) return {"code": 403};
       rethrow;
     }
@@ -181,8 +181,8 @@ class DataRepository with ChangeNotifier {
         notifyListeners();
         return response;
       }
-    } on DioError catch (e) {
-      if (checkDioError(e)) logout();
+    } on DioException catch (e) {
+      if (checkDioException(e)) logout();
       rethrow;
     }
     return null;
@@ -192,8 +192,8 @@ class DataRepository with ChangeNotifier {
     try {
       _myScans = await api.getMesScans();
       notifyListeners();
-    } on DioError catch (e) {
-      if (checkDioError(e)) logout();
+    } on DioException catch (e) {
+      if (checkDioException(e)) logout();
       rethrow;
     }
   }
@@ -201,8 +201,8 @@ class DataRepository with ChangeNotifier {
   Future<List<Scan>> getSearchScan({required String bordereau}) async {
     try {
       return await api.getSearchScan(bordereau: bordereau);
-    } on DioError catch (e) {
-      if (checkDioError(e)) logout();
+    } on DioException catch (e) {
+      if (checkDioException(e)) logout();
       if (e.response?.statusCode == 404) return [];
       rethrow;
     }
@@ -223,7 +223,7 @@ class DataRepository with ChangeNotifier {
     notifyListeners();
   }
 
-  bool checkDioError(DioError e) {
+  bool checkDioException(DioException e) {
     return e.response?.statusCode == 403 || e.response?.statusCode == 401;
   }
 

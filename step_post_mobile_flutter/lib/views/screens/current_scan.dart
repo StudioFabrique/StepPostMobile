@@ -67,6 +67,7 @@ class _CurrentScanState extends State<CurrentScan> {
                   ),
                   mail!.etat < 5
                       ? CustomButton(
+                          width: 300,
                           label: "Modifier le Statut",
                           callback: () {
                             Navigator.of(context).push(_createRoute());

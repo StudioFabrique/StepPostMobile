@@ -24,6 +24,7 @@ class _TabViewControllerState extends State<TabViewController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        foregroundColor: Colors.white,
         backgroundColor: kBlue,
         title: items[context.watch<DataRepository>().currentIndex].appBarTitle,
         centerTitle: true,

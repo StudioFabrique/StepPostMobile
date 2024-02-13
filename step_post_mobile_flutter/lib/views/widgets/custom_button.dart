@@ -7,14 +7,17 @@ class CustomButton extends StatelessWidget {
   final Color color;
   final dynamic value;
   final double width;
+  final Color textColor;
 
-  const CustomButton(
-      {super.key,
-      required this.label,
-      required this.callback,
-      this.color = const Color(0xff140a82),
-      this.value,
-      this.width = 200});
+  const CustomButton({
+    super.key,
+    required this.label,
+    required this.callback,
+    this.color = const Color(0xff140a82),
+    this.value,
+    this.width = 200,
+    this.textColor = Colors.white,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,11 @@ class CustomButton extends StatelessWidget {
         onPressed: value != null ? () => callback(value) : () => callback(),
         child: Text(
           label,
-          style: GoogleFonts.rubik(fontSize: 18, fontWeight: FontWeight.bold),
+          style: GoogleFonts.rubik(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: textColor,
+          ),
         ),
       ),
     );

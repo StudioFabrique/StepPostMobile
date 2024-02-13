@@ -40,6 +40,7 @@ class _QRCodeScanState extends State<QRCodeScan> {
         title: const Text("Scan"),
         centerTitle: true,
         backgroundColor: kBlue,
+        foregroundColor: Colors.white,
       ),
       body: Column(
         children: <Widget>[
