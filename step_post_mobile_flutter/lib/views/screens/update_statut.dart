@@ -35,7 +35,7 @@ class _UpdateStatutState extends State<UpdateStatut> {
   }
 
   void initData() {
-    limit = context.read<DataRepository>().getLimit() + 1;
+    limit = context.read<DataRepository>().getLimit() + 2;
     if (statut == 1) limit = 3;
   }
 
@@ -53,7 +53,7 @@ class _UpdateStatutState extends State<UpdateStatut> {
                           MaterialPageRoute(
                               builder: (context) => SignaturePad(
                                     callback: () {
-                                      updatedStatut(value);
+                                      updatedStatut(5);
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();
                                     },

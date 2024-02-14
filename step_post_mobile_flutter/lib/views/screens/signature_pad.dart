@@ -123,6 +123,7 @@ class _SignaturePadState extends State<SignaturePad> {
           title: const Text("Signature"),
           centerTitle: true,
           backgroundColor: kBlue,
+          foregroundColor: Colors.white,
         ),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

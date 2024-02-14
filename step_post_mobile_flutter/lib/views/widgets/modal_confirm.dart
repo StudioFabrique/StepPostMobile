@@ -38,7 +38,9 @@ class ModalConfirm extends StatelessWidget {
           hasAlignment: TextAlign.center,
         ),
         CustomText(
-          label: context.read<DataRepository>().getEtat(value).toUpperCase(),
+          label: value != 9
+              ? context.read<DataRepository>().getEtat(value).toUpperCase()
+              : "PROCURATION",
           size: 24,
           color: Colors.white,
           hasAlignment: TextAlign.center,
@@ -56,14 +58,20 @@ class ModalConfirm extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(backgroundColor: kOrange),
-              child: Text("ANNULER", style: GoogleFonts.rubik(),),
+              child: Text(
+                "ANNULER",
+                style: GoogleFonts.rubik(color: Colors.white),
+              ),
             ),
             ElevatedButton(
                 onPressed: () {
                   callback();
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: kBlue),
-                child: Text("CONFIRMER", style: GoogleFonts.rubik(),))
+                child: Text(
+                  "CONFIRMER",
+                  style: GoogleFonts.rubik(color: Colors.white),
+                ))
           ],
         )
       ],
