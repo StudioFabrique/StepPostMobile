@@ -49,16 +49,18 @@ class _UpdateStatutState extends State<UpdateStatut> {
               callback: value == 5 || value == 9
                   ? () {
                       Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignaturePad(
-                                    callback: () {
-                                      updatedStatut(5);
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
-                                    },
-                                    state: value,
-                                  )));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignaturePad(
+                            callback: () {
+                              updatedStatut(5);
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                            state: value,
+                          ),
+                        ),
+                      );
                     }
                   : () {
                       updatedStatut(value);
